@@ -1,0 +1,1 @@
+# parse placement result and issue REST API calls to instantiate and chain the VNFs in the emulator accordingly

@@ -1,0 +1,88 @@
+End time: 2017-12-18 17:03:19
+Input: Data/scenarios/scenario.csv
+network:	../network.csv
+templates:	../templates/unidirectional/chain.csv
+sources:	../sources.csv
+fixed:	../fixed.csv
+flow_number: 1
+source_number: 1
+source_dr: 1.0
+
+Model:	tep_extended
+Objective: COMBINED
+Bounds: None
+
+Optimal solution found
+Runtime:	0.06251144409179688
+Objective value:	3005001.0
+Gap:	0.0
+
+# objective info: type value
+num_cpu_ex 0
+num_mem_ex 0
+num_dr_ex 0
+instances 3
+changed 3
+total_delay 1.0
+total_cpu 2.0
+total_mem 2.0
+total_dr 1.0
+
+max_cpu_over-subscription:	0
+max_mem_over-subscription:	0
+max_dr_over-subscription:	0
+
+# cpu exceeded: node
+
+# mem exceeded: node
+
+# dr exceeded: link-start link-end
+
+# instances: component node
+A	1
+B	1
+S1	0
+
+# edges: arc start-node end-node flow
+A.0->B.0	1	1	f1
+S1.0->A.0	0	1	f1
+
+# edge delays: arc start-node end-node delay
+S1.0->A.0	0	1	1.0
+
+# passes: dir component node flow
+fwd	A	1	f1
+fwd	B	1	f1
+fwd	S1	0	f1
+
+# changed: component node
+A	1
+B	1
+S1	0
+
+# cpu req: component node cpu_req
+A	1	1.0
+B	1	1.0
+
+# mem req: component node mem_req
+A	1	1.0
+B	1	1.0
+
+# ingoing fwd: component node flow port data_rate
+A	1	f1	0	1.0
+B	1	f1	0	1.0
+
+# ingoing bwd: component node flow port data_rate
+
+# outgoing fwd: component node flow port data_rate
+A	1	f1	0	1.0
+S1	0	f1	0	1.0
+
+# outgoing bwd: component node flow port data_rate
+
+# link dr: arc-start arc-end link-start link-end data_rate
+S1.0->A.0	0	1	0	1	1.0
+
+# link used: arc-start arc-end link-start link-end
+S1.0->A.0	0	1	0	1
+
