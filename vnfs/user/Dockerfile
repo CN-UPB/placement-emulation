@@ -10,7 +10,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -
 	inetutils-ping \
 	curl \
         wget \
-        hping3
+        hping3 \
+        httping
 
 ADD start.sh start.sh
 RUN chmod +x start.sh
