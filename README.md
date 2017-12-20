@@ -42,8 +42,8 @@ vim-emu compute start -n vnf_web -i placement-apache-img --net '(id=input,ip=30.
 vim-emu network add -src vnf_user:output -dst vnf_proxy:input
 vim-emu network add -src vnf_proxy:output -dst vnf_l4fw:input
 vim-emu network add -src vnf_l4fw:output -dst vnf_web:input
-
 ```
+(this script is also available in `emulator/deploy_example.sh`)
 
 #### Testing the deployment
 
@@ -68,13 +68,33 @@ containernet> vnf_proxy ping -c3 20.0.0.2
 containernet> vnf_l4fw ping -c3 30.0.0.2
 
 # full chain HTTP connectivity
-
+containernet> vnf_user curl -x http://10.0.0.2:3128 http://20.0.0.2:8899
 ```
+
+This `curl` command might look confusing. It does the following:
+
+* a HTTP request to the IP of `vnf_l4fw` that forwards the request arriving at port `TCP:8899` to `vnf_web` on port `TCP:80`
+* for the request it has to use the proxy (`vnf_proxy`) which is specified by `-x http://10.0.0.2:3128`
 
 #### Manual RTT measurement
 
-TODO
+(in a new terminal)
+```bash
+# log into to vnf_user
+docker exec -it mn.vnf_user /bin/bash
 
+# basic check
+vnf_user curl -x http://10.0.0.2:3128 http://20.0.0.2:8899 -v
+
+# use httping to measure RTT between user and vnf_web
+httping --proxy 10.0.0.2:3128 --url http://20.0.0.2 -p 8899 -c 5
+```
+
+#### Shut down experiment
+
+```bash
+containernet> exit
+```
 
 ### Notes
 

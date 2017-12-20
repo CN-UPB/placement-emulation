@@ -17,6 +17,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -
 	ethtool \
 	bmon \
 	vim \
+        curl \
 	socat
 
 ADD start.sh start.sh
