@@ -29,6 +29,27 @@ The `vnfs` folder contains a couple of example VNFs (as Docker files to be build
 The used service has four containers:
 `User -> Proxy (Squid) -> L4FW (Socat) -> Webservice (Apache)`
 
+```
+     Example Service Chain an IPs
+
+       +-------+        +------+
+       |       |        |      |
+       |  User |        | Web  |
+       |       |        |      |
+       +-------+        +---^--+
+10.0.0.1/24|                | 30.0.0.2/24
+           |                |
+10.0.0.2/24|                | 30.0.0.1/24
+       +---v---+        +---+--+
+       |       |        |      |
+       | Proxy +--------> L4FW |
+       |       |        |      |
+       +-------+        +------+
+         20.0.0.1/24  20.0.0.2/24
+
+
+```
+
 #### Deployment steps
 
 ```bash
