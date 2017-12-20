@@ -1,14 +1,25 @@
 import csv
 import requests
-import json
+import networkx as nx
+import bjointsp.read_write.reader as reader
+
+
+# read network topology from Topology Zoo in GraphML using NetworkX
+def read_network(network_file, node_cpu, node_mem):
+	network = nx.read_graphml(network_file, node_type=int)
+	# assign specified node capacities
+	for n in network.nodes:
+		network.nodes[n]["cpu"] = node_cpu
+		network.nodes[n]["mem"] = node_mem
+	# TODO: use same methods as topology_zoo to read network and set delay & bandwidth for links
 
 
 # parse placement result and issue REST API calls to instantiate and chain the VNFs in the emulator accordingly
-def emulate_embedding(embedding):
+def emulate_placement(placement):
 	compute_url = "http://127.0.0.1:5001/restapi/compute/"
 	network_url = "http://127.0.0.1:5001/restapi/network"
 	read_instances, read_edges = False, False
-	with open(embedding, "r") as embedding_file:
+	with open(placement, "r") as embedding_file:
 		reader = csv.reader((row for row in embedding_file), delimiter="\t")
 		for row in reader:
 			if len(row) > 0:
@@ -38,6 +49,9 @@ def emulate_embedding(embedding):
 						print("Adding link from " + src + " to " + dst + ". Success: " + str(response.status_code == requests.codes.ok))
 
 
-embedding = "placement/result.csv"
-emulate_embedding(embedding)
-
+# placement_result = "placement/result.csv"
+# emulate_placement(placement_result)
+# read_network("topologies/Abilene.graphml", 10, 10)
+# TODO: adjust bjointsp to support triggering the MIP and heuristic from the outside
+# TODO: take network, template, sources as cmd args
+# TODO: read network from graphml
