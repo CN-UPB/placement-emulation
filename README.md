@@ -12,6 +12,7 @@ The `vnfs` folder contains a couple of example VNFs (as Docker files to be build
 ### Prerequisites
 
 1. Install [`vim-emu`](https://osm.etsi.org/gitweb/?p=osm/vim-emu.git) (see [README.md "Bare-metal installation"](https://osm.etsi.org/gitweb/?p=osm/vim-emu.git;a=blob;f=README.md;h=ba22ec342ed5d60bf65770aa154adce8b0fcc141;hb=HEAD))
+    * `cd vim-emu; sudo python setup.py develop`
 1. Pre-build VNF containers: `cd vnfs; ./build.sh`
 1. Install some other dependencies
     * `pip install geopy`
@@ -65,6 +66,9 @@ vim-emu compute list
 containernet> vnf_user ping -c3 10.0.0.2
 containernet> vnf_proxy ping -c3 20.0.0.2
 containernet> vnf_l4fw ping -c3 30.0.0.2
+
+# full chain HTTP connectivity
+
 ```
 
 #### Manual RTT measurement

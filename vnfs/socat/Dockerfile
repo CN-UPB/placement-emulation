@@ -3,7 +3,7 @@ MAINTAINER manuel.peuster@uni-paderborn.de
 
 # configure layer 4 forwarding
 ENV FW_IN_PORT 8899
-ENV FW_OUT_ADDR 20.0.0.1
+ENV FW_OUT_ADDR 30.0.0.2
 ENV FW_OUT_PORT 80
 
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y -q \
