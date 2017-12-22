@@ -1,11 +1,15 @@
 # placement-emulation
 Automatically emulate network service placements calculated by placement algorithms
 
-The `placement` folder contains the input files and the result of placing a simple chain with 3 VNFs on a 4-node network.
+Folder structure:
 
-The `topologies` folder contains [TopologyZoo](http://www.topology-zoo.org) topologies given as `*.graphml` files.
+* `emulator`: `topology_zoo.py` script, reading a Topology Zoo network and starting it in `vim-emu` 
+* `placement`: `placement_emulator.py` triggers the `bjointsp` placement algorithm and starts the placed VNFs on the emulator
+  * `placement/example-input`: example input for the placement algorithm
+* `topologies`: Contains [TopologyZoo](http://www.topology-zoo.org) topologies given as `*.graphml` files
+* `vnfs`: Contains a couple of example VNFs (as Docker files to be build locally)
 
-The `vnfs` folder contains a couple of example VNFs (as Docker files to be build locally).
+More details are provided below.
 
 ## Emulation environment
 
@@ -130,3 +134,11 @@ containernet> exit
 ### Prerequisites
 
 Install [`bjointsp`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
+
+### Place and emulate
+
+1. Select a network topology from `topologies`, e.g., `Abilene.graphml`, and create a `csv` files describing the placement scenario (template, network, sources - see `placement/example-input`).
+2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology)
+3. Start the placement and emulation with `python placement/placement_emulator.py -s placement/example_input/scenario.csv`. 
+
+Note: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
