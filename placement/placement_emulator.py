@@ -1,17 +1,7 @@
 import csv
+import argparse
 import requests
-import networkx as nx
-import bjointsp.read_write.reader as reader
-
-
-# read network topology from Topology Zoo in GraphML using NetworkX
-def read_network(network_file, node_cpu, node_mem):
-	network = nx.read_graphml(network_file, node_type=int)
-	# assign specified node capacities
-	for n in network.nodes:
-		network.nodes[n]["cpu"] = node_cpu
-		network.nodes[n]["mem"] = node_mem
-	# TODO: use same methods as topology_zoo to read network and set delay & bandwidth for links
+import bjointsp.main as bjointsp
 
 
 # parse placement result and issue REST API calls to instantiate and chain the VNFs in the emulator accordingly
@@ -49,9 +39,39 @@ def emulate_placement(placement):
 						print("Adding link from " + src + " to " + dst + ". Success: " + str(response.status_code == requests.codes.ok))
 
 
-# placement_result = "placement/result.csv"
-# emulate_placement(placement_result)
-# read_network("topologies/Abilene.graphml", 10, 10)
-# TODO: adjust bjointsp to support triggering the MIP and heuristic from the outside
-# TODO: take network, template, sources as cmd args
-# TODO: read network from graphml
+def parse_args():
+	parser = argparse.ArgumentParser(description="Triggers placement and then emulation")
+	parser.add_argument(
+		"-s",
+		"--scenario",
+		help="Input scenario file (.csv)",
+		required=True,
+		default=None,
+		dest="scenario")
+	parser.add_argument(
+		"--placeOnly",
+		help="Only perform placement, do not trigger emulation.",
+		required=False,
+		default=False,
+		action="store_true",
+		dest="placeOnly")
+	return parser.parse_args()
+
+
+def main():
+	args = parse_args()
+	# TODO: allow to set cpu, mem, dr as args; or take them from graphml
+	result = bjointsp.heuristic(args.scenario, graphml_network=True, cpu=10, mem=10, dr=50)
+	if not args.placeOnly:
+		print("\n\nEmulating calculated placement:\n")
+		emulate_placement(result)
+	else:
+		print("\nPlacement complete; no emulation (--placeOnly).")
+
+
+if __name__ == '__main__':
+	main()
+
+
+# TODO: take network, template, sources as cmd args instead of reading them from a scenario file
+# TODO: start topology_zoo and placement_emulator from one script with one command
