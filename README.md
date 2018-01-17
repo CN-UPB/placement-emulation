@@ -133,7 +133,7 @@ containernet> exit
 
 ### Prerequisites
 
-At least Python 3.5 (on Ubuntu 16.04 always use `python3` instead of `python`)
+Python 3.5+ (on Ubuntu 16.04 always use `python3` instead of `python`)
 
 Install [`bjointsp`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
 
@@ -141,12 +141,12 @@ Install [`bjointsp`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulatio
 
 1. Select a network topology from `topologies`, e.g., `Abilene.graphml`, and create a `csv` files describing the placement scenario (template, network, sources - see `placement/example-input`).
 2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology)
-3. Start the placement and emulation with `python placement/placement_emulator.py -s placement/example_input/scenario.csv`. 
+3. Start the placement and emulation with `python placement/placement_emulator.py -s placement/example_input/scenario.csv`.
+4. You can list the deployed VNFs with `vim-emu compute list` and check their connectivity in the `containernet` terminal with `vnf1 ping -c 3 vnf2`.
 
 Note: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
 
 ### TODO
 
-* Resolve problem with `gurobipy` dependency of `bjointsp` (only needed by MIP): Either require `gurobipy` to be installed (problem: commercial & can't be installed with `pip`) or package heuristic separately from MIP without the `gurobipy` dependency
 * Combine `topology_zoo` and `placement_emulator` in one script (or call them from one script) so that everything can be started with one command
 * Pass placement arguments via command line, not specified in a `scenario.csv` (cleaner & more flexible approach)

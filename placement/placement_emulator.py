@@ -48,6 +48,9 @@ def parse_args():
 		required=True,
 		default=None,
 		dest="scenario")
+	# parser.add_argument("-n", "--network", help="Network input file (.graphml)", required=True, default=None, dest="network")
+	# parser.add_argument("-t", "--template", help="Template input file (.csv)", required=True, default=None, dest="template")
+	# parser.add_argument("-s", "--sources", help="Sources input file (.csv)", required=True, default=None, dest="scources")
 	parser.add_argument(
 		"--placeOnly",
 		help="Only perform placement, do not trigger emulation.",
@@ -73,5 +76,6 @@ if __name__ == '__main__':
 	main()
 
 
+# FIXME: not all network links are created correctly. in the example, A->B supposedly was created but ping doesn't work
 # TODO: take network, template, sources as cmd args instead of reading them from a scenario file
 # TODO: start topology_zoo and placement_emulator from one script with one command
