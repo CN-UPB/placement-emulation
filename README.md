@@ -140,7 +140,7 @@ Install [`bjointsp`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulatio
 ### Place and emulate
 
 1. Select a network topology from `topologies`, e.g., `Abilene.graphml`, and create a `csv` files describing the placement scenario (template, network, sources - see `placement/example-input`).
-2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology)
+2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g topologies/Abilene.graphml`
 3. Start the placement and emulation with `python placement/placement_emulator.py -s placement/example_input/scenario.csv`.
 4. You can list the deployed VNFs with `vim-emu compute list` and check their connectivity in the `containernet` terminal with `vnf1 ping -c 3 vnf2`.
 
