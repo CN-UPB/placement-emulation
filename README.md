@@ -148,5 +148,6 @@ Note: If you only want to trigger placement without emulation, use the `--placeO
 
 ### TODO
 
+* Create VNFs with multiple interfaces and connect them correctly if necessary. Eg, S->A->B: A needs 2 interfaces to work correctly.
 * Combine `topology_zoo` and `placement_emulator` in one script (or call them from one script) so that everything can be started with one command
 * Pass placement arguments via command line, not specified in a `scenario.csv` (cleaner & more flexible approach)
