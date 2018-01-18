@@ -135,7 +135,7 @@ containernet> exit
 
 Python 3.5+ (on Ubuntu 16.04 always use `python3` instead of `python`)
 
-Install [`bjointsp`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
+Install [`bjointsp 2.0+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
 
 ### Place and emulate
 
@@ -150,4 +150,3 @@ Note: If you only want to trigger placement without emulation, use the `--placeO
 
 * Create VNFs with multiple interfaces and connect them correctly if necessary. Eg, S->A->B: A needs 2 interfaces to work correctly.
 * Combine `topology_zoo` and `placement_emulator` in one script (or call them from one script) so that everything can be started with one command
-* Pass placement arguments via command line, not specified in a `scenario.csv` (cleaner & more flexible approach)

@@ -41,16 +41,9 @@ def emulate_placement(placement):
 
 def parse_args():
 	parser = argparse.ArgumentParser(description="Triggers placement and then emulation")
-	parser.add_argument(
-		"-s",
-		"--scenario",
-		help="Input scenario file (.csv)",
-		required=True,
-		default=None,
-		dest="scenario")
-	# parser.add_argument("-n", "--network", help="Network input file (.graphml)", required=True, default=None, dest="network")
-	# parser.add_argument("-t", "--template", help="Template input file (.csv)", required=True, default=None, dest="template")
-	# parser.add_argument("-s", "--sources", help="Sources input file (.csv)", required=True, default=None, dest="scources")
+	parser.add_argument("-n", "--network", help="Network input file (.graphml)", required=True, default=None, dest="network")
+	parser.add_argument("-t", "--template", help="Template input file (.csv)", required=True, default=None, dest="template")
+	parser.add_argument("-s", "--sources", help="Sources input file (.csv)", required=True, default=None, dest="sources")
 	parser.add_argument(
 		"--placeOnly",
 		help="Only perform placement, do not trigger emulation.",
@@ -64,7 +57,7 @@ def parse_args():
 def main():
 	args = parse_args()
 	# TODO: allow to set cpu, mem, dr as args; or take them from graphml
-	result = bjointsp.heuristic(args.scenario, graphml_network=True, cpu=10, mem=10, dr=50)
+	result = bjointsp.heuristic(args.network, args.template, args.sources, graphml_network=True, cpu=10, mem=10, dr=50)
 	if not args.placeOnly:
 		print("\n\nEmulating calculated placement:\n")
 		emulate_placement(result)
@@ -75,7 +68,5 @@ def main():
 if __name__ == '__main__':
 	main()
 
-
-# FIXME: not all network links are created correctly. in the example, A->B supposedly was created but ping doesn't work
-# TODO: take network, template, sources as cmd args instead of reading them from a scenario file
+# FIXME: create VNFs with multiple interfaces when necessary
 # TODO: start topology_zoo and placement_emulator from one script with one command

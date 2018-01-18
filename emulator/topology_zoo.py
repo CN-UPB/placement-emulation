@@ -51,10 +51,10 @@ Assumptions & properties
 Default link bw: 100 Mbps * BW_SCALE_FACTOR (used if not given in topology)
 Default link delay: 1 ms (used if not given in topology)
 """
-# TODO check this with Stefan, what does the simulation use?
 SPEED_OF_LIGHT = 299792458  # meter per second
 PROPAGATION_FACTOR = 0.77  # https://en.wikipedia.org/wiki/Propagation_delay
 BW_SCALE_FACTOR = 0.1  # downscale all link bandwidths to work with Containernet 
+
 
 class TopologyZooTopology(object):
 
