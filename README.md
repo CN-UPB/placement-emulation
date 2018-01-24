@@ -150,7 +150,7 @@ Note: If you only want to trigger placement without emulation, use the `--placeO
 
 * Create VNFs with multiple interfaces and connect them correctly if necessary. Eg, S->A->B: A needs 2 interfaces to work correctly.
   * `curl -X PUT http://127.0.0.1:5001/restapi/compute/cvim1/new_vnf -H 'Content-Type: application/json' -d '{"image":"ubuntu:trusty", "network":"(id=input,ip=10.0.0.1/24),(id=output,ip=20.0.0.1/24)"}'` creates VNF with 2 interfaces
-  * but the connection doesn't work (at least `ping` doesn't work with the `output` interace, only with `input`)
+  * but the connection doesn't work (at least `ping` doesn't work with the `output` interace, only with `input`)...
 
 
 * Combine `topology_zoo` and `placement_emulator` in one script (or call them from one script) so that everything can be started with one command
