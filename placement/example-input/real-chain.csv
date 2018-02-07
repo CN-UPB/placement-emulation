@@ -2,12 +2,12 @@
 # name
 real-chain
 
-# Components: name type stateful inputs in_back outputs out_back [cpu_coeff] [mem_coeff] [[outgoing_coeff]] [[outgoing_back]]
+# Components: name type stateful inputs in_back outputs out_back [cpu_coeff] [mem_coeff] [[outgoing_coeff]] [[outgoing_back]] opt:vnf_image
 # type={source, normal, end}; values separated by tabs; coeff separated by comma - first fw_in, then bw_in, then +constant; outgoing for diff outputs separated by ;
-User	source	True	0	0	1	0	[0]		[0]		[]		[]
-Proxy	normal	False	1	0	1	0	[1,0]	[1,0]	[[1,0]]	[]
-L4FW	normal	False	1	0	1	0	[1,0]	[1,0]	[[1,0]]	[]
-Web		normal	False	1	0	0	0	[1,0]	[1,0]	[]		[]
+User	source	True	0	0	1	0	[0]		[0]		[]		[]	'{"image":"placement-user-img", "network":"(id=output,ip=10.0.0.1/24)"}'
+Proxy	normal	False	1	0	1	0	[1,0]	[1,0]	[[1,0]]	[]	'{"image":"placement-squid-img", "network":"(id=input,ip=10.0.0.2/24),(id=output,ip=20.0.0.1/24)"}'
+L4FW	normal	False	1	0	1	0	[1,0]	[1,0]	[[1,0]]	[]	'{"image":"placement-socat-img", "network":"(id=input,ip=20.0.0.2/24),(id=output,ip=30.0.0.1/24)"}'
+Web		normal	False	1	0	0	0	[1,0]	[1,0]	[]		[]	'{"image":"placement-apache-img", "network":"(id=input,ip=30.0.0.2/24)"}'
 
 # Arcs: direction src_name src_output dest_name dest_input max_delay
 forward		User	0	Proxy	0	50

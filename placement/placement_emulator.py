@@ -4,8 +4,19 @@ import requests
 import bjointsp.main as bjointsp
 
 
+def emulate_placement(overlays, templates):
+	compute_url = "http://127.0.0.1:5001/restapi/compute/"
+	network_url = "http://127.0.0.1:5001/restapi/network"
+
+	for ol in overlays.values():
+		for i in ol.instances:
+			print(str(i) + ": " + i.component.config)
+			# TODO: make corresponding API calls
+
+
+# TODO: better to parse from file or use overlays result? keep this for reference and cleanup later
 # parse placement result and issue REST API calls to instantiate and chain the VNFs in the emulator accordingly
-def emulate_placement(placement):
+def emulate_placement_from_file(placement):
 	compute_url = "http://127.0.0.1:5001/restapi/compute/"
 	network_url = "http://127.0.0.1:5001/restapi/network"
 	read_instances, read_edges = False, False
@@ -57,10 +68,11 @@ def parse_args():
 def main():
 	args = parse_args()
 	# TODO: allow to set cpu, mem, dr as args; or take them from graphml
-	result = bjointsp.heuristic(args.network, args.template, args.sources, graphml_network=True, cpu=10, mem=10, dr=50)
+	result, overlays, templates = bjointsp.heuristic(args.network, args.template, args.sources, graphml_network=True, cpu=10, mem=10, dr=50)
 	if not args.placeOnly:
 		print("\n\nEmulating calculated placement:\n")
-		emulate_placement(result)
+		#emulate_placement_from_file(result)
+		emulate_placement(overlays, templates)
 	else:
 		print("\nPlacement complete; no emulation (--placeOnly).")
 
@@ -68,4 +80,4 @@ def main():
 if __name__ == '__main__':
 	main()
 
-# TODO: somehow link these VNFs to the docker images and start the docker containers on vim-emu
+# TODO: somehow link these VNFs to the docker images and start the docker containers on vim-emu (img name is not enough)
