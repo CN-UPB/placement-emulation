@@ -1,3 +1,0 @@
-network: ../../topologies/Abilene.graphml
-templates: chain.csv
-sources: sources.csv
