@@ -68,5 +68,4 @@ def main():
 if __name__ == '__main__':
 	main()
 
-# FIXME: create VNFs with multiple interfaces when necessary
-# TODO: start topology_zoo and placement_emulator from one script with one command
+# TODO: somehow link these VNFs to the docker images and start the docker containers on vim-emu
