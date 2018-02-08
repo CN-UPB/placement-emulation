@@ -4,21 +4,23 @@ import requests
 import bjointsp.main as bjointsp
 
 
-def emulate_placement(overlays, templates):
-	compute_url = "http://127.0.0.1:5001/restapi/compute/"
-	network_url = "http://127.0.0.1:5001/restapi/network"
+compute_url = "http://127.0.0.1:5001/restapi/compute/"
+network_url = "http://127.0.0.1:5001/restapi/network"
+config_prefix = " -H 'Content-Type: application/json' -d "
 
+
+def emulate_placement(overlays, templates):
 	for ol in overlays.values():
 		for i in ol.instances:
 			print(str(i) + ": " + i.component.config)
-			# TODO: make corresponding API calls
+			response = requests.put(compute_url + i.location + "/" + i.component + config_prefix + i.component.config)
+			print("Adding VNF " + i.component + " at " + i.location + ". Success: " + str(response.status_code == requests.codes.ok))
+			# TODO: edges
 
 
 # TODO: better to parse from file or use overlays result? keep this for reference and cleanup later
 # parse placement result and issue REST API calls to instantiate and chain the VNFs in the emulator accordingly
 def emulate_placement_from_file(placement):
-	compute_url = "http://127.0.0.1:5001/restapi/compute/"
-	network_url = "http://127.0.0.1:5001/restapi/network"
 	read_instances, read_edges = False, False
 	with open(placement, "r") as embedding_file:
 		reader = csv.reader((row for row in embedding_file), delimiter="\t")
@@ -37,7 +39,7 @@ def emulate_placement_from_file(placement):
 					if len(row) == 2:
 						dc = row[1];
 						vnf = row[0];
-						response = requests.put(compute_url + dc + "/" +vnf)
+						response = requests.put(compute_url + dc + "/" + vnf)
 						print("Adding VNF " + vnf + " at " + dc + ". Success: " + str(response.status_code == requests.codes.ok))
 
 				# recreate edges from previous embedding (edge format: "A.0->B.0 ...."
@@ -81,3 +83,4 @@ if __name__ == '__main__':
 	main()
 
 # TODO: somehow link these VNFs to the docker images and start the docker containers on vim-emu (img name is not enough)
+# TODO: what about scaling? ports & connections need to be decided dynamically
