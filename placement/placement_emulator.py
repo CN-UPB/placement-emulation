@@ -1,6 +1,7 @@
 import csv
 import argparse
 import requests
+import ast
 import bjointsp.main as bjointsp
 
 
@@ -12,9 +13,9 @@ config_prefix = " -H 'Content-Type: application/json' -d "
 def emulate_placement(overlays, templates):
 	for ol in overlays.values():
 		for i in ol.instances:
-			print(str(i) + ": " + i.component.config)
-			response = requests.put(compute_url + i.location + "/" + i.component + config_prefix + i.component.config)
-			print("Adding VNF " + i.component + " at " + i.location + ". Success: " + str(response.status_code == requests.codes.ok))
+			data = ast.literal_eval(i.component.config)			# convert string config to dict
+			response = requests.put(compute_url + i.location + "/" + str(i.component), json=data)
+			print("Adding VNF " + str(i.component) + " at " + i.location + ". Success: " + str(response.status_code == requests.codes.ok))
 			# TODO: edges
 
 
