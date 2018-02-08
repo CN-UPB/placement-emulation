@@ -1,4 +1,3 @@
-import csv
 import argparse
 import requests
 import ast
@@ -25,40 +24,6 @@ def emulate_placement(overlays, templates):
 			data = {"vnf_src_name":src, "vnf_dst_name":dst, "vnf_src_interface":"output", "vnf_dst_interface":"input", "bidirectional":"True"}
 			response = requests.put(network_url, json=data)
 			print("Adding link from " + src + " to " + dst + ". Success: " + str(response.status_code == requests.codes.ok))
-
-
-# TODO: better to parse from file or use overlays result? keep this for reference and cleanup later
-# parse placement result and issue REST API calls to instantiate and chain the VNFs in the emulator accordingly
-def emulate_placement_from_file(placement):
-	read_instances, read_edges = False, False
-	with open(placement, "r") as embedding_file:
-		reader = csv.reader((row for row in embedding_file), delimiter="\t")
-		for row in reader:
-			if len(row) > 0:
-				if row[0].startswith("#"):
-					read_instances = False
-					read_edges = False
-				if row[0].startswith("# instances:"):
-					read_instances = True
-				elif row[0].startswith("# edges:"):
-					read_edges = True
-
-				# recreate instances from previous embedding
-				if read_instances:
-					if len(row) == 2:
-						dc = row[1];
-						vnf = row[0];
-						response = requests.put(compute_url + dc + "/" + vnf)
-						print("Adding VNF " + vnf + " at " + dc + ". Success: " + str(response.status_code == requests.codes.ok))
-
-				# recreate edges from previous embedding (edge format: "A.0->B.0 ...."
-				if read_edges:
-					if len(row) == 4:
-						src = row[0].split("->")[0].split(".")[0]
-						dst = row[0].split("->")[1].split(".")[0]
-						data = {"vnf_src_name":src, "vnf_dst_name":dst, "vnf_src_interface":src+"-eth0", "vnf_dst_interface":dst+"-eth0", "bidirectional":True}
-						response = requests.put(network_url, json=data)
-						print("Adding link from " + src + " to " + dst + ". Success: " + str(response.status_code == requests.codes.ok))
 
 
 def parse_args():
@@ -91,5 +56,4 @@ def main():
 if __name__ == '__main__':
 	main()
 
-# TODO: somehow link these VNFs to the docker images and start the docker containers on vim-emu (img name is not enough)
 # TODO: what about scaling? ports & connections need to be decided dynamically

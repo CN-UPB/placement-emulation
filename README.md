@@ -141,21 +141,7 @@ Install [`bjointsp 2.0+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emu
 
 1. Select a network topology from `topologies`, e.g., `Abilene.graphml`, as well as a template and sources, defined by `csv` files. See `placement/example-input` for examples.
 2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g topologies/Abilene.graphml`
-3. Start the placement and emulation with `python placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/chain.csv -s placement/example_input/sources.csv`.
-4. You can list the deployed VNFs with `vim-emu compute list` and check their connectivity in the `containernet` terminal with `S1 ping -c3 A`.
-   **FIXME:** `A ping -c3 B` does not work.
+3. Start the placement and emulation with `python placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/template.csv -s placement/example_input/sources.csv`.
+4. You can test the deployment and connectivity in the `containernet` terminal with as described [above](https://github.com/CN-UPB/placement-emulation#testing-the-deployment).
 
 Note: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
-
-### TODO
-
-* Focus on placement and emulation with prepared User-Proxy-L4Fwd-Web chain!
-
-Ignore for now:
-
-* Create VNFs with multiple interfaces and connect them correctly if necessary. Eg, S->A->B: A needs 2 interfaces to work correctly.
-  * `curl -X PUT http://127.0.0.1:5001/restapi/compute/cvim1/new_vnf -H 'Content-Type: application/json' -d '{"image":"ubuntu:trusty", "network":"(id=input,ip=10.0.0.1/24),(id=output,ip=20.0.0.1/24)"}'` creates VNF with 2 interfaces
-  * but the connection doesn't work (at least `ping` doesn't work with the `output` interace, only with `input`)...
-
-
-* Combine `topology_zoo` and `placement_emulator` in one script (or call them from one script) so that everything can be started with one command
