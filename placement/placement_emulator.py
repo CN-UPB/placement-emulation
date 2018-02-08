@@ -12,11 +12,19 @@ config_prefix = " -H 'Content-Type: application/json' -d "
 
 def emulate_placement(overlays, templates):
 	for ol in overlays.values():
+		# start placed VNF instances on the emulator
 		for i in ol.instances:
 			data = ast.literal_eval(i.component.config)			# convert string config to dict
 			response = requests.put(compute_url + i.location + "/" + str(i.component), json=data)
 			print("Adding VNF " + str(i.component) + " at " + i.location + ". Success: " + str(response.status_code == requests.codes.ok))
-			# TODO: edges
+			
+		# connect instances along calculated edges
+		for e in ol.edges:
+			src = str(e.source.component)
+			dst = str(e.dest.component)
+			data = {"vnf_src_name":src, "vnf_dst_name":dst, "vnf_src_interface":"output", "vnf_dst_interface":"input", "bidirectional":"True"}
+			response = requests.put(network_url, json=data)
+			print("Adding link from " + src + " to " + dst + ". Success: " + str(response.status_code == requests.codes.ok))
 
 
 # TODO: better to parse from file or use overlays result? keep this for reference and cleanup later
