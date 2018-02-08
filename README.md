@@ -112,7 +112,7 @@ docker exec -it mn.vnf_user /bin/bash
 vnf_user curl -x http://10.0.0.2:3128 http://20.0.0.2:8899 -v
 
 # use httping to measure RTT between user and vnf_web
-httping --proxy 10.0.0.2:3128 --url http://20.0.0.2 -p 8899 -c 5
+vnf_user httping --proxy 10.0.0.2:3128 --url http://20.0.0.2 -p 8899 -c 5
 ```
 
 #### Shut down experiment
@@ -142,6 +142,6 @@ Install [`bjointsp 2.0+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emu
 1. Select a network topology from `topologies`, e.g., `Abilene.graphml`, as well as a template and sources, defined by `csv` files. See `placement/example-input` for examples.
 2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g topologies/Abilene.graphml`
 3. Start the placement and emulation with `python placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/template.csv -s placement/example_input/sources.csv`.
-4. You can test the deployment and connectivity in the `containernet` terminal with as described [above](https://github.com/CN-UPB/placement-emulation#testing-the-deployment).
+4. You can test the deployment and connectivity as described [above](https://github.com/CN-UPB/placement-emulation#testing-the-deployment).
 
 Note: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
