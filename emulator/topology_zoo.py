@@ -105,8 +105,7 @@ class TopologyZooTopology(object):
             # parse bw limit from edge
             bw_mbps = self._parse_bandwidth(e)
             # calculate delay from nodes
-            delay = round(self._calc_delay_ms(e[0], e[1]), 2)
-            print("{} to {}: {}ms (emu)".format(e[0], e[1], delay))
+            delay = round(self._calc_delay_ms(e[0], e[1]))
             try:
                 self.net.addLink(self.pops[e[0]], self.pops[e[1]],
                                  cls=TCLink,
