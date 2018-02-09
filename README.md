@@ -135,7 +135,7 @@ containernet> exit
 
 Python 3.5+ (on Ubuntu 16.04 always use `python3` instead of `python`)
 
-Install [`bjointsp 2.0+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
+Install [`bjointsp 2.1+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
 
 ### Place and emulate
 
