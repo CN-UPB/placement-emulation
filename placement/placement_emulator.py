@@ -43,8 +43,8 @@ def parse_args():
 
 def main():
 	args = parse_args()
-	# TODO: allow to set cpu, mem, dr as args; or take them from graphml
-	result, overlays, templates = bjointsp.heuristic(args.network, args.template, args.sources, graphml_network=True, cpu=10, mem=10, dr=50)
+	# TODO: allow to set cpu, mem, dr as args; or take them from graphml. should be consistent with emulator settings
+	result, overlays, templates = bjointsp.heuristic(args.network, args.template, args.sources, graphml_network=True, cpu=1, mem=10, dr=50)
 	if not args.placeOnly:
 		print("\n\nEmulating calculated placement:\n")
 		#emulate_placement_from_file(result)
@@ -56,4 +56,4 @@ def main():
 if __name__ == '__main__':
 	main()
 
-# TODO: what about scaling? ports & connections need to be decided dynamically
+# TODO: what about scaling? ports & connections need to be decided dynamically. load balancing?
