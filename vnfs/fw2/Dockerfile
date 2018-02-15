@@ -27,7 +27,7 @@ RUN chmod +x ipconfig.sh
 
 WORKDIR /
 
-EXPOSE 8899
+EXPOSE 80
 
 # entry point
 ENV SON_EMU_CMD ./start.sh
