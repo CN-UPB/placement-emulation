@@ -141,7 +141,23 @@ Install [`bjointsp 2.1+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emu
 
 1. Select a network topology from `topologies`, e.g., `Abilene.graphml`, as well as a template and sources, defined by `csv` files. See `placement/example-input` for examples.
 2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g topologies/Abilene.graphml`
-3. Start the placement and emulation with `python placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/template.csv -s placement/example_input/sources.csv`.
+3. Start the placement and emulation with `python placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/template.csv -s placement/example-input/sources.csv`.
 4. You can test the deployment and connectivity as described [above](https://github.com/CN-UPB/placement-emulation#testing-the-deployment).
 
 Note: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
+
+
+### Placement of alternative chains (only L4FW, no proxy)
+As the proxy may lead to unexpected effects when measuring delay, it can be preferable to use a chain of one or more L4FWs and no proxy.
+For now, docker containers and placement templates are available for chains with one or with two L4FWs.
+
+Use templates `fw1chain.csv` or `fw2chain.csv` for placement.
+
+
+## Abilene visualization
+The figure below visualizes the Abilene network (from SNDlib). Our topology (from Topology Zoo) only has 11 nodes, missing the "ATLAM5" node.
+
+The black numbers illustrate the pop number used by the `vim-emu` and the placement algorithm. The dark red numbers indicate the rounded link delay between the pops (as used here).
+
+![abilene](abilene.jpg)
+

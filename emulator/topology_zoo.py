@@ -163,8 +163,8 @@ class TopologyZooTopology(object):
               .format(n1id, n2id, meter / 1000))
         # calc delay
         delay = (meter / SPEED_OF_LIGHT * 1000) * PROPAGATION_FACTOR  # in milliseconds
-        LOG.debug("- Delay {}-{} = {} ms"
-              .format(n1id, n2id, delay))
+        LOG.debug("- Delay {}-{} = {} ms (rounded: {} ms)"
+              .format(n1id, n2id, delay, round(delay)))
         return delay
 
     def start_topology(self):
