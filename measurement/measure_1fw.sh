@@ -7,6 +7,5 @@ sudo docker exec -it mn.vnf_user ping -c5 -q 88.0.0.2
 echo "\nL4FW 1 -> Web"
 sudo docker exec -it mn.vnf_fw1 ping -c5 -q 99.0.0.2
 
-# FIXME: why does the connection time out?
 echo "\nLatency of whole chain"
 sudo docker exec -it mn.vnf_user httping --url http://88.0.0.2 -p 80 -c 5
