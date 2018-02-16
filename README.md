@@ -4,6 +4,7 @@ Automatically emulate network service placements calculated by placement algorit
 Folder structure:
 
 * `emulator`: `topology_zoo.py` script, reading a Topology Zoo network and starting it in `vim-emu` 
+* `measurement`: Scripts for measuring the delay between VNFs and on the whole chain (with `ping` and `httping`)
 * `placement`: `placement_emulator.py` triggers the `bjointsp` placement algorithm and starts the placed VNFs on the emulator
   * `placement/example-input`: example input for the placement algorithm
 * `topologies`: Contains [TopologyZoo](http://www.topology-zoo.org) topologies given as `*.graphml` files
@@ -133,7 +134,7 @@ containernet> exit
 
 ### Prerequisites
 
-Python 3.5+ (on Ubuntu 16.04 always use `python3` instead of `python`)
+Python 3.5+
 
 Install [`bjointsp 2.1+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
 
@@ -141,23 +142,21 @@ Install [`bjointsp 2.1+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emu
 
 1. Select a network topology from `topologies`, e.g., `Abilene.graphml`, as well as a template and sources, defined by `csv` files. See `placement/example-input` for examples.
 2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g topologies/Abilene.graphml`
-3. Start the placement and emulation with `python placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/template.csv -s placement/example-input/sources.csv`.
+3. Start the placement and emulation with `python3 placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/template.csv -s placement/example-input/sources.csv`.
 4. You can test the deployment and connectivity as described [above](https://github.com/CN-UPB/placement-emulation#testing-the-deployment).
+5. `measurement` contains scripts for measuring the delay between VNFs and on the whole chain. E.g., run `./measurements/measure.sh`.
 
 Note: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
 
 
-### Placement of alternative chains (only L4FW, no proxy)
-As the proxy may lead to unexpected effects when measuring delay, it can be preferable to use a chain of one or more L4FWs and no proxy.
-For now, docker containers and placement templates are available for chains with one or with two L4FWs.
 
-Use templates `fw1chain.csv` or `fw2chain.csv` for placement.
+The repository also contains examples without the proxy, which may introduce unexpected effects. These examples contain 1-2 L4FW or 1-2 bridges instead. While L4FW each require a separate TCP connection, leading to higher delays with `httping`, the bridges don't such that there's only one TCP connection from the user to the web server.
 
 
 ## Abilene visualization
 The figure below visualizes the Abilene network (from SNDlib). Our topology (from Topology Zoo) only has 11 nodes, missing the "ATLAM5" node.
 
-The black numbers illustrate the pop number used by the `vim-emu` and the placement algorithm. The dark red numbers indicate the rounded link delay between the pops (as used here).
+The black numbers illustrate the pop number used by the `vim-emu` and the placement algorithm. The dark red numbers indicate the rounded link delay between the pops (as used here). This is supposed to support and simplify the analysis of delay measurements.
 
 ![abilene](abilene.jpg)
 
