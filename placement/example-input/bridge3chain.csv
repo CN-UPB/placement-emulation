@@ -6,9 +6,9 @@ bridge3-chain
 # type={source, normal, end}; values separated by tabs; coeff separated by comma - first fw_in, then bw_in, then +constant; outgoing for diff outputs separated by ;
 vnf_user	source	True	0	0	1	0	[0]		[0]		[]		[]	'{"image":"placement-user-img", "network":"(id=output,ip=88.0.0.1/24)"}'
 vnf_bridge3		normal	False	1	0	1	0	[1,0]	[1,0]	[[1,0]]	[]	'{"image":"placement-bridge-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=88.0.0.3/24)"}'
-vnf_bridge2		normal	False	1	0	1	0	[1,0]	[1,0]	[[1,0]]	[]	'{"image":"placement-bridge-img", "network":"(id=input,ip=88.0.0.3/24),(id=output,ip=88.0.0.4/24)"}'
-vnf_bridge1		normal	False	1	0	1	0	[1,0]	[1,0]	[[1,0]]	[]	'{"image":"placement-bridge-img", "network":"(id=input,ip=88.0.0.5/24),(id=output,ip=88.0.0.6/24)"}'
-vnf_web		normal	False	1	0	0	0	[1,0]	[1,0]	[]		[]	'{"image":"placement-apache-img", "network":"(id=input,ip=88.0.0.7/24)"}'
+vnf_bridge2		normal	False	1	0	1	0	[1,0]	[1,0]	[[1,0]]	[]	'{"image":"placement-bridge-img", "network":"(id=input,ip=88.0.0.4/24),(id=output,ip=88.0.0.5/24)"}'
+vnf_bridge1		normal	False	1	0	1	0	[1,0]	[1,0]	[[1,0]]	[]	'{"image":"placement-bridge-img", "network":"(id=input,ip=88.0.0.6/24),(id=output,ip=88.0.0.7/24)"}'
+vnf_web		normal	False	1	0	0	0	[1,0]	[1,0]	[]		[]	'{"image":"placement-apache-img", "network":"(id=input,ip=88.0.0.8/24)"}'
 
 # Arcs: direction src_name src_output dest_name dest_input max_delay
 forward		vnf_user	0	vnf_bridge3	0	50
