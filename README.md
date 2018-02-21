@@ -153,10 +153,45 @@ Note: If you only want to trigger placement without emulation, use the `--placeO
 The repository also contains examples without the proxy, which may introduce unexpected effects. These examples contain 1-2 L4FW or 1-2 bridges instead. While L4FW each require a separate TCP connection, leading to higher delays with `httping`, the bridges don't such that there's only one TCP connection from the user to the web server.
 
 
-## Abilene visualization
+## Example input
+### Abilene network
 The figure below visualizes the Abilene network (from SNDlib). Our topology (from Topology Zoo) only has 11 nodes, missing the "ATLAM5" node.
 
 The black numbers illustrate the pop number used by the `vim-emu` and the placement algorithm. The dark red numbers indicate the rounded link delay between the pops (as used here). This is supposed to support and simplify the analysis of delay measurements.
 
 ![abilene](abilene.jpg)
+
+
+### Network service chains
+We use chains of varying length, in which a user (1st "VNF") requests content from a web server (last VNF). In between, there are 1 to 3 forwarding VNFs (either layer 2 or layer 4).
+
+#### Chains with layer-4 forwarders (socat)
+L4FW are connected with separate TCP connections. Each TCP connection is setup using TCP's 3-way handshake, leading to considerable delay. These are the different chains:
+
+```
+vnf_user (88.0.0.1/24) --> (88.0.0.2/24) vnf_fw1 (99.0.0.1/24) --> (99.0.0.2/24) vnf_web
+```
+
+```
+vnf_user (77.0.0.1/24) --> (77.0.0.2/24) vnf_fw2 (88.0.0.1/24) --> (88.0.0.2/24) vnf_fw1 (99.0.0.1/24) --> (99.0.0.2/24) vnf_web
+```
+
+```
+vnf_user (66.0.0.1/24) --> (66.0.0.2/24) vnf_fw3 (77.0.0.1/24) --> (77.0.0.2/24) vnf_fw2 (88.0.0.1/24) --> (88.0.0.2/24) vnf_fw1 (99.0.0.1/24) --> (99.0.0.2/24) vnf_web
+```
+
+#### Chains with layer-2 forwarders (bridges)
+Here, user and web server are directly connected with a single TCP connection, thus requiring shorter setup delay.
+
+```
+vnf_user (88.0.0.1/24) --> (88.0.0.2/24) vnf_bridge1 (88.0.0.3/24) --> (88.0.0.4/24) vnf_web
+```
+
+```
+vnf_user (88.0.0.1/24) --> (88.0.0.2/24) vnf_bridge2 (88.0.0.3/24) --> (88.0.0.4/24) vnf_bridge1 (88.0.0.5/24) --> (88.0.0.6/24) vnf_web
+```
+
+```
+vnf_user (88.0.0.1/24) --> (88.0.0.2/24) vnf_bridge3 (88.0.0.3/24) --> (88.0.0.4/24) vnf_bridge2 (88.0.0.5/24) --> (88.0.0.6/24) vnf_bridge1 (88.0.0.7/24) --> (88.0.0.8/24) vnf_web
+```
 
