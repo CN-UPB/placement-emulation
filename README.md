@@ -144,7 +144,7 @@ Install [`bjointsp 2.1+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emu
 2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g topologies/Abilene.graphml`
 3. Start the placement and emulation with `python3 placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/template.csv -s placement/example-input/sources.csv`.
 4. You can test the deployment and connectivity as described [above](https://github.com/CN-UPB/placement-emulation#testing-the-deployment).
-5. `measurement` contains scripts for measuring the delay between VNFs and on the whole chain. E.g., run `./measurements/measure.sh`.
+5. `measurement` contains scripts for measuring the delay between VNFs and on the whole chain. E.g., run `./measurements/measure.sh |& tee -a results/1fw.log` to also log to file.
 
 Note: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
 
@@ -166,7 +166,7 @@ The black numbers illustrate the pop number used by the `vim-emu` and the placem
 We use chains of varying length, in which a user (1st "VNF") requests content from a web server (last VNF). In between, there are 1 to 3 forwarding VNFs (either layer 2 or layer 4).
 
 #### Chains with layer-4 forwarders (socat)
-L4FW are connected with separate TCP connections. Each TCP connection is setup using TCP's 3-way handshake, leading to considerable delay. These are the different chains:
+L4FW are connected with separate TCP connections. Each TCP connection is setup using TCP's 3-way handshake, leading to considerable delay. These are the different chains (interfaces in brackets):
 
 ```
 vnf_user (88.0.0.1/24) --> (88.0.0.2/24) vnf_fw1 (99.0.0.1/24) --> (99.0.0.2/24) vnf_web
