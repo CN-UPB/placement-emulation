@@ -140,6 +140,15 @@ Install [`bjointsp 2.3+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emu
 
 ### Place and emulate
 
+**Quickstart:**
+
+1. Run `./start.sh -n network -t service -s sources` with adequate arguments to start the emulator and the placement emulation.
+2. Perform measurements
+3. Run `./stop.sh` to stop the emulator and clean up
+
+
+**Separate steps:**
+
 1. Select a network topology from `topologies`, e.g., `Abilene.graphml`, as well as a template and sources, defined by `yaml` files. See `placement/example-input` for examples.
 2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g topologies/Abilene.graphml`
 3. Start the placement and emulation with `python3 placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/fw1chain.yaml -s placement/example-input/source0.yaml`.
