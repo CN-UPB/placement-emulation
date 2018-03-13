@@ -28,8 +28,8 @@ partner consortium (www.sonata-nfv.eu).
 import logging
 import argparse
 import networkx as nx
-import os
-import sys
+import signal
+import time
 from geopy.distance import vincenty
 from mininet.net import Containernet
 from mininet.log import setLogLevel
@@ -59,6 +59,11 @@ BW_SCALE_FACTOR = 0.1  # downscale all link bandwidths to work with Containernet
 class TopologyZooTopology(object):
 
     def __init__(self, args):
+        # run daemonized to stop on signal
+        self.running = True
+        signal.signal(signal.SIGINT, self._stop_by_signal)
+        signal.signal(signal.SIGTERM, self._stop_by_signal)
+
         self.args = args
         self.G = self._load_graphml(args.graph_file)
         self.G_name = self.G.graph.get("label", args.graph_file)
@@ -73,6 +78,8 @@ class TopologyZooTopology(object):
         self.create_pops()
         self.create_links()
         self.start_topology()
+        self.daemonize()
+        self.stop_topology()
 
     def _load_graphml(self, path):
         try:
@@ -173,6 +180,15 @@ class TopologyZooTopology(object):
 
     def cli(self):
         self.net.CLI()
+
+    def daemonize(self):
+        print("Daemonizing vim-emu. Send SIGTERM or SIGKILL to stop.")
+        while self.running:
+            time.sleep(1)
+
+    def _stop_by_signal(self, signum, frame):
+        print("Received SIGNAL {}. Stopping.".format(signum))
+        self.running = False
         
     def stop_topology(self):
         self.rest_api.stop()
@@ -196,8 +212,8 @@ def main():
     args = parse_args()
     LOG.debug("Args: {}".format(args))
     t = TopologyZooTopology(args)
-    t.cli()
-    t.stop_topology()
+    # t.cli()
+    # t.stop_topology()
 
 
 if __name__ == '__main__':
