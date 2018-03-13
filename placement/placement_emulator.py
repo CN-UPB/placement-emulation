@@ -1,4 +1,5 @@
 import argparse
+import yaml
 import requests
 import ast
 import bjointsp.main as bjointsp
@@ -9,19 +10,20 @@ network_url = "http://127.0.0.1:5001/restapi/network"
 config_prefix = " -H 'Content-Type: application/json' -d "
 
 
-# TODO: adjust to new yaml result file
 def emulate_placement(placement):
-    for ol in overlays.values():
+    with open(placement, "r") as place_file:
+        result = yaml.load(place_file)
+
         # start placed VNF instances on the emulator
-        for i in ol.instances:
-            data = ast.literal_eval(i.component.config)			# convert string config to dict
-            response = requests.put(compute_url + i.location + "/" + str(i.component), json=data)
-            print("Adding VNF " + str(i.component) + " at " + i.location + ". Success: " + str(response.status_code == requests.codes.ok))
+        for vnf in result["placement"]["vnfs"]:
+            data = ast.literal_eval(vnf["image"])			# convert string config to dict
+            response = requests.put(compute_url + vnf["node"] + "/" + vnf["name"], json=data)
+            print("Adding VNF " + vnf["name"] + " at " + vnf["node"] + ". Success: " + str(response.status_code == requests.codes.ok))
 
         # connect instances along calculated edges
-        for e in ol.edges:
-            src = str(e.source.component)
-            dst = str(e.dest.component)
+        for vlink in result["placement"]["vlinks"]:
+            src = vlink["src_vnf"]
+            dst = vlink["dest_vnf"]
             data = {"vnf_src_name":src, "vnf_dst_name":dst, "vnf_src_interface":"output", "vnf_dst_interface":"input", "bidirectional":"True"}
             response = requests.put(network_url, json=data)
             print("Adding link from " + src + " to " + dst + ". Success: " + str(response.status_code == requests.codes.ok))
@@ -45,11 +47,11 @@ def parse_args():
 def main():
     args = parse_args()
     placement = bjointsp.place(args.network, args.template, args.sources, cpu=1, mem=10, dr=50)
-    if not args.placeOnly:
+    if args.placeOnly:
+        print("\nPlacement complete; no emulation (--placeOnly).")
+    else:
         print("\n\nEmulating calculated placement:\n")
         emulate_placement(placement)
-    else:
-        print("\nPlacement complete; no emulation (--placeOnly).")
 
 
 if __name__ == '__main__':
