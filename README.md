@@ -136,21 +136,19 @@ containernet> exit
 
 Python 3.5+
 
-Install [`bjointsp 2.1+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
+Install [`bjointsp 2.3+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
 
 ### Place and emulate
 
-1. Select a network topology from `topologies`, e.g., `Abilene.graphml`, as well as a template and sources, defined by `csv` files. See `placement/example-input` for examples.
+1. Select a network topology from `topologies`, e.g., `Abilene.graphml`, as well as a template and sources, defined by `yaml` files. See `placement/example-input` for examples.
 2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g topologies/Abilene.graphml`
-3. Start the placement and emulation with `python3 placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/template.csv -s placement/example-input/sources.csv`.
+3. Start the placement and emulation with `python3 placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/fw1chain.yaml -s placement/example-input/source0.yaml`.
 4. You can test the deployment and connectivity as described [above](https://github.com/CN-UPB/placement-emulation#testing-the-deployment).
 5. `measurement` contains scripts for measuring the delay between VNFs and on the whole chain. E.g., run `./measurements/measure.sh |& tee -a results/1fw.log` to also log to file.
 
 Note: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
 
-
-
-The repository also contains examples without the proxy, which may introduce unexpected effects. These examples contain 1-2 L4FW or 1-2 bridges instead. While L4FW each require a separate TCP connection, leading to higher delays with `httping`, the bridges don't such that there's only one TCP connection from the user to the web server.
+The repository ~~also~~ only contains examples without the proxy, which may introduce unexpected effects. These examples contain 1-2 L4FW or 1-2 bridges instead. While L4FW each require a separate TCP connection, leading to higher delays with `httping`, the bridges don't such that there's only one TCP connection from the user to the web server.
 
 
 ## Example input
