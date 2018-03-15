@@ -1,0 +1,28 @@
+Latency between VNFs (ping)
+User -> L4FW 1
+PING 88.0.0.2 (88.0.0.2): 56 data bytes
+--- 88.0.0.2 ping statistics ---
+10 packets transmitted, 10 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 0.085/0.288/0.670/0.181 ms
+
+L4FW 1 -> Web
+PING 99.0.0.2 (99.0.0.2): 56 data bytes
+--- 99.0.0.2 ping statistics ---
+10 packets transmitted, 10 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 2.304/3.729/7.815/1.613 ms
+
+Latency of whole chain
+PING 88.0.0.2:80 (/):
+connected to 88.0.0.2:80 (274 bytes), seq=0 time= 22.01 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=1 time=  6.75 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=2 time= 12.94 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=3 time= 11.15 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=4 time= 12.69 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=5 time=  7.37 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=6 time=  8.82 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=7 time= 11.82 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=8 time= 26.94 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=9 time=  9.28 ms 
+--- http://88.0.0.2/ ping statistics ---
+10 connects, 10 ok, 0.00% failed, time 10152ms
+round-trip min/avg/max = 6.8/13.0/26.9 ms
