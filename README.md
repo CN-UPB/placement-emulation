@@ -37,9 +37,9 @@ Folder structure:
 If you prefer to run the steps yourself, you can follow these manual steps:
 
 1. Select inputs from `inputs`
-2. Start the topology on `vim-emu` as described [above](#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
+2. Start the topology on `vim-emu` as described [below](#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
 3. Start the placement and emulation with `python3 placement/placement_emulator.py -n inputs/networks/Abilene.graphml -t inputs/services/fw1chain.yaml -s inputs/sources/source0.yaml`. *Note*: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
-4. You can test the deployment and connectivity as described [above](https://github.com/CN-UPB/placement-emulation#testing-the-deployment), e.g., with `vim-emu compute list`. Delay measurements can be performed with `ping` or `httping` from inside `vim-emu`.
+4. You can test the deployment and connectivity as described [below](#testing-the-deployment), e.g., with `vim-emu compute list`. Delay measurements can be performed with `ping` or `httping` from inside `vim-emu`.
 
 
 
