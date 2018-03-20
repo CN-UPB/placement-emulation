@@ -32,8 +32,8 @@ def emulate_placement(placement):
 def parse_args():
     parser = argparse.ArgumentParser(description="Triggers placement and then emulation")
     parser.add_argument("-n", "--network", help="Network input file (.graphml)", required=True, default=None, dest="network")
-    parser.add_argument("-t", "--template", help="Template input file (.csv)", required=True, default=None, dest="template")
-    parser.add_argument("-s", "--sources", help="Sources input file (.csv)", required=True, default=None, dest="sources")
+    parser.add_argument("-t", "--template", help="Template input file (.yaml)", required=True, default=None, dest="template")
+    parser.add_argument("-s", "--sources", help="Sources input file (.yaml)", required=True, default=None, dest="sources")
     parser.add_argument(
         "--placeOnly",
         help="Only perform placement, do not trigger emulation.",

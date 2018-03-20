@@ -1,6 +1,7 @@
 # script for creating suitable measurement shell-scripts
 import yaml
 import json
+import argparse
 
 
 # read interface IPs from string and return as dict
@@ -59,5 +60,14 @@ def generate_measure_script(service_file, num_pings=10):
             print(l)
 
 
-service_file = '../placement/example-input/fw1chain.yaml'
-generate_measure_script(service_file, num_pings=10)
+def parse_args():
+    parser = argparse.ArgumentParser(description="Generates a custom measurement script")
+    parser.add_argument("-t", "--template", help="Template/service input file (.yaml)", required=True, default=None, dest="template")
+    parser.add_argument("-c", help="Number of ping measurements (-c arg)", required=False, default=10, dest="num_pings")
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    args = parse_args()
+    generate_measure_script(args.template, args.num_pings)
+
