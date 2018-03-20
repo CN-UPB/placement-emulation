@@ -15,7 +15,6 @@ function filename {
 NETWORK=topologies/Abilene.graphml
 SERVICE=placement/example-input/fw1chain.yaml
 SOURCES=placement/example-input/source0.yaml
-MEASUREMENT=/measurement/measure_1fw.sh
 NUM_PINGS=3
 
 # individual log file
