@@ -20,8 +20,8 @@ def get_interfaces(if_string):
 
 # generate script according to specified service (in yaml format)
 def generate_measure_script(service_file, num_pings=10):
-    echo_vnf = 'echo "Latency between VNFs (ping)"'
-    echo_chain = 'echo "Latency of whole chain (httping)"'
+    echo_vnf = 'echo "\nLatency between VNFs (ping)"'
+    echo_chain = 'echo "\nLatency of whole chain (httping)"'
     first_fwd = None        # first forwarder in chain
     lines = ['#!/bin/sh', '']
 
