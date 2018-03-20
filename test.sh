@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# run placement and emulation sequentially with example inputs
+
 # return filename without path or extension
 function filename {
 	filename=$(basename "$1")
@@ -9,23 +11,13 @@ function filename {
 }
 
 
-# run placement, emulation, and measurements sequentially
-printf "Expected arguments: -n network -t service -s sources\n"
-
-# get arguments as -n, -t, -s
-while getopts n:t:s: option 
-do
-	case "${option}" 
-	in
-		n) NETWORK=${OPTARG};;
-		t) SERVICE=${OPTARG};;
-		s) SOURCES=${OPTARG};;
-	esac
-done
-
-
-# other constants, individual log file
+# constants
+NETWORK=inputs/networks/Abilene.graphml
+SERVICE=inputs/services/fw1chain.yaml
+SOURCES=inputs/sources/source0.yaml
 NUM_PINGS=3
+
+# individual log file
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 network_name=$(filename $NETWORK)
 service_name=$(filename $SERVICE)
@@ -53,4 +45,9 @@ echo "timestamp: $TIMESTAMP" >> $LOG
 echo "network: $NETWORK" >> $LOG
 echo "service: $SERVICE" >> $LOG
 echo "sources: $SOURCES" >> $LOG
+
+# stop: find the pids and stop the process (will automatically clean up)
+pgrep -f "python emu" | sudo xargs kill
+sleep 5
+echo "Placement-emulation completed!"
 

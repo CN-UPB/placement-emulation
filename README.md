@@ -27,9 +27,14 @@ Folder structure:
 
 **Quickstart:**
 
-1. Run `./start.sh -n network -t service -s sources` with adequate arguments to start the emulator, the placement emulation, and measurements.
-2. Run `./stop.sh` to stop the emulator and clean up
+To start the emulator, calculate the placement, emulate it, measure and log delays, and stop the emulator with one command, use:
 
+```
+./place-emu.sh -n network -t service -s sources -c num_pings
+```
+
+Where `network`, `service`, and `sources` have to be suitable input parameters, e.g., from the `inputs`. `num_pings` is the number of packets sent by each delay measurement, e.g., 5 for testing and 100 for evaluation.
+If you just want to test placement-emulation with predefined parameters, simply run `test.sh`.
 
 
 **Separate steps:**
@@ -40,6 +45,7 @@ If you prefer to run the steps yourself, you can follow these manual steps:
 2. Start the topology on `vim-emu` as described [below](#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
 3. Start the placement and emulation with `python3 placement/placement_emulator.py -n inputs/networks/Abilene.graphml -t inputs/services/fw1chain.yaml -s inputs/sources/source0.yaml`. *Note*: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
 4. You can test the deployment and connectivity as described [below](#testing-the-deployment), e.g., with `vim-emu compute list`. Delay measurements can be performed with `ping` or `httping` from inside `vim-emu`.
+5. Important: Stop the emulator using `exit` inside the ContainerNet terminal. This is necessary to clean up, so that the emulator can be started again.
 
 
 
