@@ -4,6 +4,7 @@
 NETWORK=topologies/Abilene.graphml
 SERVICE=placement/example-input/fw1chain.yaml
 SOURCES=placement/example-input/source0.yaml
+MEASUREMENT=/measurement/measure_1fw.sh
 
 # start vim-emu with the specified network
 printf "\n\nStarting the emulator\n"
@@ -13,4 +14,8 @@ sleep 10
 # start the placement emulation
 printf "\n\nStarting the placement emulation\n"
 python3 placement/placement_emulator.py -n $NETWORK -t $SERVICE -s $SOURCES
+
+# start measurement
+printf "\n\nStarting the measurement\n"
+.$MEASUREMENT |& tee -a results/test.log
 
