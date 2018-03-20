@@ -22,9 +22,9 @@ def parse_log(log_file):
                 delay = {}
                 delay['src'], delay['dest'] = log[i+1].split(' -> ')
             elif line.startswith('Latency of whole chain'):
-                delay = {'httping': True}
                 reading_vnf_delay = False
                 reading_chain_delay = True
+                delay = {}
 
             if reading_vnf_delay and line.startswith('round-trip'):
                 # extract delay times
@@ -39,7 +39,7 @@ def parse_log(log_file):
                 delay_list = re.findall("\d+\.\d+", line)
                 delay_list = [float(j) for j in delay_list]
                 delay['min'], delay['avg'], delay['max'] = delay_list
-                delays['delays'].append(delay)
+                delays['chain_delay'] = delay
                 reading_chain_delay = False
 
     return delays
@@ -53,6 +53,6 @@ def write_yaml_log(log_file, delays):
 
 
 if __name__ == '__main__':
-    log_file = '../1fw.log'
+    log_file = '../results/measurements/example.log'
     delays = parse_log(log_file)
     write_yaml_log(log_file, delays)
