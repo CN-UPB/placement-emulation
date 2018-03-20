@@ -4,13 +4,27 @@ Automatically emulate network service placements calculated by placement algorit
 Folder structure:
 
 * `emulator`: `topology_zoo.py` script, reading a Topology Zoo network and starting it in `vim-emu` 
-* `measurement`: Scripts for measuring the delay between VNFs and on the whole chain (with `ping` and `httping`)
 * `placement`: `placement_emulator.py` triggers the `bjointsp` placement algorithm and starts the placed VNFs on the emulator
-  * `placement/example-input`: example input for the placement algorithm
-* `topologies`: Contains [TopologyZoo](http://www.topology-zoo.org) topologies given as `*.graphml` files
-* `vnfs`: Contains a couple of example VNFs (as Docker files to be build locally)
+* `util`: auxiliary scripts for measurement
+* `inputs`: example VNF images, networks, services, sources for placement and emulation
+* `results`: placement results and measurement logs (from emulation)
+* `docs`: docs...
 
-More details are provided below.
+
+## Installation
+
+1. Install emulator and prerequisits
+2. Install bjointsp and prerequisits
+
+Check below for details
+
+## Usage
+
+1. Run `./start.sh -n network -t service -s sources` with adequate arguments to start the emulator, the placement emulation, and measurements.
+2. Run `./stop.sh` to stop the emulator and clean up
+
+
+# Details
 
 ## Emulation environment
 
@@ -24,7 +38,7 @@ More details are provided below.
 
 ### Start a topology
 
-1. `sudo python emulator/topology_zoo.py -g topologies/Abilene.graphml`
+1. `sudo python emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
 2. Check if everything is working (other terminal): `vim-emu datacenter list`
 
 ### Start and place a service (example)
@@ -142,9 +156,8 @@ Install [`bjointsp 2.3+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emu
 
 **Quickstart:**
 
-1. Run `./start.sh -n network -t service -s sources` with adequate arguments to start the emulator and the placement emulation.
-2. Perform measurements
-3. Run `./stop.sh` to stop the emulator and clean up
+1. Run `./start.sh -n network -t service -s sources` with adequate arguments to start the emulator, the placement emulation, and measurements.
+2. Run `./stop.sh` to stop the emulator and clean up
 
 
 **Separate steps:**

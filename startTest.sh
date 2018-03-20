@@ -12,9 +12,9 @@ function filename {
 
 
 # constants
-NETWORK=topologies/Abilene.graphml
-SERVICE=placement/example-input/fw1chain.yaml
-SOURCES=placement/example-input/source0.yaml
+NETWORK=inputs/networks/Abilene.graphml
+SERVICE=inputs/services/fw1chain.yaml
+SOURCES=inputs/sources/source0.yaml
 NUM_PINGS=3
 
 # individual log file
