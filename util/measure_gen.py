@@ -1,5 +1,4 @@
 # script for creating suitable measurement shell-scripts
-import datetime
 import yaml
 import json
 import argparse
@@ -24,8 +23,7 @@ def generate_measure_script(service_file, num_pings=10):
     echo_vnf = 'echo "Latency between VNFs (ping)"'
     echo_chain = 'echo "Latency of whole chain (httping)"'
     first_fwd = None        # first forwarder in chain
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    lines = ['#!/bin/sh', '', '#'+timestamp, '#'+service_file, '']
+    lines = ['#!/bin/sh', '']
 
     # read service yaml file
     with open(service_file, 'r') as f_service:
