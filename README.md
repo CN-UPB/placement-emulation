@@ -13,28 +13,37 @@ Folder structure:
 
 ## Installation
 
-1. Install emulator and prerequisits
-2. Install bjointsp and prerequisits
-
-Check below for details
+1. Install the emulator:
+   1. Install [`vim-emu`](https://osm.etsi.org/gitweb/?p=osm/vim-emu.git) (see [README.md "Bare-metal installation"](https://osm.etsi.org/gitweb/?p=osm/vim-emu.git;a=blob;f=README.md;h=ba22ec342ed5d60bf65770aa154adce8b0fcc141;hb=HEAD))
+      - `cd vim-emu; sudo python setup.py develop`
+   2. Pre-build VNF containers: `cd inputs/vnfs; ./build.sh`
+   3. Install some other dependencies
+      - `pip install geopy`
+2. Install [`bjointsp 2.3+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
+   - `sudo pyhton3 setup.py develop` Somehow `install` doesn't work at the moment.
+   - Requires Python 3.5
 
 ## Usage
+
+**Quickstart:**
 
 1. Run `./start.sh -n network -t service -s sources` with adequate arguments to start the emulator, the placement emulation, and measurements.
 2. Run `./stop.sh` to stop the emulator and clean up
 
 
-# Details
+
+**Separate steps:**
+
+If you prefer to run the steps yourself, you can follow these manual steps:
+
+1. Select inputs from `inputs`
+2. Start the topology on `vim-emu` as described [above](#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
+3. Start the placement and emulation with `python3 placement/placement_emulator.py -n inputs/networks/Abilene.graphml -t inputs/services/fw1chain.yaml -s inputs/sources/source0.yaml`. *Note*: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
+4. You can test the deployment and connectivity as described [above](https://github.com/CN-UPB/placement-emulation#testing-the-deployment), e.g., with `vim-emu compute list`. Delay measurements can be performed with `ping` or `httping` from inside `vim-emu`.
+
+
 
 ## Emulation environment
-
-### Prerequisites
-
-1. Install [`vim-emu`](https://osm.etsi.org/gitweb/?p=osm/vim-emu.git) (see [README.md "Bare-metal installation"](https://osm.etsi.org/gitweb/?p=osm/vim-emu.git;a=blob;f=README.md;h=ba22ec342ed5d60bf65770aa154adce8b0fcc141;hb=HEAD))
-    * `cd vim-emu; sudo python setup.py develop`
-2. Pre-build VNF containers: `cd vnfs; ./build.sh`
-3. Install some other dependencies
-    * `pip install geopy`
 
 ### Start a topology
 
@@ -42,6 +51,8 @@ Check below for details
 2. Check if everything is working (other terminal): `vim-emu datacenter list`
 
 ### Start and place a service (example)
+
+*Note: This section may be outdated! E.g., the proxy is no longer used due to weird timing effects.* 
 
 #### Used service
 
@@ -144,34 +155,6 @@ containernet> exit
 * Link bandwidth is set if given in the graph (not many topologies have it)
 
 
-## Placement
-
-### Prerequisites
-
-Python 3.5+
-
-Install [`bjointsp 2.3+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
-
-### Place and emulate
-
-**Quickstart:**
-
-1. Run `./start.sh -n network -t service -s sources` with adequate arguments to start the emulator, the placement emulation, and measurements.
-2. Run `./stop.sh` to stop the emulator and clean up
-
-
-**Separate steps:**
-
-1. Select a network topology from `topologies`, e.g., `Abilene.graphml`, as well as a template and sources, defined by `yaml` files. See `placement/example-input` for examples.
-2. Start the topology on `vim-emu` as described [above](https://github.com/CN-UPB/placement-emulation#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g topologies/Abilene.graphml`
-3. Start the placement and emulation with `python3 placement/placement_emulator.py -n topologies/Abilene.graphml -t placement/example-input/fw1chain.yaml -s placement/example-input/source0.yaml`.
-4. You can test the deployment and connectivity as described [above](https://github.com/CN-UPB/placement-emulation#testing-the-deployment).
-5. `measurement` contains scripts for measuring the delay between VNFs and on the whole chain. E.g., run `./measurements/measure.sh |& tee -a results/1fw.log` to also log to file.
-
-Note: If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
-
-The repository ~~also~~ only contains examples without the proxy, which may introduce unexpected effects. These examples contain 1-2 L4FW or 1-2 bridges instead. While L4FW each require a separate TCP connection, leading to higher delays with `httping`, the bridges don't such that there's only one TCP connection from the user to the web server.
-
 
 ## Example input
 ### Abilene network
@@ -179,10 +162,12 @@ The figure below visualizes the Abilene network (from SNDlib). Our topology (fro
 
 The black numbers illustrate the pop number used by the `vim-emu` and the placement algorithm. The dark red numbers indicate the rounded link delay between the pops (as used here). This is supposed to support and simplify the analysis of delay measurements.
 
-![abilene](abilene.jpg)
+![Abilene](docs/abilene.jpg)
 
 
 ### Network service chains
+The repository ~~also~~ only contains examples without the proxy, which may introduce unexpected effects. These examples contain 1-2 L4FW or 1-2 bridges instead. While L4FW each require a separate TCP connection, leading to higher delays with `httping`, the bridges don't such that there's only one TCP connection from the user to the web server.
+
 We use chains of varying length, in which a user (1st "VNF") requests content from a web server (last VNF). In between, there are 1 to 3 forwarding VNFs (either layer 2 or layer 4).
 
 #### Chains with layer-4 forwarders (socat)
