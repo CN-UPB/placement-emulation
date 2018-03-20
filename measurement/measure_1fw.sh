@@ -10,4 +10,4 @@ echo "vnf_fw1 -> vnf_web"
 sudo docker exec -it mn.vnf_fw1 ping -c10 -q 99.0.0.2
 
 echo "\nLatency of whole chain (httping)"
-sudo docker exec -it mn.vnf_user httping --url http://88.0.0.2 -p 80 -c 10
+sudo docker exec -it mn.vnf_user httping --url 88.0.0.2 -p 80 -c 10
