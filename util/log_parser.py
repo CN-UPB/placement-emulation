@@ -2,6 +2,7 @@
 # tailored to fit fixed log structure!
 import re
 import yaml
+import glob
 
 
 def parse_log(log_file):
@@ -53,6 +54,7 @@ def write_yaml_log(log_file, delays):
 
 
 if __name__ == '__main__':
-    log_file = '../results/measurements/example.log'
-    delays = parse_log(log_file)
-    write_yaml_log(log_file, delays)
+    log_files = glob.glob('../eval/*.log')
+    for log in log_files:
+        delays = parse_log(log)
+        write_yaml_log(log, delays)

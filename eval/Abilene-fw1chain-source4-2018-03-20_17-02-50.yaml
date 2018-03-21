@@ -1,0 +1,17 @@
+chain_delay:
+  avg: 5.9
+  max: 6.8
+  min: 5.7
+delays:
+- avg: 0.079
+  dest: vnf_fw1
+  max: 0.481
+  min: 0.069
+  src: vnf_user
+  stddev: 0.041
+- avg: 2.194
+  dest: vnf_web
+  max: 5.278
+  min: 2.128
+  src: vnf_fw1
+  stddev: 0.31
