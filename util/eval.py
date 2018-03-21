@@ -52,5 +52,6 @@ plt.ylabel('VNF RTT delays (in ms)')
 
 plt.show()
 
+# TODO: analyze big difference in VNF delays!
 # TODO: plot the delay difference as a function of the total (simulation) delay?
 # TODO: modularize
