@@ -2,33 +2,36 @@ input:
   model: bjointsp-heuristic
   network: Abilene.graphml
   objective: 0
-  seed: 6361
+  seed: 4168
   service: fw1chain.yaml
   sources: source0.yaml
 metrics:
   changed:
   - name: vnf_user
     node: pop0
-  - name: vnf_fw1
-    node: pop0
   - name: vnf_web
     node: pop2
+  - name: vnf_fw1
+    node: pop0
   delays:
-  - delay: 1
-    dest: vnf_web
-    dest_node: pop2
-    src: vnf_fw1
-    src_node: pop0
   - delay: 0
     dest: vnf_fw1
     dest_node: pop0
     src: vnf_user
     src_node: pop0
+  - delay: 1
+    dest: vnf_web
+    dest_node: pop2
+    src: vnf_fw1
+    src_node: pop0
   max_cpu_oversub: 0
   max_dr_oversub: 0
   max_mem_oversub: 0
+  num_changed: 3
+  num_instances: 3
   obj_value: 3005001.0
-  runtime: 0.16987156867980957
+  runtime: 0.0729825496673584
+  total_delay: 1
 placement:
   alloc_node_res:
   - cpu: 0
@@ -37,21 +40,21 @@ placement:
     node: pop0
   - cpu: 1
     mem: 1
-    name: vnf_fw1
-    node: pop0
-  - cpu: 1
-    mem: 1
     name: vnf_web
     node: pop2
+  - cpu: 1
+    mem: 1
+    name: vnf_fw1
+    node: pop0
   cpu_oversub: []
   dr_oversub: []
   flows:
-  - arc: vnf_fw1.0->vnf_web.0
-    dst_node: pop2
-    flow_id: f1
-    src_node: pop0
   - arc: vnf_user.0->vnf_fw1.0
     dst_node: pop0
+    flow_id: f1
+    src_node: pop0
+  - arc: vnf_fw1.0->vnf_web.0
+    dst_node: pop2
     flow_id: f1
     src_node: pop0
   links:
@@ -62,22 +65,22 @@ placement:
     link_src: pop0
   mem_oversub: []
   vlinks:
-  - dest_node: pop2
-    dest_vnf: vnf_web
-    src_node: pop0
-    src_vnf: vnf_fw1
   - dest_node: pop0
     dest_vnf: vnf_fw1
     src_node: pop0
     src_vnf: vnf_user
+  - dest_node: pop2
+    dest_vnf: vnf_web
+    src_node: pop0
+    src_vnf: vnf_fw1
   vnfs:
   - image: '{"image":"placement-user-img", "network":"(id=output,ip=88.0.0.1/24)"}'
     name: vnf_user
     node: pop0
-  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
-    name: vnf_fw1
-    node: pop0
   - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
     name: vnf_web
     node: pop2
-time: '2018-03-20 10:53:13'
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop0
+time: 2018-03-21_11-19-08
