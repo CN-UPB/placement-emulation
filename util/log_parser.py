@@ -6,7 +6,7 @@ import glob
 
 
 def parse_log(log_file):
-    delays = {'delays': []}
+    result = {'delays': []}
 
     with open(log_file, 'r') as f:
         log = f.readlines()
@@ -32,18 +32,27 @@ def parse_log(log_file):
                 delay_list = re.findall("\d+\.\d+", line)
                 # convert to floats
                 delay_list = [float(j) for j in delay_list]
-                delay['min'], delay['avg'], delay['max'], delay['stddev'] = delay_list
-                delays['delays'].append(delay)
+                delay['min'], delay['delay'], delay['max'], delay['stddev'] = delay_list        # delay = avg
+                result['delays'].append(delay)
                 reading_vnf_delay = False
 
             if reading_chain_delay and line.startswith('round-trip'):
                 delay_list = re.findall("\d+\.\d+", line)
                 delay_list = [float(j) for j in delay_list]
-                delay['min'], delay['avg'], delay['max'] = delay_list
-                delays['chain_delay'] = delay
+                delay['min'], delay['delay'], delay['max'] = delay_list         # delay = avg
+                result['chain_delay'] = delay
                 reading_chain_delay = False
 
-    return delays
+            if line.startswith('Info'):
+                # get info from next 4 lines: timestamp, network, service, sources
+                timestamp = log[i+1].replace('timestamp: ', '')
+                network = log[i+2].replace('network: ', '')
+                service = log[i+3].replace('service: ', '')
+                sources = log[i+4].replace('sources: ', '')
+                result['time'] = timestamp
+                result['input'] = {'network': network, 'service': service, 'sources': sources}
+
+    return result
 
 
 def write_yaml_log(log_file, delays):
@@ -54,7 +63,7 @@ def write_yaml_log(log_file, delays):
 
 
 if __name__ == '__main__':
-    log_files = glob.glob('../eval/*.log')
+    log_files = glob.glob('../eval/emulation/*.log')
     for log in log_files:
         delays = parse_log(log)
         write_yaml_log(log, delays)

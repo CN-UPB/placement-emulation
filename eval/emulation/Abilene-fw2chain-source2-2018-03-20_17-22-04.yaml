@@ -1,23 +1,28 @@
 chain_delay:
-  avg: 19.2
+  delay: 19.2
   max: 20.1
   min: 19.0
 delays:
-- avg: 0.081
+- delay: 0.081
   dest: vnf_fw2
   max: 0.565
   min: 0.069
   src: vnf_user
   stddev: 0.049
-- avg: 2.184
+- delay: 2.184
   dest: vnf_fw1
   max: 5.252
   min: 2.097
   src: vnf_fw2
   stddev: 0.31
-- avg: 6.245
+- delay: 6.245
   dest: vnf_web
   max: 13.195
   min: 6.127
   src: vnf_fw1
   stddev: 0.699
+input:
+  network: inputs/networks/Abilene.graphml
+  service: inputs/services/fw2chain.yaml
+  sources: inputs/sources/source2.yaml
+time: 2018-03-20_17-22-04

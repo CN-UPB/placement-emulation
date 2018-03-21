@@ -1,29 +1,34 @@
 chain_delay:
-  avg: 24.5
+  delay: 24.5
   max: 25.7
   min: 24.0
 delays:
-- avg: 0.081
+- delay: 0.081
   dest: vnf_fw3
   max: 0.589
   min: 0.066
   src: vnf_user
   stddev: 0.059
-- avg: 2.194
+- delay: 2.194
   dest: vnf_fw2
   max: 5.151
   min: 2.113
   src: vnf_fw3
   stddev: 0.298
-- avg: 4.218
+- delay: 4.218
   dest: vnf_fw1
   max: 9.268
   min: 4.159
   src: vnf_fw2
   stddev: 0.508
-- avg: 4.236
+- delay: 4.236
   dest: vnf_web
   max: 9.28
   min: 4.115
   src: vnf_fw1
   stddev: 0.508
+input:
+  network: inputs/networks/Abilene.graphml
+  service: inputs/services/fw3chain.yaml
+  sources: inputs/sources/source1.yaml
+time: 2018-03-20_17-51-40
