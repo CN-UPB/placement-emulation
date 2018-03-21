@@ -3,6 +3,7 @@
 import re
 import yaml
 import glob
+import argparse
 
 
 def parse_log(log_file):
@@ -62,8 +63,18 @@ def write_yaml_log(log_file, delays):
         yaml.dump(delays, f, default_flow_style=False)
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Parses a measurement log and creates a structured yaml file")
+    parser.add_argument("-f", "--file", help="Log file", required=True, default=None, dest="file")
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
-    log_files = glob.glob('../eval/emulation/*.log')
-    for log in log_files:
-        delays = parse_log(log)
-        write_yaml_log(log, delays)
+    # log_files = glob.glob('../eval/emulation/*.log')
+    # for log in log_files:
+    #     delays = parse_log(log)
+    #     write_yaml_log(log, delays)
+
+    args = parse_args()
+    result = parse_log(args.file)
+    write_yaml_log(args.file, result)
