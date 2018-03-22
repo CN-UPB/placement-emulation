@@ -2,8 +2,9 @@
 import glob
 import yaml
 import matplotlib.pyplot as plt
-import numpy
 
+
+# TODO: store and process delays in an ordered fashion! (see fixme below)
 
 # emulation results
 emu_results = glob.glob('../eval/emulation/*.yaml')
@@ -58,10 +59,10 @@ plt.plot(x_vnfs, emu_vnf_rtt, 'g^', x_vnfs, bjointsp_vnf_rtt, 'bs')
 plt.errorbar(x_vnfs, emu_vnf_rtt, yerr=emu_vnf_std, fmt='none', ecolor='black', capsize=2)
 plt.xticks(x_vnfs, bjointsp_vnf_length)
 plt.xlabel('Different service/source combinations (chain length)')
-plt.ylabel('VNF RTT (in ms)')
+plt.ylabel('Inter-VNF RTT (in ms)')
 
 
-# plot differences
+# plot delay differences
 plt.figure(2)
 chain_diffs = [emu_chain_rtt[i]-bjointsp_chain_rtt[i] for i in range(len(emu_chain_rtt))]
 plt.subplot(2, 1, 1)
@@ -73,14 +74,19 @@ plt.title('Emulation delay - simulation delay')
 vnf_diffs = [emu_vnf_rtt[i]-bjointsp_vnf_rtt[i] for i in range(len(emu_vnf_rtt))]
 plt.subplot(2, 1, 2)
 plt.plot(x_vnfs, vnf_diffs)
-plt.xticks(x_vnfs, bjointsp_vnf_length)
+# plt.xticks(x_vnfs, bjointsp_vnf_length)
 plt.xlabel('Different service/source combinations (chain length)')
-plt.ylabel('VNF RTT diff. (in ms)')
+plt.ylabel('Inter-VNF RTT diff. (in ms)')
 
 
 plt.show()
 
 
+# insights:
+# chain delay: emulated delay diverges from simulated delay with incr. chain length
+# inter-VNF delay: chaotic differences
+
+
 # TODO: analyze big difference in VNF delays!
-# TODO: plot the delay difference as a function of the total (simulation) delay?
+# => FIXME: this seems to be some problem with ordering! => ensure, I'm comparing the right inter-VNF delays (also chains)! don't rely on sorting..
 # TODO: modularize
