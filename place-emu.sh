@@ -36,7 +36,11 @@ LOG="results/measurements/$network_name-$service_name-$sources_name-$TIMESTAMP.l
 # start vim-emu with the specified network
 printf "\n\nStarting the emulator\n"
 sudo python emulator/topology_zoo.py -g $NETWORK &
-sleep 10
+
+# wait for the emulator to start (depends on network size)
+echo "Start"
+NETWORKSIZE="$(python3 util/network_size.py -n $NETWORK)"
+sleep $NETWORKSIZE
 
 # start the placement emulation
 printf "\n\nStarting the placement emulation\n"
@@ -60,6 +64,6 @@ rm $LOG
 
 # stop: find the pids and stop the process (will automatically clean up)
 pgrep -f "python emu" | sudo xargs kill
-sleep 5
+sleep $(($NETWORKSIZE/2))
 echo "Placement-emulation completed!"
 
