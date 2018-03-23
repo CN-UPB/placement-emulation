@@ -1,0 +1,28 @@
+chain_delay:
+  delay: 3.0
+  max: 5.5
+  min: 2.8
+delays:
+- delay: 0.134
+  dest: vnf_fw2
+  max: 1.655
+  min: 0.101
+  src: vnf_user
+  stddev: 0.153
+- delay: 0.137
+  dest: vnf_fw1
+  max: 1.817
+  min: 0.109
+  src: vnf_fw2
+  stddev: 0.169
+- delay: 0.104
+  dest: vnf_web
+  max: 1.161
+  min: 0.085
+  src: vnf_fw1
+  stddev: 0.107
+input:
+  network: inputs/networks/Colt.graphml
+  service: inputs/services/fw2chain.yaml
+  sources: inputs/sources/source4.yaml
+time: 2018-03-22_18-18-12
