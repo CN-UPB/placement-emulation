@@ -4,10 +4,8 @@ import yaml
 import matplotlib.pyplot as plt
 
 
-# TODO: store and process delays in an ordered fashion! (see fixme below)
-
 def process_emu_results():
-    emu_results = glob.glob('../eval/emulation/*.yaml')
+    emu_results = glob.glob('../eval/emulation/Abilene*.yaml')
     emu_delays = []
     for result_file in emu_results:
         with open(result_file, 'r') as f:
@@ -25,7 +23,7 @@ def process_emu_results():
 
 
 def process_sim_results():
-    sim_results = glob.glob('../eval/bjointsp/*.yaml')
+    sim_results = glob.glob('../eval/bjointsp/Abilene*.yaml')
     sim_delays = []
     for result_file in sim_results:
         with open(result_file, 'r') as f:
@@ -80,11 +78,11 @@ def plot(emu_delays, sim_delays):
     plt.plot(x_vnfs, emu_vnf_rtt, 'g^', x_vnfs, sim_vnf_rtt, 'bs')
     # plt.errorbar(x_vnfs, emu_vnf_rtt, yerr=emu_vnf_std, fmt='none', ecolor='black', capsize=2)
     # plt.xticks(x_vnfs, sim_vnf_length)
-    plt.xlabel('Different service/source combinations (chain length)')
+    plt.xlabel('Different service/source combinations')
     plt.ylabel('Inter-VNF RTT (in ms)')
 
 
-    # plot delay differences
+    # plot delay differences: emu_delay-sim_delay
     plt.figure(2)
     chain_diffs = [emu_chain_rtt[i]-sim_chain_rtt[i] for i in range(len(emu_chain_rtt))]
     plt.subplot(2, 1, 1)
@@ -97,15 +95,21 @@ def plot(emu_delays, sim_delays):
     plt.subplot(2, 1, 2)
     plt.plot(x_vnfs, vnf_diffs)
     # plt.xticks(x_vnfs, sim_vnf_length)
-    plt.xlabel('Different service/source combinations (chain length)')
+    plt.xlabel('Different service/source combinations')
     plt.ylabel('Inter-VNF RTT diff. (in ms)')
 
 
+    # plot delay ratio: emu_delay/sim_delay (not for inter-VNF delays as they are often 0)
+    plt.figure(3)
+    chain_ratio = [emu_chain_rtt[i]/sim_chain_rtt[i] for i in range(len(emu_chain_rtt))]
+    plt.plot(x_chain, chain_ratio)
+    # plt.xticks(x_chain, sim_chain_length)
+    plt.xlabel('Different service/source combinations')
+    plt.ylabel('Chain RTT ratio')
+    plt.title('Emulation delay / simulation delay')
+
+
     plt.show()
-
-
-    # TODO: analyze big difference in VNF delays!
-    # => FIXME: this seems to be some problem with ordering! => ensure, I'm comparing the right inter-VNF delays (also chains)! don't rely on sorting..
 
 
 if __name__ == '__main__':
