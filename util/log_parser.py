@@ -4,6 +4,7 @@ import re
 import yaml
 import glob
 import argparse
+import networkx as nx
 
 
 def parse_log(log_file):
@@ -52,6 +53,17 @@ def parse_log(log_file):
                 sources = log[i+4].replace('sources: ', '')
                 result['time'] = timestamp
                 result['input'] = {'network': network, 'service': service, 'sources': sources}
+
+                # extract and add input details: network size, etc.
+                network = nx.read_graphml('../' + network)
+                result["input"]["num_nodes"] = network.number_of_nodes()
+                result["input"]["num_edges"] = network.number_of_edges()
+                with open('../' + service) as f:
+                    service = yaml.load(f)
+                    result["input"]["num_vnfs"] = len(service["vnfs"])
+                with open('../' + sources) as f:
+                    sources = yaml.load(f)
+                    result["input"]["num_sources"] = len(sources)
 
     return result
 

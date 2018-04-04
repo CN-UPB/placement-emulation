@@ -17,6 +17,10 @@ delays:
   stddev: 6.318
 input:
   network: inputs/networks/Abilene.graphml
+  num_edges: 14
+  num_nodes: 11
+  num_sources: 1
+  num_vnfs: 3
   service: inputs/services/fw1chain.yaml
   sources: inputs/sources/source0.yaml
 time: 2018-04-04_17-36-01
