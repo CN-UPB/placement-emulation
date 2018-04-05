@@ -2,12 +2,13 @@
 from util import reader, writer
 import yaml
 from datetime import datetime
-from random import choice
-# TODO: fix random seed for reproducability; write to input
+import random
 
 
 # TODO: only choose from nodes with remaining resources
 def place(network_file, service_file, sources_file, seed=1234):
+    random.seed(seed)
+
     # read input
     network = reader.read_network(network_file)
     with open(service_file) as f:
@@ -18,6 +19,7 @@ def place(network_file, service_file, sources_file, seed=1234):
     # prepare placement output
     placement = {'time': datetime.now().strftime("%Y-%m-%d_%H-%M-%S"),
                  'input': {'model': 'random',
+                           'seed': seed,
                            'network': network_file,
                            'service': service_file,
                            'sources': sources_file,
@@ -44,7 +46,7 @@ def place(network_file, service_file, sources_file, seed=1234):
                 # assume a linear chain, ie, only one matching vlink
                 matched_vlink = matched_vlink[0]
                 matched_vnf = [vnf for vnf in service['vnfs'] if vnf['name'] == matched_vlink['dest']][0]
-                rand_node = choice(list(network.nodes()))
+                rand_node = random.choice(list(network.nodes()))
                 dest_vnf = {'name': matched_vnf['name'], 'node': rand_node, 'image': matched_vnf['image']}
                 placement['placement']['vnfs'].append(dest_vnf)
 
@@ -66,7 +68,6 @@ network = '../inputs/networks/Abilene.graphml'
 service = '../inputs/services/fw1chain.yaml'
 sources = '../inputs/sources/source0.yaml'
 placement = place(network, service, sources)
-print(placement)
 
 # write placement to file
 writer.write_placement(network, service, sources, placement, 'random')
