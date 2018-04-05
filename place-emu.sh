@@ -60,7 +60,7 @@ echo "sources: $SOURCES" >> $LOG
 
 # convert log to structured yaml file
 python3 util/log_parser.py -f $LOG
-rm $LOG
+#rm $LOG
 
 # stop: find the pids and stop the process (will automatically clean up)
 pgrep -f "python emu" | sudo xargs kill
