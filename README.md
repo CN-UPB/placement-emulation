@@ -13,9 +13,8 @@ Folder structure:
 
 ## Preliminary timeplan
 
-* until 13.4.: complete paper draft without Sevil's placement
-* until 20.4.: integration with Sevil's placement
-* until 27.4.: complete paper with everything
+* until 13.4.: first complete paper draft
+* until 27.4.: complete paper
 * until 4.5.: finalization
 * **deadline (probably!): 12.5.**
 
