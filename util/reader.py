@@ -32,9 +32,9 @@ def read_network(file, node_attr=None, edge_attr=None):
     # all attributes are set equally for all nodes/edges
     if node_attr:
         for key, value in node_attr.items():
-            nx.set_node_attributes(network, key, value)
+            nx.set_node_attributes(network, value, key)     # different order of args in older NetworkX version!
     if edge_attr:
         for key, value in edge_attr.items():
-            nx.set_edge_attributes(network, key, value)
+            nx.set_edge_attributes(network, value, key)
 
     return network
