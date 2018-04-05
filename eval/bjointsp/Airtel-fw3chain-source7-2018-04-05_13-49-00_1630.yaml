@@ -1,0 +1,144 @@
+input:
+  model: bjointsp-heuristic
+  network: Airtel.graphml
+  num_edges: 37
+  num_nodes: 16
+  num_sources: 1
+  num_vnfs: 5
+  objective: 0
+  seed: 1630
+  service: fw3chain.yaml
+  sources: source7.yaml
+metrics:
+  changed:
+  - name: vnf_fw3
+    node: pop7
+  - name: vnf_web
+    node: pop1
+  - name: vnf_fw2
+    node: pop8
+  - name: vnf_fw1
+    node: pop11
+  - name: vnf_user
+    node: pop7
+  delays:
+  - delay: 3
+    dest: vnf_fw1
+    dest_node: pop11
+    src: vnf_fw2
+    src_node: pop8
+  - delay: 14
+    dest: vnf_fw2
+    dest_node: pop8
+    src: vnf_fw3
+    src_node: pop7
+  - delay: 0
+    dest: vnf_fw3
+    dest_node: pop7
+    src: vnf_user
+    src_node: pop7
+  - delay: 20
+    dest: vnf_web
+    dest_node: pop1
+    src: vnf_fw1
+    src_node: pop11
+  max_cpu_oversub: 0
+  max_dr_oversub: 0
+  max_mem_oversub: 0
+  num_changed: 5
+  num_instances: 5
+  obj_value: 5013037.0
+  runtime: 0.14231014251708984
+  total_delay: 37
+placement:
+  alloc_node_res:
+  - cpu: 1
+    mem: 1
+    name: vnf_fw3
+    node: pop7
+  - cpu: 1
+    mem: 1
+    name: vnf_web
+    node: pop1
+  - cpu: 1
+    mem: 1
+    name: vnf_fw2
+    node: pop8
+  - cpu: 1
+    mem: 1
+    name: vnf_fw1
+    node: pop11
+  - cpu: 0
+    mem: 0
+    name: vnf_user
+    node: pop7
+  cpu_oversub: []
+  dr_oversub: []
+  flows:
+  - arc: vnf_fw2.0->vnf_fw1.0
+    dst_node: pop11
+    flow_id: f1
+    src_node: pop8
+  - arc: vnf_fw3.0->vnf_fw2.0
+    dst_node: pop8
+    flow_id: f1
+    src_node: pop7
+  - arc: vnf_user.0->vnf_fw3.0
+    dst_node: pop7
+    flow_id: f1
+    src_node: pop7
+  - arc: vnf_fw1.0->vnf_web.0
+    dst_node: pop1
+    flow_id: f1
+    src_node: pop11
+  links:
+  - arc: vnf_fw2.0->vnf_fw1.0
+    edge_dst: pop11
+    edge_src: pop8
+    link_dst: pop11
+    link_src: pop8
+  - arc: vnf_fw3.0->vnf_fw2.0
+    edge_dst: pop8
+    edge_src: pop7
+    link_dst: pop8
+    link_src: pop7
+  - arc: vnf_fw1.0->vnf_web.0
+    edge_dst: pop1
+    edge_src: pop11
+    link_dst: pop1
+    link_src: pop11
+  mem_oversub: []
+  vlinks:
+  - dest_node: pop11
+    dest_vnf: vnf_fw1
+    src_node: pop8
+    src_vnf: vnf_fw2
+  - dest_node: pop8
+    dest_vnf: vnf_fw2
+    src_node: pop7
+    src_vnf: vnf_fw3
+  - dest_node: pop7
+    dest_vnf: vnf_fw3
+    src_node: pop7
+    src_vnf: vnf_user
+  - dest_node: pop1
+    dest_vnf: vnf_web
+    src_node: pop11
+    src_vnf: vnf_fw1
+  vnfs:
+  - image: '{"image":"placement-fw3-img", "network":"(id=input,ip=66.0.0.2/24),(id=output,ip=77.0.0.1/24)"}'
+    name: vnf_fw3
+    node: pop7
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop1
+  - image: '{"image":"placement-fw2-img", "network":"(id=input,ip=77.0.0.2/24),(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_fw2
+    node: pop8
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop11
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=66.0.0.1/24)"}'
+    name: vnf_user
+    node: pop7
+time: 2018-04-05_13-49-00
