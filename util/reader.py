@@ -4,7 +4,8 @@ import networkx as nx
 from geopy.distance import vincenty
 
 
-# TODO: also use for bjointsp? just have to add cpu, mem, dr and retrieve bidirectional edges
+# TODO: also use for bjointsp? just have to retrieve nodes, links from created networkx
+# TODO: but how? best to pass NetworkX directly to all placements (slight adjustment of interface)
 # read graphml, calculate delays, return undirected(!) NetworkX graph
 # if specified (as dict), set additional node and/or edge attributes (e.g., resources)
 def read_network(file, node_attr=None, edge_attr=None):
