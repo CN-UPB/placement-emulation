@@ -7,7 +7,7 @@ import argparse
 import networkx as nx
 
 
-def parse_log(log_file):
+def parse_log(log_file, input_prefix=''):
     result = {'delays': []}
 
     with open(log_file, 'r') as f:
@@ -55,13 +55,14 @@ def parse_log(log_file):
                 result['input'] = {'network': network, 'service': service, 'sources': sources}
 
                 # extract and add input details: network size, etc.
-                network = nx.read_graphml('../' + network)
+                # read input files from specified path (+ prefix)
+                network = nx.read_graphml(input_prefix + network)
                 result["input"]["num_nodes"] = network.number_of_nodes()
                 result["input"]["num_edges"] = network.number_of_edges()
-                with open('../' + service) as f:
+                with open(input_prefix + service) as f:
                     service = yaml.load(f)
                     result["input"]["num_vnfs"] = len(service["vnfs"])
-                with open('../' + sources) as f:
+                with open(input_prefix + sources) as f:
                     sources = yaml.load(f)
                     result["input"]["num_sources"] = len(sources)
 
