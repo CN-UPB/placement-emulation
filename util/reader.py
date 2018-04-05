@@ -6,12 +6,11 @@ from geopy.distance import vincenty
 
 # TODO: also use for bjointsp? just have to add cpu, mem, dr and retrieve bidirectional edges
 # read graphml, calculate delays, return undirected(!) NetworkX graph
-def read_network(file):
+# if specified (as dict), set additional node and/or edge attributes (e.g., resources)
+def read_network(file, node_attr=None, edge_attr=None):
     SPEED_OF_LIGHT = 299792458  # meter per second
     PROPAGATION_FACTOR = 0.77  	# https://en.wikipedia.org/wiki/Propagation_delay
 
-    if not file.endswith('.graphml'):
-        raise ValueError('{} is not a GraphML file'.format(file))
     network = nx.read_graphml(file, node_type=int)
 
     # add 'pop' to node index (eg, 1 --> pop1)
@@ -28,5 +27,14 @@ def read_network(file):
         delay = (distance / SPEED_OF_LIGHT * 1000) * PROPAGATION_FACTOR  	    # in milliseconds
         # round to integer delays!
         network[e[0]][e[1]]['delay'] = round(delay)
+
+    # set node and edge attributes if specified
+    # all attributes are set equally for all nodes/edges
+    if node_attr:
+        for key, value in node_attr.items():
+            nx.set_node_attributes(network, key, value)
+    if edge_attr:
+        for key, value in edge_attr.items():
+            nx.set_edge_attributes(network, key, value)
 
     return network
