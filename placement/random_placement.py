@@ -1,14 +1,15 @@
 # simple random placement
-from util import read_network
+from util import reader, writer
 import yaml
 from datetime import datetime
 from random import choice
+# TODO: fix random seed for reproducability; write to input
 
 
 # TODO: only choose from nodes with remaining resources
-def place(network_file, service_file, sources_file):
+def place(network_file, service_file, sources_file, seed=1234):
     # read input
-    network = read_network.read_network(network_file)
+    network = reader.read_network(network_file)
     with open(service_file) as f:
         service = yaml.load(f)
     with open(sources_file) as f:
@@ -16,7 +17,8 @@ def place(network_file, service_file, sources_file):
 
     # prepare placement output
     placement = {'time': datetime.now().strftime("%Y-%m-%d_%H-%M-%S"),
-                 'input': {'network': network_file,
+                 'input': {'model': 'random',
+                           'network': network_file,
                            'service': service_file,
                            'sources': sources_file,
                            'num_nodes': network.number_of_nodes(),
@@ -59,8 +61,12 @@ def place(network_file, service_file, sources_file):
     return placement
 
 
+# input parameters
 network = '../inputs/networks/Abilene.graphml'
 service = '../inputs/services/fw1chain.yaml'
 sources = '../inputs/sources/source0.yaml'
 placement = place(network, service, sources)
 print(placement)
+
+# write placement to file
+writer.write_placement(network, service, sources, placement, 'random')
