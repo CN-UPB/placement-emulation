@@ -8,8 +8,8 @@ vnfs:
     inputs_bwd: 0
     outputs_fwd: 1
     outputs_bwd: 0
-    cpu: [0]
-    mem: [0]
+    cpu: [1]
+    mem: [1]
     out_fwd: []
     out_bwd: []
     image: '{"image":"placement-user-img", "network":"(id=output,ip=77.0.0.1/24)"}'
