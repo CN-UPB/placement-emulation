@@ -10,13 +10,14 @@ function filename {
 
 
 # run placement, emulation, and measurements sequentially
-printf "Expected arguments: -n network -t service -s sources -c num_pings\n"
+printf "Expected arguments: -a algorithm -n network -t service -s sources -c num_pings\n"
 
-# get arguments as -n, -t, -s, -c
-while getopts n:t:s:c: option 
+# get arguments as -a, -n, -t, -s, -c
+while getopts a:n:t:s:c: option 
 do
 	case "${option}" 
 	in
+		a) ALG=${OPTARG};;
 		n) NETWORK=${OPTARG};;
 		t) SERVICE=${OPTARG};;
 		s) SOURCES=${OPTARG};;
@@ -30,7 +31,8 @@ TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 network_name=$(filename $NETWORK)
 service_name=$(filename $SERVICE)
 sources_name=$(filename $SOURCES)
-LOG="results/measurements/$network_name-$service_name-$sources_name-$TIMESTAMP.log"
+LOG="results/$ALG/emulation/$network_name-$service_name-$sources_name-$TIMESTAMP.log"
+mkdir -p results/$ALG/emulation
 
 
 # start vim-emu with the specified network
@@ -44,7 +46,7 @@ sleep $NETWORKSIZE
 
 # start the placement emulation
 printf "\n\nStarting the placement emulation\n"
-python3 placement/placement_emulator.py -n $NETWORK -t $SERVICE -s $SOURCES
+python3 placement/placement_emulator.py -a $ALG --network $NETWORK --service $SERVICE --sources $SOURCES
 
 # start measurement: 1. generate individual measurement script, 2. run & log it
 printf "\n\nStarting the measurement (logging to $LOG)\n"
@@ -54,6 +56,7 @@ eval "${MEASUREMENT}" |& tee -a $LOG
 # append info to log: timestamp, network, service, sources
 printf "\nInfo\n" >> $LOG
 echo "timestamp: $TIMESTAMP" >> $LOG
+echo "algorithm: $ALG" >> $LOG
 echo "network: $NETWORK" >> $LOG
 echo "service: $SERVICE" >> $LOG
 echo "sources: $SOURCES" >> $LOG

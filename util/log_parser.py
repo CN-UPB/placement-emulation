@@ -46,13 +46,14 @@ def parse_log(log_file, input_prefix=''):
                 reading_chain_delay = False
 
             if line.startswith('Info'):
-                # get info from next 4 lines: timestamp, network, service, sources
+                # get info from next 5 lines: timestamp, algorithm, network, service, sources
                 timestamp = log[i+1].replace('timestamp: ', '')
-                network = log[i+2].replace('network: ', '')
-                service = log[i+3].replace('service: ', '')
-                sources = log[i+4].replace('sources: ', '')
+                algorithm = log[i+2].replace('algorithm: ', '')
+                network = log[i+3].replace('network: ', '')
+                service = log[i+4].replace('service: ', '')
+                sources = log[i+5].replace('sources: ', '')
                 result['time'] = timestamp
-                result['input'] = {'network': network, 'service': service, 'sources': sources}
+                result['input'] = {'algorithm': algorithm, 'network': network, 'service': service, 'sources': sources}
 
                 # extract and add input details: network size, etc.
                 # read input files from specified path (+ prefix)
