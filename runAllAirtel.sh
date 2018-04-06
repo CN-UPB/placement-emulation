@@ -2,7 +2,7 @@
 set -e
 
 # run each placement algorithm sequentially
-for ALG in random
+for ALG in bjointsp random
 do
 	# fw1chain
 	./place-emu.sh -a $ALG -n inputs/networks/Airtel.graphml -t inputs/services/fw1chain.yaml -s inputs/sources/source0.yaml -c 100
