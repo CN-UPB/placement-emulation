@@ -39,6 +39,7 @@ def place(network_file, service_file, sources_file, seed=1234):
         matched_vnf = [vnf for vnf in service['vnfs'] if vnf['name'] == src['vnf']][0]
         src_vnf = {'name': src['vnf'], 'node': src['node'], 'image': matched_vnf['image']}
         placement['placement']['vnfs'].append(src_vnf)
+        print('Placed {} at {}'.format(src_vnf['name'], src_vnf['node']))
         # decrease node resource (cpu)
         network.node[src_vnf['node']]['cpu'] -= 1
 
@@ -56,6 +57,7 @@ def place(network_file, service_file, sources_file, seed=1234):
                 rand_node = random.choice(available_nodes)
                 dest_vnf = {'name': matched_vnf['name'], 'node': rand_node, 'image': matched_vnf['image']}
                 placement['placement']['vnfs'].append(dest_vnf)
+                print('Placed {} at {}'.format(dest_vnf['name'], dest_vnf['node']))
                 network.node[dest_vnf['node']]['cpu'] -= 1
 
                 # add connecting vLink

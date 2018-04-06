@@ -25,7 +25,7 @@ def emulate_placement(placement):
         for vlink in result['placement']['vlinks']:
             src = vlink['src_vnf']
             dst = vlink['dest_vnf']
-            data = {'vnf_src_name':src, 'vnf_dst_name':dst, 'vnf_src_interface':'output', 'vnf_dst_interface':'input', 'bidirectional':'True'}
+            data = {'vnf_src_name': src, 'vnf_dst_name': dst, 'vnf_src_interface': 'output', 'vnf_dst_interface': 'input', 'bidirectional': 'True'}
             response = requests.put(network_url, json=data)
             print('Adding link from ' + src + ' to ' + dst + '. Success: ' + str(response.status_code == requests.codes.ok))
 
