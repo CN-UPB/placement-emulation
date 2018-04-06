@@ -12,7 +12,7 @@ def read_network(file, node_attr=None, edge_attr=None):
     SPEED_OF_LIGHT = 299792458  # meter per second
     PROPAGATION_FACTOR = 0.77  	# https://en.wikipedia.org/wiki/Propagation_delay
 
-    network = nx.read_graphml(file, node_type=int)
+    network = nx.Graph(nx.read_graphml(file, node_type=int))    # don't allow multi graphs (2+ edges between nodes)
 
     # add 'pop' to node index (eg, 1 --> pop1)
     node_mapping = {n: 'pop{}'.format(n) for n in network.nodes}

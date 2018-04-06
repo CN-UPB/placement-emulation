@@ -4,6 +4,7 @@ import yaml
 import networkx as nx
 from datetime import datetime
 import random
+import argparse
 
 
 def place(network_file, service_file, sources_file, seed=1234):
@@ -67,14 +68,20 @@ def place(network_file, service_file, sources_file, seed=1234):
             else:
                 end_of_chain = True
 
+    # write placement to file
+    writer.write_placement(network_file, service_file, sources_file, placement, 'random')
+
     return placement
 
 
-# input parameters
-network = '../inputs/networks/Abilene.graphml'
-service = '../inputs/services/fw1chain.yaml'
-sources = '../inputs/sources/source0.yaml'
-placement = place(network, service, sources)
+def parse_args():
+    parser = argparse.ArgumentParser(description="Simple random placement")
+    parser.add_argument("--network", help="Network input file (.graphml)", required=True, default=None, dest="network")
+    parser.add_argument("--service", help="Template input file (.yaml)", required=True, default=None, dest="service")
+    parser.add_argument("--sources", help="Sources input file (.yaml)", required=True, default=None, dest="sources")
+    return parser.parse_args()
 
-# write placement to file
-writer.write_placement(network, service, sources, placement, 'random')
+
+if __name__ == '__main__':
+    args = parse_args()
+    placement = place(args.network, args.service, args.sources)
