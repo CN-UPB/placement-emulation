@@ -54,6 +54,8 @@ def place(network_file, service_file, sources_file, seed=1234):
                 matched_vnf = [vnf for vnf in service['vnfs'] if vnf['name'] == matched_vlink['dest']][0]
                 # get random node with remaining resources
                 available_nodes = [v for v, cpu in nx.get_node_attributes(network, 'cpu').items() if cpu > 0]
+                # sort list to get reproducable results! Else, the order may be arbitrary in NetworkX 2.0
+                available_nodes.sort()
                 rand_node = random.choice(available_nodes)
                 dest_vnf = {'name': matched_vnf['name'], 'node': rand_node, 'image': matched_vnf['image']}
                 placement['placement']['vnfs'].append(dest_vnf)
