@@ -51,13 +51,13 @@ If you prefer to run the steps yourself, you can follow these manual steps:
 
 1. Select inputs from `inputs`
 2. Start the topology on `vim-emu` as described [below](#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
-3. Start the placement and emulation with `python3 placement/placement_emulator.py --network inputs/networks/Abilene.graphml --service inputs/services/fw1chain.yaml --sources inputs/sources/source0.yaml`.
+3. Start the placement and emulation with `python3 placement/placement_emulator.py -a bjointsp --network inputs/networks/Abilene.graphml --service inputs/services/fw1chain.yaml --sources inputs/sources/source0.yaml`.
 4. You can test the deployment and connectivity as described [below](#testing-the-deployment), e.g., with `vim-emu compute list`. Delay measurements can be performed with `ping` or `httping` from inside `vim-emu`.
 5. Important: Stop the emulator using `exit` inside the ContainerNet terminal. This is necessary to clean up, so that the emulator can be started again.
 
 *Note*:
+The `-a` argument sets the placement algorithm: Currently, we support `bjointsp` and `random`.
 If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
-If you want to use random placement instead of the B-JointSP heuristic, add `--placeRandom`.
 
 
 ## Emulation environment
