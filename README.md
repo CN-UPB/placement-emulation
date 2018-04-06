@@ -7,7 +7,7 @@ Folder structure:
 * `placement`: `placement_emulator.py` triggers the `bjointsp` placement algorithm and starts the placed VNFs on the emulator
 * `util`: auxiliary scripts for measurement
 * `inputs`: example VNF images, networks, services, sources for placement and emulation
-* `results`: placement results and measurement logs (from emulation)
+* `results`: placement results and emulation logs
 * `docs`: docs...
 
 
@@ -38,10 +38,10 @@ Folder structure:
 To start the emulator, calculate the placement, emulate it, measure and log delays, and stop the emulator with one command, use:
 
 ```
-./place-emu.sh -n network -t service -s sources -c num_pings
+./place-emu.sh -a algorithm -n network -t service -s sources -c num_pings
 ```
 
-Where `network`, `service`, and `sources` have to be suitable input parameters, e.g., from the `inputs`. `num_pings` is the number of packets sent by each delay measurement, e.g., 5 for testing and 100 for evaluation.
+Where `algorithm` is a placement algorithm, e.g., `bjointsp` or `random`. Inputs `network`, `service`, and `sources` are paths to input parameters, e.g., from the `inputs`. `num_pings` is the number of packets sent by each delay measurement, e.g., 5 for testing and 100 for evaluation.
 If you just want to test placement-emulation with predefined parameters, simply run `test.sh`.
 
 
