@@ -60,6 +60,11 @@ The `-a` argument sets the placement algorithm: Currently, we support `bjointsp`
 If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
 
 
+**Experiments:**
+
+Use scripts like `runAllAbilene.sh` to run a large number of placement emulations sequentially. *Important:* use `|& tee some_log.log` to log the display output for debugging.
+
+
 ## Emulation environment
 
 ### Start a topology
