@@ -3,6 +3,7 @@ import yaml
 import requests
 import ast
 import bjointsp.main as bjointsp
+from placement import random_placement
 
 
 compute_url = "http://127.0.0.1:5001/restapi/compute/"
@@ -31,9 +32,9 @@ def emulate_placement(placement):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Triggers placement and then emulation")
-    parser.add_argument("-n", "--network", help="Network input file (.graphml)", required=True, default=None, dest="network")
-    parser.add_argument("-t", "--template", help="Template input file (.yaml)", required=True, default=None, dest="template")
-    parser.add_argument("-s", "--sources", help="Sources input file (.yaml)", required=True, default=None, dest="sources")
+    parser.add_argument("--network", help="Network input file (.graphml)", required=True, default=None, dest="network")
+    parser.add_argument("--service", help="Service input file (.yaml)", required=True, default=None, dest="service")
+    parser.add_argument("--sources", help="Sources input file (.yaml)", required=True, default=None, dest="sources")
     parser.add_argument(
         "--placeOnly",
         help="Only perform placement, do not trigger emulation.",
@@ -41,20 +42,28 @@ def parse_args():
         default=False,
         action="store_true",
         dest="placeOnly")
+    parser.add_argument(
+        "--placeRandom",
+        help="Use random placement instead of B-JointSP.",
+        required=False,
+        default=False,
+        action="store_true",
+        dest="placeRandom")
     return parser.parse_args()
 
 
-def main():
+if __name__ == '__main__':
     args = parse_args()
-    placement = bjointsp.place(args.network, args.template, args.sources, cpu=1, mem=10, dr=50)
+    if args.placeRandom:
+        print('\nStarting random placement\n')
+        placement = random_placement.place(args.network, args.service, args.sources)
+    else:
+        print('\nStarting placement with B-JointSP (heuristic)\n')
+        placement = bjointsp.place(args.network, args.service, args.sources, cpu=1, mem=10, dr=50)
     if args.placeOnly:
         print("\nPlacement complete; no emulation (--placeOnly).")
     else:
         print("\n\nEmulating calculated placement:\n")
         emulate_placement(placement)
-
-
-if __name__ == '__main__':
-    main()
 
 # TODO: what about scaling? ports & connections need to be decided dynamically. load balancing?
