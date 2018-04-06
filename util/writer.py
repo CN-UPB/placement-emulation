@@ -20,3 +20,5 @@ def write_placement(network, service, sources, placement, subfolder):
     with open(result_path, 'w', newline='') as f:
         yaml.dump(placement, f, default_flow_style=False)
         print("Writing solution to {}".format(result_path))
+
+    return result_path

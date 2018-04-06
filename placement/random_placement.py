@@ -69,9 +69,9 @@ def place(network_file, service_file, sources_file, seed=1234):
                 end_of_chain = True
 
     # write placement to file
-    writer.write_placement(network_file, service_file, sources_file, placement, 'random')
+    result = writer.write_placement(network_file, service_file, sources_file, placement, 'random')
 
-    return placement
+    return result
 
 
 def parse_args():
