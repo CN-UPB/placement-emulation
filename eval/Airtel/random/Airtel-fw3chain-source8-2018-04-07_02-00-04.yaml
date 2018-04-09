@@ -1,4 +1,5 @@
 input:
+  algorithm: random
   model: random
   network: inputs/networks/Airtel.graphml
   num_edges: 26

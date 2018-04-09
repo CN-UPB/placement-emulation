@@ -46,7 +46,7 @@ def place(network_file, service_file, sources_file, seed=1234):
 
     # prepare placement output
     placement = {'time': datetime.now().strftime("%Y-%m-%d_%H-%M-%S"),
-                 'input': {'model': 'random',
+                 'input': {'algorithm': 'random',
                            'seed': seed,
                            'network': network_file,
                            'service': service_file,
