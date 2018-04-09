@@ -8,6 +8,19 @@ input:
   seed: 1234
   service: inputs/services/fw1chain.yaml
   sources: inputs/sources/source3.yaml
+metrics:
+  delays:
+  - delay: 42
+    dest: vnf_fw1
+    dest_node: pop7
+    src: vnf_user
+    src_node: pop3
+  - delay: 69
+    dest: vnf_web
+    dest_node: pop15
+    src: vnf_fw1
+    src_node: pop7
+  total_delay: 111
 placement:
   vlinks:
   - dest_node: pop7
