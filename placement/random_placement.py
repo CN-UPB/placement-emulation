@@ -7,6 +7,31 @@ import random
 import argparse
 
 
+# add link delays along the shortest paths between the placed VNFs
+def add_delays(placement, network):
+    placement['metrics'] = {}
+    placement['metrics']['delays'] = []
+    # for each vLink add the inter-VNF delay along the shortest path (regarding delay)
+    for vl in placement['placement']['vlinks']:
+        delay = {'src': vl['src_vnf'], 'src_node': vl['src_node'], 'dest': vl['dest_vnf'], 'dest_node': vl['dest_node']}
+        sp = nx.shortest_path(network, source=delay['src_node'], target=delay['dest_node'], weight='delay')
+
+        # sum up and save link delay along shortest path from src to dest
+        link_delay = 0
+        for i in range(len(sp) - 1):
+            link_delay += network[sp[i]][sp[i+1]]['delay']
+        delay['delay'] = link_delay
+        placement['metrics']['delays'].append(delay)
+
+    # sum up and save inter-VNF delays as total chain delay (assume just 1 chain)
+    total_delay = 0
+    for delay in placement['metrics']['delays']:
+        total_delay += delay['delay']
+    placement['metrics']['total_delay'] = total_delay
+
+    return placement
+
+
 def place(network_file, service_file, sources_file, seed=1234):
     random.seed(seed)
 
@@ -72,8 +97,10 @@ def place(network_file, service_file, sources_file, seed=1234):
             else:
                 end_of_chain = True
 
+    # add chain and inter-VNF delays along links of the shortest paths
+    placement = add_delays(placement, network)
+
     # write placement to file
-    # TODO: add link delays
     result = writer.write_placement(network_file, service_file, sources_file, placement, 'random')
 
     return result

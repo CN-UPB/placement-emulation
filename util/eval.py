@@ -2,8 +2,6 @@
 import glob
 import yaml
 import pandas as pd
-from util import reader
-import networkx as nx
 
 
 # load simulation results and calculate RTT
@@ -94,40 +92,3 @@ def prepare_eval(network, algorithm):
     chain_df, vnf_df = match_sim_emu(sim, emu)
 
     return chain_df, vnf_df
-
-
-def add_link_delays(result_file):
-    # read placement and calc delays
-    with open(result_file, 'r') as f:
-        result = yaml.load(f)
-        network = reader.read_network('../' + result['input']['network'])
-
-        result['metrics'] = {}
-        result['metrics']['delays'] = []
-        for vl in result['placement']['vlinks']:
-            delay = {'src': vl['src_vnf'], 'src_node': vl['src_node'], 'dest': vl['dest_vnf'], 'dest_node': vl['dest_node']}
-            sp = nx.shortest_path(network, source=delay['src_node'], target=delay['dest_node'], weight='delay')
-
-            # sum up and save link delay along shortest path from src to dest
-            link_delay = 0
-            for i in range(len(sp) - 1):
-                link_delay += network[sp[i]][sp[i+1]]['delay']
-            delay['delay'] = link_delay
-            result['metrics']['delays'].append(delay)
-
-        # sum up and save inter-VNF delays as total chain delay (assume just 1 chain)
-        total_delay = 0
-        for delay in result['metrics']['delays']:
-            total_delay += delay['delay']
-        result['metrics']['total_delay'] = total_delay
-
-    # write delays to file
-    with open(result_file, 'w', newline='') as f:
-        yaml.dump(result, f, default_flow_style=False)
-        print("Writing delays to {}".format(result_file))
-
-
-if __name__ == '__main__':
-    result_files = glob.glob('../eval/Airtel/random/Airtel*.yaml')
-    for rf in result_files:
-        add_link_delays(rf)
