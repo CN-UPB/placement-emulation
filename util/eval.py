@@ -85,10 +85,35 @@ def match_sim_emu(sim_delays, emu_delays):
     return chain_df, vnf_df
 
 
+# calc and save RTT difference and ratio; also return additional auxiliary dataframes
+# df contains sim_rtt and emu_rtt; input_cols are the names of the input columns (eg, 'network')
+def calc_stats(df, input_cols):
+    # calc RTT difference (emu_rtt - sim_rtt) and ratio (emu_rtt / sim_rtt); if sim_rtt = 0, rtt_ratio = inf
+    df['rtt_diff'] = df['emu_rtt'] - df['sim_rtt']
+    df['rtt_ratio'] = df['emu_rtt'] / df['sim_rtt']
+
+    # create auxiliary df with separate rows for each RTT and a type (sim or emu); for easier plotting later
+    # temporary df with simulation RTTs
+    sim_df = df[input_cols].copy()
+    sim_df['rtt'] = df['sim_rtt']
+    sim_df['type'] = 'sim'
+    # temporary df with emulation RTTs
+    emu_df = df[input_cols].copy()
+    emu_df['rtt'] = df['emu_rtt']
+    emu_df['type'] = 'emu'
+    aux_df = pd.concat([sim_df, emu_df])
+
+    return df, aux_df
+
+
 # call other functions to prepare evaluation; returns pandas dataframes
 def prepare_eval(network, algorithm):
     sim = sim_delays(network, algorithm)
     emu = emu_delays(network, algorithm)
     chain_df, vnf_df = match_sim_emu(sim, emu)
 
-    return chain_df, vnf_df
+    input_cols = ['algorithm', 'network', 'num_nodes', 'num_edges', 'service', 'num_vnfs', 'sources', 'num_sources']
+    chain_df, aux_chain_df = calc_stats(chain_df, input_cols)
+    vnf_df, aux_vnf_df = calc_stats(vnf_df, input_cols + ['src', 'dest'])
+
+    return chain_df, aux_chain_df, vnf_df, aux_vnf_df
