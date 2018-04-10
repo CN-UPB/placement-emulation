@@ -14,13 +14,7 @@ def add_delays(placement, network):
     # for each vLink add the inter-VNF delay along the shortest path (regarding delay)
     for vl in placement['placement']['vlinks']:
         delay = {'src': vl['src_vnf'], 'src_node': vl['src_node'], 'dest': vl['dest_vnf'], 'dest_node': vl['dest_node']}
-        sp = nx.shortest_path(network, source=delay['src_node'], target=delay['dest_node'], weight='delay')
-
-        # sum up and save link delay along shortest path from src to dest
-        link_delay = 0
-        for i in range(len(sp) - 1):
-            link_delay += network[sp[i]][sp[i+1]]['delay']
-        delay['delay'] = link_delay
+        delay['delay'] = nx.shortest_path_length(network, delay['src_node'], delay['dest_node'], weight='delay')
         placement['metrics']['delays'].append(delay)
 
     # sum up and save inter-VNF delays as total chain delay (assume just 1 chain)
@@ -32,6 +26,7 @@ def add_delays(placement, network):
     return placement
 
 
+# place VNFs at random nodes (max 1 per node) and connect with shortest paths
 def place(network_file, service_file, sources_file, seed=1234):
     random.seed(seed)
 
@@ -68,7 +63,7 @@ def place(network_file, service_file, sources_file, seed=1234):
         # decrease node resource (cpu)
         network.node[src_vnf['node']]['cpu'] -= 1
 
-        # follow vLinks in service to reache following VNFs and place randomly
+        # follow vLinks in service to reach following VNFs and place randomly
         end_of_chain = False
         while not end_of_chain:
             matched_vlink = [vl for vl in service['vlinks'] if vl['src'] == src_vnf['name']]
@@ -77,9 +72,10 @@ def place(network_file, service_file, sources_file, seed=1234):
                 # assume a linear chain, ie, only one matching vlink
                 matched_vlink = matched_vlink[0]
                 matched_vnf = [vnf for vnf in service['vnfs'] if vnf['name'] == matched_vlink['dest']][0]
+
                 # get random node with remaining resources
                 available_nodes = [v for v, cpu in nx.get_node_attributes(network, 'cpu').items() if cpu > 0]
-                # sort list to get reproducable results! Else, the order may be arbitrary in NetworkX 2.0
+                # sort list to get reproducible results! Else, the order may be arbitrary in NetworkX 2.0
                 available_nodes.sort()
                 rand_node = random.choice(available_nodes)
                 dest_vnf = {'name': matched_vnf['name'], 'node': rand_node, 'image': matched_vnf['image']}
