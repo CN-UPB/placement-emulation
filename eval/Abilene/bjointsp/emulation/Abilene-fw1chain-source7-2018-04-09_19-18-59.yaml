@@ -1,0 +1,27 @@
+chain_delay:
+  delay: 14.1
+  max: 15.0
+  min: 13.9
+delays:
+- delay: 4.22
+  dest: vnf_fw1
+  max: 9.307
+  min: 4.126
+  src: vnf_user
+  stddev: 0.512
+- delay: 2.193
+  dest: vnf_web
+  max: 5.162
+  min: 2.13
+  src: vnf_fw1
+  stddev: 0.299
+input:
+  algorithm: bjointsp
+  network: inputs/networks/Abilene.graphml
+  num_edges: 14
+  num_nodes: 11
+  num_sources: 1
+  num_vnfs: 3
+  service: inputs/services/fw1chain.yaml
+  sources: inputs/sources/source7.yaml
+time: 2018-04-09_19-18-59
