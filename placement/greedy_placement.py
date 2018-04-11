@@ -1,35 +1,27 @@
-# simple random placement
+# simple greedy placement
 from util import reader, writer
 import yaml
 import networkx as nx
 from datetime import datetime
-import random
 import argparse
 
 
-# add link delays along the shortest paths between the placed VNFs
-def add_delays(placement, network):
-    placement['metrics'] = {}
-    placement['metrics']['delays'] = []
-    # for each vLink add the inter-VNF delay along the shortest path (regarding delay)
-    for vl in placement['placement']['vlinks']:
-        delay = {'src': vl['src_vnf'], 'src_node': vl['src_node'], 'dest': vl['dest_vnf'], 'dest_node': vl['dest_node']}
-        delay['delay'] = nx.shortest_path_length(network, delay['src_node'], delay['dest_node'], weight='delay')
-        placement['metrics']['delays'].append(delay)
+# get closest node regarding delay with available resources + the length of the corresponding shortest path
+def get_closest_node(network, src_node):
+    # only nodes with remaining resources (here, cpu)
+    available_nodes = [v for v, cpu in nx.get_node_attributes(network, 'cpu').items() if cpu > 0]
 
-    # sum up and save inter-VNF delays as total chain delay (assume just 1 chain)
-    total_delay = 0
-    for delay in placement['metrics']['delays']:
-        total_delay += delay['delay']
-    placement['metrics']['total_delay'] = total_delay
+    # choose closest node from available nodes
+    lengths = nx.shortest_path_length(network, src_node, weight='delay')
+    lengths = {v: length for (v, length) in lengths.items() if v in available_nodes}
+    closest = min(lengths, key=lengths.get)
 
-    return placement
+    print('Closest available node from {}: {} (shortest path length: {})'.format(src_node, closest, lengths[closest]))
+    return closest, lengths[closest]
 
 
-# place VNFs at random nodes (max 1 per node) and connect with shortest paths
-def place(network_file, service_file, sources_file, seed=1234):
-    random.seed(seed)
-
+# place VNFs at closest node (max 1 per node) and connect with shortest paths
+def place(network_file, service_file, sources_file):
     # read input
     # set cpu=1 as node resource and assume each vnf needs 1 cpu => max 1 vnf per node
     # for better comparison with other placement algorithms
@@ -41,8 +33,7 @@ def place(network_file, service_file, sources_file, seed=1234):
 
     # prepare placement output
     placement = {'time': datetime.now().strftime("%Y-%m-%d_%H-%M-%S"),
-                 'input': {'algorithm': 'random',
-                           'seed': seed,
+                 'input': {'algorithm': 'greedy',
                            'network': network_file,
                            'service': service_file,
                            'sources': sources_file,
@@ -50,7 +41,8 @@ def place(network_file, service_file, sources_file, seed=1234):
                            'num_edges': network.number_of_edges(),
                            'num_vnfs': len(service['vnfs']),
                            'num_sources': len(sources)},
-                 'placement': {'vnfs': [], 'vlinks': []}}
+                 'placement': {'vnfs': [], 'vlinks': []},
+                 'metrics': {'delays': [], 'total_delay': 0}}
 
     # placement
     for src in sources:
@@ -63,7 +55,7 @@ def place(network_file, service_file, sources_file, seed=1234):
         # decrease node resource (cpu)
         network.node[src_vnf['node']]['cpu'] -= 1
 
-        # follow vLinks in service to reach following VNFs and place randomly
+        # follow vLinks in service to reach following VNFs and place them greedily as close as possible (delay)
         end_of_chain = False
         while not end_of_chain:
             matched_vlink = [vl for vl in service['vlinks'] if vl['src'] == src_vnf['name']]
@@ -73,12 +65,10 @@ def place(network_file, service_file, sources_file, seed=1234):
                 matched_vlink = matched_vlink[0]
                 matched_vnf = [vnf for vnf in service['vnfs'] if vnf['name'] == matched_vlink['dest']][0]
 
-                # get random node with remaining resources
-                available_nodes = [v for v, cpu in nx.get_node_attributes(network, 'cpu').items() if cpu > 0]
-                # sort list to get reproducible results! Else, the order may be arbitrary in NetworkX 2.0
-                available_nodes.sort()
-                rand_node = random.choice(available_nodes)
-                dest_vnf = {'name': matched_vnf['name'], 'node': rand_node, 'image': matched_vnf['image']}
+                # get closest node with remaining resources
+                closest_node, path_length = get_closest_node(network, src_vnf['node'])
+
+                dest_vnf = {'name': matched_vnf['name'], 'node': closest_node, 'image': matched_vnf['image']}
                 placement['placement']['vnfs'].append(dest_vnf)
                 print('Placed {} at {}'.format(dest_vnf['name'], dest_vnf['node']))
                 network.node[dest_vnf['node']]['cpu'] -= 1
@@ -88,16 +78,19 @@ def place(network_file, service_file, sources_file, seed=1234):
                          'dest_vnf': dest_vnf['name'], 'dest_node': dest_vnf['node']}
                 placement['placement']['vlinks'].append(vlink)
 
+                # set vLink delay along shortest path
+                delay = {'src': src_vnf['name'], 'src_node': src_vnf['node'],
+                         'dest': dest_vnf['name'], 'dest_node': dest_vnf['node'], 'delay': path_length}
+                placement['metrics']['delays'].append(delay)
+                placement['metrics']['total_delay'] += path_length
+
                 # update src_vnf for next iteration
                 src_vnf = dest_vnf
             else:
                 end_of_chain = True
 
-    # add chain and inter-VNF delays along links of the shortest paths
-    placement = add_delays(placement, network)
-
     # write placement to file
-    result = writer.write_placement(network_file, service_file, sources_file, placement, 'random')
+    result = writer.write_placement(network_file, service_file, sources_file, placement, 'greedy')
 
     return result
 

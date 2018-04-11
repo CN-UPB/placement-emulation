@@ -3,7 +3,7 @@ import yaml
 import requests
 import ast
 import bjointsp.main as bjointsp
-from placement import random_placement
+from placement import random_placement, greedy_placement
 
 
 compute_url = 'http://127.0.0.1:5001/restapi/compute/'
@@ -32,7 +32,7 @@ def emulate_placement(placement):
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Triggers placement and then emulation')
-    parser.add_argument('-a', '--algorithm', help='Placement algorithm ("bjointsp" or "random")', required=True, dest='alg')
+    parser.add_argument('-a', '--algorithm', help='Placement algorithm ("bjointsp", "random", "greedy")', required=True, dest='alg')
     parser.add_argument('--network', help='Network input file (.graphml)', required=True, dest='network')
     parser.add_argument('--service', help='Service input file (.yaml)', required=True, dest='service')
     parser.add_argument('--sources', help='Sources input file (.yaml)', required=True, dest='sources')
@@ -54,8 +54,11 @@ if __name__ == '__main__':
     elif args.alg == 'random':
         print('\nStarting random placement\n')
         placement = random_placement.place(args.network, args.service, args.sources)
+    elif args.alg == 'greedy':
+        print('\nStarting greedy placement\n')
+        placement = greedy_placement.place(args.network, args.service, args.sources)
     else:
-        raise ValueError('Unknown placement algorithm: {}. Use "bjointsp" or "random"'.format(args.alg))
+        raise ValueError('Unknown placement algorithm: {}. Use "bjointsp", "random", or "greedy"'.format(args.alg))
 
     if args.placeOnly:
         print('\nPlacement complete; no emulation (--placeOnly).')

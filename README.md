@@ -41,7 +41,7 @@ To start the emulator, calculate the placement, emulate it, measure and log dela
 ./place-emu.sh -a algorithm -n network -t service -s sources -c num_pings
 ```
 
-Where `algorithm` is a placement algorithm, e.g., `bjointsp` or `random`. Inputs `network`, `service`, and `sources` are paths to input parameters, e.g., from the `inputs`. `num_pings` is the number of packets sent by each delay measurement, e.g., 5 for testing and 100 for evaluation.
+Where `algorithm` is a placement algorithm, e.g., `bjointsp`, `random`, or `greedy`. Inputs `network`, `service`, and `sources` are paths to input parameters, e.g., from the `inputs`. `num_pings` is the number of packets sent by each delay measurement, e.g., 5 for testing and 100 for evaluation.
 If you just want to test placement-emulation with predefined parameters, simply run `test.sh`.
 
 
@@ -56,13 +56,18 @@ If you prefer to run the steps yourself, you can follow these manual steps:
 5. Important: Stop the emulator using `exit` inside the ContainerNet terminal. This is necessary to clean up, so that the emulator can be started again.
 
 *Note*:
-The `-a` argument sets the placement algorithm: Currently, we support `bjointsp` and `random`.
+The `-a` argument sets the placement algorithm: Currently, we support `bjointsp`, `random`, and `greedy`.
 If you only want to trigger placement without emulation, use the `--placeOnly` option when calling `placement_emulator.py`.
 
 
 **Experiments:**
 
 Use scripts like `runAllAbilene.sh` to run a large number of placement emulations sequentially. *Important:* use `|& tee some_log.log` to log the display output for debugging.
+
+For some experimental results see:
+
+* [Airtel notebook](eval/eval_airtel.ipynb)
+* [Abilene notebook](eval/eval_abilene.ipynb)
 
 
 ## Emulation environment
