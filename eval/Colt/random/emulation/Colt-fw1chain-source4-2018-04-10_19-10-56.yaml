@@ -1,0 +1,27 @@
+chain_delay:
+  delay: 14.8
+  max: 15.9
+  min: 14.6
+delays:
+- delay: 2.349
+  dest: vnf_fw1
+  max: 6.909
+  min: 2.223
+  src: vnf_user
+  stddev: 0.459
+- delay: 4.369
+  dest: vnf_web
+  max: 12.48
+  min: 4.257
+  src: vnf_fw1
+  stddev: 0.816
+input:
+  algorithm: random
+  network: inputs/networks/Colt.graphml
+  num_edges: 191
+  num_nodes: 153
+  num_sources: 1
+  num_vnfs: 3
+  service: inputs/services/fw1chain.yaml
+  sources: inputs/sources/source4.yaml
+time: 2018-04-10_19-10-56
