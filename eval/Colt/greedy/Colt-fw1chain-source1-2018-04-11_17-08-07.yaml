@@ -1,0 +1,43 @@
+input:
+  algorithm: greedy
+  network: inputs/networks/Colt.graphml
+  num_edges: 177
+  num_nodes: 153
+  num_sources: 1
+  num_vnfs: 3
+  service: inputs/services/fw1chain.yaml
+  sources: inputs/sources/source1.yaml
+metrics:
+  delays:
+  - delay: 1
+    dest: vnf_fw1
+    dest_node: pop97
+    src: vnf_user
+    src_node: pop1
+  - delay: 0
+    dest: vnf_web
+    dest_node: pop100
+    src: vnf_fw1
+    src_node: pop97
+  total_delay: 1
+placement:
+  vlinks:
+  - dest_node: pop97
+    dest_vnf: vnf_fw1
+    src_node: pop1
+    src_vnf: vnf_user
+  - dest_node: pop100
+    dest_vnf: vnf_web
+    src_node: pop97
+    src_vnf: vnf_fw1
+  vnfs:
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_user
+    node: pop1
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop97
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop100
+time: 2018-04-11_17-08-07

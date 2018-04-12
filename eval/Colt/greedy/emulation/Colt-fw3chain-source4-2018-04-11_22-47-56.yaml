@@ -1,0 +1,39 @@
+chain_delay:
+  delay: 4.3
+  max: 6.8
+  min: 4.0
+delays:
+- delay: 0.138
+  dest: vnf_fw3
+  max: 1.708
+  min: 0.107
+  src: vnf_user
+  stddev: 0.158
+- delay: 0.121
+  dest: vnf_fw2
+  max: 1.469
+  min: 0.088
+  src: vnf_fw3
+  stddev: 0.136
+- delay: 0.158
+  dest: vnf_fw1
+  max: 2.162
+  min: 0.122
+  src: vnf_fw2
+  stddev: 0.202
+- delay: 0.174
+  dest: vnf_web
+  max: 3.025
+  min: 0.126
+  src: vnf_fw1
+  stddev: 0.288
+input:
+  algorithm: greedy
+  network: inputs/networks/Colt.graphml
+  num_edges: 191
+  num_nodes: 153
+  num_sources: 1
+  num_vnfs: 5
+  service: inputs/services/fw3chain.yaml
+  sources: inputs/sources/source4.yaml
+time: 2018-04-11_22-47-56
