@@ -2,6 +2,7 @@
 import glob
 import yaml
 import pandas as pd
+import os
 
 
 # load simulation results and calculate RTT
@@ -54,16 +55,23 @@ def match_sim_emu(sim_delays, emu_delays):
 
     # match and sort chain and inter-VNF RTTs and insert into data frames
     for emu in emu_delays:
-        for sim in sim_delays:
-            # match chain delays (same input: network, service, sources)
-            if emu['input']['network'].endswith(sim['input']['network']) \
-                    and emu['input']['service'].endswith(sim['input']['service']) \
-                    and emu['input']['sources'].endswith(sim['input']['sources']):
+        # only use name of network, service, and source files (instead of full path)
+        emu_network_name = os.path.basename(emu['input']['network']).replace('.graphml', '')
+        emu_service_name = os.path.basename(emu['input']['service']).replace('.yaml', '')
+        emu_sources_name = os.path.basename(emu['input']['sources']).replace('.yaml', '')
 
+        for sim in sim_delays:
+            # only use name of network, service, and source files (instead of full path)
+            sim_network_name = os.path.basename(sim['input']['network']).replace('.graphml', '')
+            sim_service_name = os.path.basename(sim['input']['service']).replace('.yaml', '')
+            sim_sources_name = os.path.basename(sim['input']['sources']).replace('.yaml', '')
+
+            # match chain delays (same input: network, service, sources)
+            if emu_network_name == sim_network_name and emu_service_name == sim_service_name and emu_sources_name == sim_sources_name:
                 # insert into data frame
-                inputs = [sim['input']['network'], sim['input']['num_nodes'], sim['input']['num_edges'],
-                          sim['input']['service'], sim['input']['num_vnfs'],
-                          sim['input']['sources'], sim['input']['num_sources'], sim['input']['algorithm']]
+                inputs = [emu_network_name, sim['input']['num_nodes'], sim['input']['num_edges'],
+                          emu_service_name, sim['input']['num_vnfs'],
+                          emu_sources_name, sim['input']['num_sources'], sim['input']['algorithm']]
                 # somehow the simulation RTT needs to be cast to float explicitly
                 chain_df.loc[chain_index] = inputs + [float(sim['chain_rtt']), emu['chain_rtt']]
                 chain_index += 1
