@@ -1,0 +1,33 @@
+chain_delay:
+  delay: 180.5
+  max: 182.8
+  min: 179.7
+delays:
+- delay: 73.03
+  dest: vnf_fw2
+  max: 146.968
+  min: 72.176
+  src: vnf_user
+  stddev: 7.431
+- delay: 8.342
+  dest: vnf_fw1
+  max: 18.295
+  min: 8.174
+  src: vnf_fw2
+  stddev: 1.001
+- delay: 8.403
+  dest: vnf_web
+  max: 18.701
+  min: 8.197
+  src: vnf_fw1
+  stddev: 1.038
+input:
+  algorithm: random
+  network: inputs/networks/Tinet.graphml
+  num_edges: 89
+  num_nodes: 53
+  num_sources: 1
+  num_vnfs: 4
+  service: inputs/services/fw2chain.yaml
+  sources: inputs/sources/source1.yaml
+time: 2018-04-17_04-17-24

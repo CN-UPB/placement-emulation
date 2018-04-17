@@ -1,0 +1,27 @@
+chain_delay:
+  delay: 58.1
+  max: 58.9
+  min: 58.0
+delays:
+- delay: 26.451
+  dest: vnf_fw1
+  max: 52.872
+  min: 26.117
+  src: vnf_user
+  stddev: 2.656
+- delay: 2.2
+  dest: vnf_web
+  max: 5.218
+  min: 2.121
+  src: vnf_fw1
+  stddev: 0.304
+input:
+  algorithm: greedy
+  network: inputs/networks/Tinet.graphml
+  num_edges: 89
+  num_nodes: 53
+  num_sources: 1
+  num_vnfs: 3
+  service: inputs/services/fw1chain.yaml
+  sources: inputs/sources/source0.yaml
+time: 2018-04-17_07-52-20
