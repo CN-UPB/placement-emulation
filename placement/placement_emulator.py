@@ -11,6 +11,8 @@ network_url = 'http://127.0.0.1:5001/restapi/network'
 config_prefix = " -H 'Content-Type: application/json' -d "
 
 
+# TODO: get response when creating network links and store the calculated/emulated path
+# TODO: also store the simulated path inside the placement algorithm
 def emulate_placement(placement):
     with open(placement, 'r') as place_file:
         result = yaml.load(place_file)
@@ -28,6 +30,7 @@ def emulate_placement(placement):
             data = {'vnf_src_name': src, 'vnf_dst_name': dst, 'vnf_src_interface': 'output', 'vnf_dst_interface': 'input', 'bidirectional': 'True'}
             response = requests.put(network_url, json=data)
             print('Adding link from ' + src + ' to ' + dst + '. Success: ' + str(response.status_code == requests.codes.ok))
+            print('Response: {}\n'.format(response))
 
 
 def parse_args():
