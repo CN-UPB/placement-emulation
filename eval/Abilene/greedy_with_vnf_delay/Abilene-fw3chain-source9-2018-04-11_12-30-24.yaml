@@ -1,5 +1,5 @@
 input:
-  algorithm: greedy
+  algorithm: greedy_with_vnf_delay
   network: inputs/networks/Abilene.graphml
   num_edges: 14
   num_nodes: 11
