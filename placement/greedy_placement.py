@@ -16,8 +16,11 @@ def get_closest_node(network, src_node):
     lengths = {v: length for (v, length) in lengths.items() if v in available_nodes}
     closest = min(lengths, key=lengths.get)
 
+    # also return shortest path to the closest node
+    path = nx.shortest_path(network, src_node, closest, weight='delay')
+
     print('Closest available node from {}: {} (shortest path length: {})'.format(src_node, closest, lengths[closest]))
-    return closest, lengths[closest]
+    return closest, path, lengths[closest]
 
 
 # place VNFs at closest node (max 1 per node) and connect with shortest paths
@@ -66,7 +69,7 @@ def place(network_file, service_file, sources_file):
                 matched_vnf = [vnf for vnf in service['vnfs'] if vnf['name'] == matched_vlink['dest']][0]
 
                 # get closest node with remaining resources
-                closest_node, path_length = get_closest_node(network, src_vnf['node'])
+                closest_node, path, path_length = get_closest_node(network, src_vnf['node'])
 
                 dest_vnf = {'name': matched_vnf['name'], 'node': closest_node, 'image': matched_vnf['image']}
                 placement['placement']['vnfs'].append(dest_vnf)
@@ -75,7 +78,7 @@ def place(network_file, service_file, sources_file):
 
                 # add connecting vLink
                 vlink = {'src_vnf': src_vnf['name'], 'src_node': src_vnf['node'],
-                         'dest_vnf': dest_vnf['name'], 'dest_node': dest_vnf['node']}
+                         'dest_vnf': dest_vnf['name'], 'dest_node': dest_vnf['node'], 'path': path}
                 placement['placement']['vlinks'].append(vlink)
 
                 # set vLink delay along shortest path

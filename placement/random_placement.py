@@ -83,9 +83,10 @@ def place(network_file, service_file, sources_file, seed=1234):
                 print('Placed {} at {}'.format(dest_vnf['name'], dest_vnf['node']))
                 network.node[dest_vnf['node']]['cpu'] -= 1
 
-                # add connecting vLink
+                # add connecting vLink along shortest path
                 vlink = {'src_vnf': src_vnf['name'], 'src_node': src_vnf['node'],
                          'dest_vnf': dest_vnf['name'], 'dest_node': dest_vnf['node']}
+                vlink['path'] = nx.shortest_path(network, src_vnf['node'], dest_vnf['node'], weight='delay')
                 placement['placement']['vlinks'].append(vlink)
 
                 # update src_vnf for next iteration
