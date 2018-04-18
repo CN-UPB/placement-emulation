@@ -27,6 +27,7 @@ Folder structure:
    2. Pre-build VNF containers: `cd inputs/vnfs; ./build.sh`
    3. Install some other dependencies
       - `pip install geopy`
+      - `pip3 install requests`
 2. Install [`bjointsp 2.3+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
    - `sudo pyhton3 setup.py develop` Somehow `install` doesn't work at the moment.
    - Requires Python 3.5
