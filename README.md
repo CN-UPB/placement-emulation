@@ -31,6 +31,8 @@ Folder structure:
    - `sudo pyhton3 setup.py develop` Somehow `install` doesn't work at the moment.
    - Requires Python 3.5
 
+*Note: I use a workaround inside the emulator to compute shortest paths correctly using link delays (instead of hop count). This workaround is currently only at my private repository: https://github.com/StefanUPB/vim-emu*
+
 ## Usage
 
 **Quickstart:**
