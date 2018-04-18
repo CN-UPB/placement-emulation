@@ -230,3 +230,9 @@ vnf_user (88.0.0.1/24) --> (88.0.0.2/24) vnf_bridge2 (88.0.0.3/24) --> (88.0.0.4
 vnf_user (88.0.0.1/24) --> (88.0.0.2/24) vnf_bridge3 (88.0.0.3/24) --> (88.0.0.4/24) vnf_bridge2 (88.0.0.5/24) --> (88.0.0.6/24) vnf_bridge1 (88.0.0.7/24) --> (88.0.0.8/24) vnf_web
 ```
 
+# Current limitations
+
+* Only linear chains
+* Only routing along shortest paths regarding delay
+* Only one source and one service (otherwise, make sure to manually adjust IPs of VNFs and vLinks!)
+* No scaling
