@@ -1,0 +1,55 @@
+input:
+  algorithm: greedy
+  network: inputs/networks/Abilene.graphml
+  num_edges: 14
+  num_nodes: 11
+  num_sources: 1
+  num_vnfs: 4
+  service: inputs/services/fw2chain.yaml
+  sources: inputs/sources/source9.yaml
+metrics:
+  delays:
+  - delay: 2
+    dest: vnf_fw2
+    dest_node: pop2
+    src: vnf_user
+    src_node: pop9
+  - delay: 1
+    dest: vnf_fw1
+    dest_node: pop0
+    src: vnf_fw2
+    src_node: pop2
+  - delay: 3
+    dest: vnf_web
+    dest_node: pop1
+    src: vnf_fw1
+    src_node: pop0
+  total_delay: 10
+placement:
+  vlinks:
+  - dest_node: pop2
+    dest_vnf: vnf_fw2
+    src_node: pop9
+    src_vnf: vnf_user
+  - dest_node: pop0
+    dest_vnf: vnf_fw1
+    src_node: pop2
+    src_vnf: vnf_fw2
+  - dest_node: pop1
+    dest_vnf: vnf_web
+    src_node: pop0
+    src_vnf: vnf_fw1
+  vnfs:
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=77.0.0.1/24)"}'
+    name: vnf_user
+    node: pop9
+  - image: '{"image":"placement-fw2-img", "network":"(id=input,ip=77.0.0.2/24),(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_fw2
+    node: pop2
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop0
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop1
+time: 2018-04-11_11-01-35
