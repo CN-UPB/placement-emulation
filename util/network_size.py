@@ -2,12 +2,25 @@
 # used for estimating emulation setup time
 
 import networkx as nx
+import glob
+import os
 import argparse
 
 
 def network_size(network_file):
     network = nx.read_graphml(network_file)
     print(network.number_of_nodes() + network.number_of_edges())
+    return network.number_of_nodes(), network.number_of_edges()
+
+
+# get size of all networks, return dict
+def all_sizes():
+    sizes = {}
+    net_files = glob.glob('../inputs/networks/*.graphml')
+    for net in net_files:
+        net_name = os.path.basename(net).replace('.graphml', '')
+        sizes[net_name] = network_size(net)
+    return sizes
 
 
 def parse_args():

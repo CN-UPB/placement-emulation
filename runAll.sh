@@ -4,7 +4,7 @@ set -e
 
 for ALG in bjointsp random greedy
 do
-	for NET in Abilene Airtel Colt
+	for NET in Airtel BtEurope Cogentco
 	do
 		for SERVICE in fw1chain fw2chain fw3chain
 		do
