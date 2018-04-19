@@ -1,0 +1,52 @@
+input:
+  algorithm: random
+  network: inputs/networks/Abilene.graphml
+  num_edges: 14
+  num_nodes: 11
+  num_sources: 1
+  num_vnfs: 3
+  seed: 1234
+  service: inputs/services/fw1chain.yaml
+  sources: inputs/sources/source7.yaml
+metrics:
+  delays:
+  - delay: 2
+    dest: vnf_fw1
+    dest_node: pop6
+    src: vnf_user
+    src_node: pop7
+  - delay: 5
+    dest: vnf_web
+    dest_node: pop1
+    src: vnf_fw1
+    src_node: pop6
+  total_delay: 7
+placement:
+  vlinks:
+  - dest_node: pop6
+    dest_vnf: vnf_fw1
+    path:
+    - pop7
+    - pop6
+    src_node: pop7
+    src_vnf: vnf_user
+  - dest_node: pop1
+    dest_vnf: vnf_web
+    path:
+    - pop6
+    - pop7
+    - pop10
+    - pop1
+    src_node: pop6
+    src_vnf: vnf_fw1
+  vnfs:
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_user
+    node: pop7
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop6
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop1
+time: 2018-04-18_19-40-10

@@ -1,0 +1,49 @@
+input:
+  algorithm: greedy
+  network: inputs/networks/Abilene.graphml
+  num_edges: 14
+  num_nodes: 11
+  num_sources: 1
+  num_vnfs: 3
+  service: inputs/services/fw1chain.yaml
+  sources: inputs/sources/source3.yaml
+metrics:
+  delays:
+  - delay: 3
+    dest: vnf_fw1
+    dest_node: pop4
+    src: vnf_user
+    src_node: pop3
+  - delay: 1
+    dest: vnf_web
+    dest_node: pop5
+    src: vnf_fw1
+    src_node: pop4
+  total_delay: 4
+placement:
+  vlinks:
+  - dest_node: pop4
+    dest_vnf: vnf_fw1
+    path:
+    - pop3
+    - pop4
+    src_node: pop3
+    src_vnf: vnf_user
+  - dest_node: pop5
+    dest_vnf: vnf_web
+    path:
+    - pop4
+    - pop5
+    src_node: pop4
+    src_vnf: vnf_fw1
+  vnfs:
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_user
+    node: pop3
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop4
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop5
+time: 2018-04-18_22-59-19

@@ -1,0 +1,33 @@
+chain_delay:
+  delay: 27.4
+  max: 28.4
+  min: 27.1
+delays:
+- delay: 6.229
+  dest: vnf_fw2
+  max: 12.784
+  min: 6.108
+  src: vnf_user
+  stddev: 0.659
+- delay: 4.216
+  dest: vnf_fw1
+  max: 9.341
+  min: 4.129
+  src: vnf_fw2
+  stddev: 0.515
+- delay: 2.196
+  dest: vnf_web
+  max: 5.214
+  min: 2.119
+  src: vnf_fw1
+  stddev: 0.305
+input:
+  algorithm: bjointsp
+  network: inputs/networks/Abilene.graphml
+  num_edges: 14
+  num_nodes: 11
+  num_sources: 1
+  num_vnfs: 4
+  service: inputs/services/fw2chain.yaml
+  sources: inputs/sources/source8.yaml
+time: 2018-04-18_17-14-35
