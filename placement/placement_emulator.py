@@ -28,11 +28,11 @@ def emulate_placement(placement):
             data = {'vnf_src_name': src, 'vnf_dst_name': dst, 'vnf_src_interface': 'output', 'vnf_dst_interface': 'input', 'bidirectional': 'True', 'weight': 'delay'}
             response = requests.put(network_url, json=data)
             print('Adding link from ' + src + ' to ' + dst + '. Success: ' + str(response.status_code == requests.codes.ok))
-            vlink['emu_debug_info'] = response.text
-
-    # dump updated result with emulation response info
-    with open(placement, 'w', newline='') as place_file:
-        yaml.dump(result, place_file, default_flow_style=False)
+    #         vlink['emu_debug_info'] = response.text
+    #
+    # # dump updated result with emulation response info
+    # with open(placement, 'w', newline='') as place_file:
+    #     yaml.dump(result, place_file, default_flow_style=False)
 
 
 def parse_args():
@@ -70,5 +70,3 @@ if __name__ == '__main__':
     else:
         print('\n\nEmulating calculated placement:\n')
         emulate_placement(placement)
-
-# TODO: what about scaling? ports & connections need to be decided dynamically. load balancing?
