@@ -31,6 +31,7 @@ import networkx as nx
 import signal
 import time
 from geopy.distance import vincenty
+import numpy as np
 from mininet.net import Containernet
 from mininet.log import setLogLevel
 from mininet.link import TCLink
@@ -111,8 +112,8 @@ class TopologyZooTopology(object):
         for e in self.G.edges(data=True):
             # parse bw limit from edge
             bw_mbps = self._parse_bandwidth(e)
-            # calculate delay from nodes
-            delay = round(self._calc_delay_ms(e[0], e[1]))
+            # calculate delay from nodes; use np.around for consistent rounding behavior in phyton2 and 3
+            delay = np.around(self._calc_delay_ms(e[0], e[1]))
             try:
                 self.net.addLink(self.pops[e[0]], self.pops[e[1]],
                                  cls=TCLink,

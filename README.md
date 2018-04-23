@@ -24,15 +24,12 @@ Folder structure:
 1. Install the emulator:
    1. Install [`vim-emu`](https://osm.etsi.org/gitweb/?p=osm/vim-emu.git) (see [README.md "Bare-metal installation"](https://osm.etsi.org/gitweb/?p=osm/vim-emu.git;a=blob;f=README.md;h=ba22ec342ed5d60bf65770aa154adce8b0fcc141;hb=HEAD))
       - `cd vim-emu; sudo python setup.py develop`
+      - *Note: I use a workaround inside the emulator to compute shortest paths correctly using link delays (instead of hop count). This workaround is currently only at my private repository: https://github.com/StefanUPB/vim-emu*
    2. Pre-build VNF containers: `cd inputs/vnfs; ./build.sh`
-   3. Install some other dependencies
-      - `pip install geopy`
-      - `pip3 install requests`
+   3. Install some other dependencies: `geopy`, `numpy`, `requests`
 2. Install [`bjointsp 2.3+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
    - `sudo pyhton3 setup.py develop` Somehow `install` doesn't work at the moment.
    - Requires Python 3.5
-
-*Note: I use a workaround inside the emulator to compute shortest paths correctly using link delays (instead of hop count). This workaround is currently only at my private repository: https://github.com/StefanUPB/vim-emu*
 
 ## Usage
 
@@ -66,11 +63,6 @@ If you only want to trigger placement without emulation, use the `--placeOnly` o
 **Experiments:**
 
 Use scripts like `runAllAbilene.sh` to run a large number of placement emulations sequentially. *Important:* use `|& tee some_log.log` to log the display output for debugging.
-
-For some experimental results see:
-
-* [Airtel notebook](eval/eval_airtel.ipynb)
-* [Abilene notebook](eval/eval_abilene.ipynb)
 
 
 ## Emulation environment
@@ -232,6 +224,7 @@ vnf_user (88.0.0.1/24) --> (88.0.0.2/24) vnf_bridge3 (88.0.0.3/24) --> (88.0.0.4
 
 # Current limitations
 
+* No proper REST API
 * Only linear chains
 * Only routing along shortest paths regarding delay
 * Only one source and one service (otherwise, make sure to manually adjust IPs of VNFs and vLinks!)

@@ -2,10 +2,9 @@
 # for consistent calculation and rounding of delays across placement algorithms and with emulation!
 import networkx as nx
 from geopy.distance import vincenty
+import numpy as np
 
 
-# TODO: also use for bjointsp? just have to retrieve nodes, links from created networkx
-# TODO: but how? best to pass NetworkX directly to all placements (slight adjustment of interface)
 # read graphml, calculate delays, return undirected(!) NetworkX graph
 # if specified (as dict), set additional node and/or edge attributes (e.g., resources)
 def read_network(file, node_attr=None, edge_attr=None):
@@ -26,8 +25,9 @@ def read_network(file, node_attr=None, edge_attr=None):
         n2_lat, n2_long = n2.get('Latitude'), n2.get('Longitude')
         distance = vincenty((n1_lat, n1_long), (n2_lat, n2_long)).meters	    # in meters
         delay = (distance / SPEED_OF_LIGHT * 1000) * PROPAGATION_FACTOR  	    # in milliseconds
-        # round to integer delays!
-        network[e[0]][e[1]]['delay'] = round(delay)
+        print(f'{e} distance: {distance}, delay: {delay}')
+        # round to integer delays! use np.around for consistent behavior in python2 vs 3
+        network[e[0]][e[1]]['delay'] = np.around(delay)
 
     # set node and edge attributes if specified
     # all attributes are set equally for all nodes/edges
