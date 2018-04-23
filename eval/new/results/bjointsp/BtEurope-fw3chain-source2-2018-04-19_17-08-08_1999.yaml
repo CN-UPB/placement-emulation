@@ -1,0 +1,186 @@
+input:
+  algorithm: bjointsp
+  network: BtEurope.graphml
+  num_edges: 37
+  num_nodes: 24
+  num_sources: 1
+  num_vnfs: 5
+  objective: 0
+  seed: 1999
+  service: fw3chain.yaml
+  sources: source2.yaml
+metrics:
+  changed:
+  - name: vnf_web
+    node: pop1
+  - name: vnf_fw3
+    node: pop5
+  - name: vnf_fw1
+    node: pop21
+  - name: vnf_fw2
+    node: pop4
+  - name: vnf_user
+    node: pop2
+  delays:
+  - delay: 1
+    dest: vnf_web
+    dest_node: pop1
+    src: vnf_fw1
+    src_node: pop21
+  - delay: 1
+    dest: vnf_fw3
+    dest_node: pop5
+    src: vnf_user
+    src_node: pop2
+  - delay: 0
+    dest: vnf_fw1
+    dest_node: pop21
+    src: vnf_fw2
+    src_node: pop4
+  - delay: 0
+    dest: vnf_fw2
+    dest_node: pop4
+    src: vnf_fw3
+    src_node: pop5
+  max_cpu_oversub: 0
+  max_dr_oversub: 0
+  max_mem_oversub: 0
+  num_changed: 5
+  num_instances: 5
+  obj_value: 5015002.0
+  runtime: 0.17328453063964844
+  total_delay: 2
+placement:
+  alloc_node_res:
+  - cpu: 1
+    mem: 1
+    name: vnf_web
+    node: pop1
+  - cpu: 1
+    mem: 1
+    name: vnf_fw3
+    node: pop5
+  - cpu: 1
+    mem: 1
+    name: vnf_fw1
+    node: pop21
+  - cpu: 1
+    mem: 1
+    name: vnf_fw2
+    node: pop4
+  - cpu: 1
+    mem: 1
+    name: vnf_user
+    node: pop2
+  cpu_oversub: []
+  dr_oversub: []
+  flows:
+  - arc: vnf_fw1.0->vnf_web.0
+    dst_node: pop1
+    flow_id: f1
+    src_node: pop21
+  - arc: vnf_user.0->vnf_fw3.0
+    dst_node: pop5
+    flow_id: f1
+    src_node: pop2
+  - arc: vnf_fw2.0->vnf_fw1.0
+    dst_node: pop21
+    flow_id: f1
+    src_node: pop4
+  - arc: vnf_fw3.0->vnf_fw2.0
+    dst_node: pop4
+    flow_id: f1
+    src_node: pop5
+  links:
+  - arc: vnf_fw1.0->vnf_web.0
+    edge_dst: pop1
+    edge_src: pop21
+    link_dst: pop4
+    link_src: pop21
+  - arc: vnf_fw1.0->vnf_web.0
+    edge_dst: pop1
+    edge_src: pop21
+    link_dst: pop1
+    link_src: pop4
+  - arc: vnf_user.0->vnf_fw3.0
+    edge_dst: pop5
+    edge_src: pop2
+    link_dst: pop5
+    link_src: pop2
+  - arc: vnf_fw2.0->vnf_fw1.0
+    edge_dst: pop21
+    edge_src: pop4
+    link_dst: pop21
+    link_src: pop4
+  - arc: vnf_fw3.0->vnf_fw2.0
+    edge_dst: pop4
+    edge_src: pop5
+    link_dst: pop4
+    link_src: pop5
+  mem_oversub: []
+  vlinks:
+  - dest_node: pop1
+    dest_vnf: vnf_web
+    emu_debug_info: '"success: add-flow between vnf_fw1 and vnf_web with options:
+      {\n \"priority\": null, \n \"path\": [\n  \"dc22.s1\", \n  \"dc5.s1\", \n  \"dc2.s1\"\n
+      ], \n \"vlan\": 1, \n \"cookie\": null, \n \"match_input\": null\n}\nsuccess:
+      add-flow between vnf_web and vnf_fw1 with options: {\n \"priority\": null, \n
+      \"path\": [\n  \"dc2.s1\", \n  \"dc5.s1\", \n  \"dc22.s1\"\n ], \n \"vlan\":
+      2, \n \"cookie\": null, \n \"match_input\": null\n}"
+
+      '
+    src_node: pop21
+    src_vnf: vnf_fw1
+  - dest_node: pop5
+    dest_vnf: vnf_fw3
+    emu_debug_info: '"success: add-flow between vnf_user and vnf_fw3 with options:
+      {\n \"priority\": null, \n \"path\": [\n  \"dc3.s1\", \n  \"dc6.s1\"\n ], \n
+      \"vlan\": 3, \n \"cookie\": null, \n \"match_input\": null\n}\nsuccess: add-flow
+      between vnf_fw3 and vnf_user with options: {\n \"priority\": null, \n \"path\":
+      [\n  \"dc6.s1\", \n  \"dc3.s1\"\n ], \n \"vlan\": 4, \n \"cookie\": null, \n
+      \"match_input\": null\n}"
+
+      '
+    src_node: pop2
+    src_vnf: vnf_user
+  - dest_node: pop21
+    dest_vnf: vnf_fw1
+    emu_debug_info: '"success: add-flow between vnf_fw2 and vnf_fw1 with options:
+      {\n \"priority\": null, \n \"path\": [\n  \"dc5.s1\", \n  \"dc22.s1\"\n ], \n
+      \"vlan\": 5, \n \"cookie\": null, \n \"match_input\": null\n}\nsuccess: add-flow
+      between vnf_fw1 and vnf_fw2 with options: {\n \"priority\": null, \n \"path\":
+      [\n  \"dc22.s1\", \n  \"dc5.s1\"\n ], \n \"vlan\": 6, \n \"cookie\": null, \n
+      \"match_input\": null\n}"
+
+      '
+    src_node: pop4
+    src_vnf: vnf_fw2
+  - dest_node: pop4
+    dest_vnf: vnf_fw2
+    emu_debug_info: '"success: add-flow between vnf_fw3 and vnf_fw2 with options:
+      {\n \"priority\": null, \n \"path\": [\n  \"dc6.s1\", \n  \"dc5.s1\"\n ], \n
+      \"vlan\": 7, \n \"cookie\": null, \n \"match_input\": null\n}\nsuccess: add-flow
+      between vnf_fw2 and vnf_fw3 with options: {\n \"priority\": null, \n \"path\":
+      [\n  \"dc5.s1\", \n  \"dc6.s1\"\n ], \n \"vlan\": 8, \n \"cookie\": null, \n
+      \"match_input\": null\n}"
+
+      '
+    src_node: pop5
+    src_vnf: vnf_fw3
+  vnfs:
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop1
+  - image: '{"image":"placement-fw3-img", "network":"(id=input,ip=66.0.0.2/24),(id=output,ip=77.0.0.1/24)"}'
+    name: vnf_fw3
+    node: pop5
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop21
+  - image: '{"image":"placement-fw2-img", "network":"(id=input,ip=77.0.0.2/24),(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_fw2
+    node: pop4
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=66.0.0.1/24)"}'
+    name: vnf_user
+    node: pop2
+time: 2018-04-19_17-08-08

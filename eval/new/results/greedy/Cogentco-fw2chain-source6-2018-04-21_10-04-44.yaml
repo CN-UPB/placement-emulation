@@ -1,0 +1,101 @@
+input:
+  algorithm: greedy
+  network: inputs/networks/Cogentco.graphml
+  num_edges: 243
+  num_nodes: 197
+  num_sources: 1
+  num_vnfs: 4
+  service: inputs/services/fw2chain.yaml
+  sources: inputs/sources/source6.yaml
+metrics:
+  delays:
+  - delay: 0
+    dest: vnf_fw2
+    dest_node: pop185
+    src: vnf_user
+    src_node: pop6
+  - delay: 0
+    dest: vnf_fw1
+    dest_node: pop167
+    src: vnf_fw2
+    src_node: pop185
+  - delay: 0
+    dest: vnf_web
+    dest_node: pop187
+    src: vnf_fw1
+    src_node: pop167
+  total_delay: 0
+placement:
+  vlinks:
+  - dest_node: pop185
+    dest_vnf: vnf_fw2
+    emu_debug_info: '"success: add-flow between vnf_user and vnf_fw2 with options:
+      {\n \"priority\": null, \n \"path\": [\n  \"dc7.s1\", \n  \"dc5.s1\", \n  \"dc4.s1\",
+      \n  \"dc78.s1\", \n  \"dc163.s1\", \n  \"dc168.s1\", \n  \"dc169.s1\", \n  \"dc170.s1\",
+      \n  \"dc186.s1\"\n ], \n \"vlan\": 1, \n \"cookie\": null, \n \"match_input\":
+      null\n}\nsuccess: add-flow between vnf_fw2 and vnf_user with options: {\n \"priority\":
+      null, \n \"path\": [\n  \"dc186.s1\", \n  \"dc170.s1\", \n  \"dc169.s1\", \n  \"dc168.s1\",
+      \n  \"dc163.s1\", \n  \"dc78.s1\", \n  \"dc4.s1\", \n  \"dc5.s1\", \n  \"dc7.s1\"\n
+      ], \n \"vlan\": 2, \n \"cookie\": null, \n \"match_input\": null\n}"
+
+      '
+    path:
+    - pop6
+    - pop4
+    - pop3
+    - pop77
+    - pop162
+    - pop167
+    - pop168
+    - pop169
+    - pop185
+    src_node: pop6
+    src_vnf: vnf_user
+  - dest_node: pop167
+    dest_vnf: vnf_fw1
+    emu_debug_info: '"success: add-flow between vnf_fw2 and vnf_fw1 with options:
+      {\n \"priority\": null, \n \"path\": [\n  \"dc186.s1\", \n  \"dc170.s1\", \n  \"dc169.s1\",
+      \n  \"dc168.s1\"\n ], \n \"vlan\": 3, \n \"cookie\": null, \n \"match_input\":
+      null\n}\nsuccess: add-flow between vnf_fw1 and vnf_fw2 with options: {\n \"priority\":
+      null, \n \"path\": [\n  \"dc168.s1\", \n  \"dc169.s1\", \n  \"dc170.s1\", \n  \"dc186.s1\"\n
+      ], \n \"vlan\": 4, \n \"cookie\": null, \n \"match_input\": null\n}"
+
+      '
+    path:
+    - pop185
+    - pop169
+    - pop168
+    - pop167
+    src_node: pop185
+    src_vnf: vnf_fw2
+  - dest_node: pop187
+    dest_vnf: vnf_web
+    emu_debug_info: '"success: add-flow between vnf_fw1 and vnf_web with options:
+      {\n \"priority\": null, \n \"path\": [\n  \"dc168.s1\", \n  \"dc163.s1\", \n  \"dc164.s1\",
+      \n  \"dc188.s1\"\n ], \n \"vlan\": 5, \n \"cookie\": null, \n \"match_input\":
+      null\n}\nsuccess: add-flow between vnf_web and vnf_fw1 with options: {\n \"priority\":
+      null, \n \"path\": [\n  \"dc188.s1\", \n  \"dc164.s1\", \n  \"dc163.s1\", \n  \"dc168.s1\"\n
+      ], \n \"vlan\": 6, \n \"cookie\": null, \n \"match_input\": null\n}"
+
+      '
+    path:
+    - pop167
+    - pop162
+    - pop163
+    - pop187
+    src_node: pop167
+    src_vnf: vnf_fw1
+  vnfs:
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=77.0.0.1/24)"}'
+    name: vnf_user
+    node: pop6
+  - image: '{"image":"placement-fw2-img", "network":"(id=input,ip=77.0.0.2/24),(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_fw2
+    node: pop185
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop167
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop187
+time: 2018-04-21_10-04-44

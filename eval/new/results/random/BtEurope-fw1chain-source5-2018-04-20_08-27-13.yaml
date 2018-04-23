@@ -1,0 +1,68 @@
+input:
+  algorithm: random
+  network: inputs/networks/BtEurope.graphml
+  num_edges: 37
+  num_nodes: 24
+  num_sources: 1
+  num_vnfs: 3
+  seed: 1234
+  service: inputs/services/fw1chain.yaml
+  sources: inputs/sources/source5.yaml
+metrics:
+  delays:
+  - delay: 0
+    dest: vnf_fw1
+    dest_node: pop21
+    src: vnf_user
+    src_node: pop5
+  - delay: 16
+    dest: vnf_web
+    dest_node: pop11
+    src: vnf_fw1
+    src_node: pop21
+  total_delay: 16
+placement:
+  vlinks:
+  - dest_node: pop21
+    dest_vnf: vnf_fw1
+    emu_debug_info: '"success: add-flow between vnf_user and vnf_fw1 with options:
+      {\n \"priority\": null, \n \"path\": [\n  \"dc6.s1\", \n  \"dc5.s1\", \n  \"dc22.s1\"\n
+      ], \n \"vlan\": 1, \n \"cookie\": null, \n \"match_input\": null\n}\nsuccess:
+      add-flow between vnf_fw1 and vnf_user with options: {\n \"priority\": null,
+      \n \"path\": [\n  \"dc22.s1\", \n  \"dc5.s1\", \n  \"dc6.s1\"\n ], \n \"vlan\":
+      2, \n \"cookie\": null, \n \"match_input\": null\n}"
+
+      '
+    path:
+    - pop5
+    - pop4
+    - pop21
+    src_node: pop5
+    src_vnf: vnf_user
+  - dest_node: pop11
+    dest_vnf: vnf_web
+    emu_debug_info: '"success: add-flow between vnf_fw1 and vnf_web with options:
+      {\n \"priority\": null, \n \"path\": [\n  \"dc22.s1\", \n  \"dc18.s1\", \n  \"dc12.s1\"\n
+      ], \n \"vlan\": 3, \n \"cookie\": null, \n \"match_input\": null\n}\nsuccess:
+      add-flow between vnf_web and vnf_fw1 with options: {\n \"priority\": null, \n
+      \"path\": [\n  \"dc12.s1\", \n  \"dc18.s1\", \n  \"dc22.s1\"\n ], \n \"vlan\":
+      4, \n \"cookie\": null, \n \"match_input\": null\n}"
+
+      '
+    path:
+    - pop21
+    - pop17
+    - pop11
+    src_node: pop21
+    src_vnf: vnf_fw1
+  vnfs:
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_user
+    node: pop5
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop21
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop11
+time: 2018-04-20_08-27-13

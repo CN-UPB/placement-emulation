@@ -1,0 +1,33 @@
+chain_delay:
+  delay: 3.0
+  max: 5.2
+  min: 2.8
+delays:
+- delay: 0.12
+  dest: vnf_fw2
+  max: 1.083
+  min: 0.091
+  src: vnf_user
+  stddev: 0.097
+- delay: 0.144
+  dest: vnf_fw1
+  max: 1.707
+  min: 0.112
+  src: vnf_fw2
+  stddev: 0.158
+- delay: 0.104
+  dest: vnf_web
+  max: 1.167
+  min: 0.083
+  src: vnf_fw1
+  stddev: 0.107
+input:
+  algorithm: bjointsp
+  network: inputs/networks/Cogentco.graphml
+  num_edges: 245
+  num_nodes: 197
+  num_sources: 1
+  num_vnfs: 4
+  service: inputs/services/fw2chain.yaml
+  sources: inputs/sources/source3.yaml
+time: 2018-04-19_22-02-13

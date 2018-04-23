@@ -1,0 +1,39 @@
+chain_delay:
+  delay: 204.9
+  max: 206.6
+  min: 204.5
+delays:
+- delay: 60.779
+  dest: vnf_fw3
+  max: 120.938
+  min: 60.135
+  src: vnf_user
+  stddev: 6.046
+- delay: 14.315
+  dest: vnf_fw2
+  max: 29.225
+  min: 14.121
+  src: vnf_fw3
+  stddev: 1.499
+- delay: 20.371
+  dest: vnf_fw1
+  max: 41.173
+  min: 20.124
+  src: vnf_fw2
+  stddev: 2.091
+- delay: 6.235
+  dest: vnf_web
+  max: 13.233
+  min: 6.118
+  src: vnf_fw1
+  stddev: 0.704
+input:
+  algorithm: bjointsp
+  network: inputs/networks/Airtel.graphml
+  num_edges: 37
+  num_nodes: 16
+  num_sources: 1
+  num_vnfs: 5
+  service: inputs/services/fw3chain.yaml
+  sources: inputs/sources/source6.yaml
+time: 2018-04-19_13-39-07

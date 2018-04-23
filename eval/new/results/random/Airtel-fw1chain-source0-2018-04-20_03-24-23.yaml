@@ -1,0 +1,66 @@
+input:
+  algorithm: random
+  network: inputs/networks/Airtel.graphml
+  num_edges: 26
+  num_nodes: 16
+  num_sources: 1
+  num_vnfs: 3
+  seed: 1234
+  service: inputs/services/fw1chain.yaml
+  sources: inputs/sources/source0.yaml
+metrics:
+  delays:
+  - delay: 10
+    dest: vnf_fw1
+    dest_node: pop7
+    src: vnf_user
+    src_node: pop0
+  - delay: 22
+    dest: vnf_web
+    dest_node: pop2
+    src: vnf_fw1
+    src_node: pop7
+  total_delay: 32
+placement:
+  vlinks:
+  - dest_node: pop7
+    dest_vnf: vnf_fw1
+    emu_debug_info: '"success: add-flow between vnf_user and vnf_fw1 with options:
+      {\n \"priority\": null, \n \"path\": [\n  \"dc1.s1\", \n  \"dc8.s1\"\n ], \n
+      \"vlan\": 1, \n \"cookie\": null, \n \"match_input\": null\n}\nsuccess: add-flow
+      between vnf_fw1 and vnf_user with options: {\n \"priority\": null, \n \"path\":
+      [\n  \"dc8.s1\", \n  \"dc1.s1\"\n ], \n \"vlan\": 2, \n \"cookie\": null, \n
+      \"match_input\": null\n}"
+
+      '
+    path:
+    - pop0
+    - pop7
+    src_node: pop0
+    src_vnf: vnf_user
+  - dest_node: pop2
+    dest_vnf: vnf_web
+    emu_debug_info: '"success: add-flow between vnf_fw1 and vnf_web with options:
+      {\n \"priority\": null, \n \"path\": [\n  \"dc8.s1\", \n  \"dc3.s1\"\n ], \n
+      \"vlan\": 3, \n \"cookie\": null, \n \"match_input\": null\n}\nsuccess: add-flow
+      between vnf_web and vnf_fw1 with options: {\n \"priority\": null, \n \"path\":
+      [\n  \"dc3.s1\", \n  \"dc8.s1\"\n ], \n \"vlan\": 4, \n \"cookie\": null, \n
+      \"match_input\": null\n}"
+
+      '
+    path:
+    - pop7
+    - pop2
+    src_node: pop7
+    src_vnf: vnf_fw1
+  vnfs:
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_user
+    node: pop0
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop7
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop2
+time: 2018-04-20_03-24-23

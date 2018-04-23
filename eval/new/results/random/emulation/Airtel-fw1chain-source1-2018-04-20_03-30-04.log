@@ -1,0 +1,127 @@
+
+Latency between VNFs (ping)
+vnf_user -> vnf_fw1
+PING 88.0.0.2 (88.0.0.2): 56 data bytes
+--- 88.0.0.2 ping statistics ---
+100 packets transmitted, 100 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 70.138/70.903/141.601/7.105 ms
+
+Latency between VNFs (ping)
+vnf_fw1 -> vnf_web
+PING 99.0.0.2 (99.0.0.2): 56 data bytes
+--- 99.0.0.2 ping statistics ---
+100 packets transmitted, 100 packets received, 0% packet loss
+round-trip min/avg/max/stddev = 44.158/44.635/89.299/4.489 ms
+
+Latency of whole chain (httping)
+PING 88.0.0.2:80 (/):
+connected to 88.0.0.2:80 (274 bytes), seq=0 time=231.26 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=1 time=230.69 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=2 time=230.49 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=3 time=230.55 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=4 time=230.52 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=5 time=230.17 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=6 time=230.42 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=7 time=230.23 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=8 time=230.17 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=9 time=230.20 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=10 time=230.20 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=11 time=230.14 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=12 time=230.21 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=13 time=230.15 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=14 time=230.25 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=15 time=230.29 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=16 time=230.17 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=17 time=230.28 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=18 time=230.20 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=19 time=230.25 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=20 time=230.27 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=21 time=230.18 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=22 time=230.26 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=23 time=230.24 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=24 time=230.26 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=25 time=230.18 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=26 time=230.28 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=27 time=230.04 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=28 time=230.01 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=29 time=230.16 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=30 time=230.08 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=31 time=230.18 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=32 time=230.18 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=33 time=230.23 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=34 time=230.13 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=35 time=230.27 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=36 time=230.18 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=37 time=230.33 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=38 time=230.23 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=39 time=230.18 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=40 time=230.26 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=41 time=230.17 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=42 time=230.15 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=43 time=230.21 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=44 time=230.21 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=45 time=230.19 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=46 time=230.21 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=47 time=230.17 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=48 time=230.19 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=49 time=230.20 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=50 time=230.40 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=51 time=230.15 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=52 time=230.20 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=53 time=230.17 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=54 time=230.06 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=55 time=230.28 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=56 time=230.27 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=57 time=230.14 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=58 time=230.18 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=59 time=230.22 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=60 time=230.15 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=61 time=230.13 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=62 time=230.12 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=63 time=230.23 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=64 time=230.18 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=65 time=230.23 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=66 time=230.11 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=67 time=230.21 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=68 time=230.17 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=69 time=230.31 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=70 time=230.17 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=71 time=230.13 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=72 time=230.24 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=73 time=230.17 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=74 time=230.21 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=75 time=230.10 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=76 time=230.19 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=77 time=230.14 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=78 time=230.25 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=79 time=230.29 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=80 time=230.32 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=81 time=230.23 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=82 time=230.18 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=83 time=230.32 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=84 time=230.20 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=85 time=230.36 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=86 time=230.11 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=87 time=230.15 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=88 time=230.21 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=89 time=230.37 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=90 time=230.41 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=91 time=230.27 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=92 time=230.30 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=93 time=230.36 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=94 time=230.15 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=95 time=230.23 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=96 time=230.26 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=97 time=230.19 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=98 time=230.70 ms 
+connected to 88.0.0.2:80 (274 bytes), seq=99 time=230.21 ms 
+--- http://88.0.0.2/ ping statistics ---
+100 connects, 100 ok, 0.00% failed, time 123044ms
+round-trip min/avg/max = 230.0/230.2/231.3 ms
+
+Info
+timestamp: 2018-04-20_03-30-04
+algorithm: random
+network: inputs/networks/Airtel.graphml
+service: inputs/services/fw1chain.yaml
+sources: inputs/sources/source1.yaml
