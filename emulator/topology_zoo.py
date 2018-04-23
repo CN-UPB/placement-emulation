@@ -113,13 +113,13 @@ class TopologyZooTopology(object):
             # parse bw limit from edge
             bw_mbps = self._parse_bandwidth(e)
             # calculate delay from nodes; use np.around for consistent rounding behavior in phyton2 and 3
-            delay = np.around(self._calc_delay_ms(e[0], e[1]))
+            delay = int(np.around(self._calc_delay_ms(e[0], e[1])))
             try:
                 self.net.addLink(self.pops[e[0]], self.pops[e[1]],
                                  cls=TCLink,
-                                 delay='{}ms'.format(int(delay)),
+                                 delay='{}ms'.format(delay),
                                  bw=min(bw_mbps, 1000))
-                LOG.info("Created link: {}".format(e))
+                LOG.info("Created link {} with delay {}".format(e, delay))
             except:
                     LOG.exception("Error in experiment")
 
@@ -166,7 +166,7 @@ class TopologyZooTopology(object):
     def _calc_delay_ms(self, n1id, n2id):
         meter = self._calc_distance_meter(n1id, n2id)
         if meter <= 0:
-            return 1  # default 1 ms delay
+            return 0  # default 0 ms delay
         LOG.debug("- Distance {}-{} = {} km"
               .format(n1id, n2id, meter / 1000))
         # calc delay
