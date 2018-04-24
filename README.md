@@ -3,12 +3,15 @@ Automatically emulate network service placements calculated by placement algorit
 
 Folder structure:
 
-* `emulator`: `topology_zoo.py` script, reading a Topology Zoo network and starting it in `vim-emu` 
-* `placement`: `placement_emulator.py` triggers the `bjointsp` placement algorithm and starts the placed VNFs on the emulator
-* `util`: auxiliary scripts for measurement
+* `place_emu`: contains the project's source code
+  * `emulator`: `topology_zoo.py` script, reading a Topology Zoo network and starting it in `vim-emu` 
+  * `placement`: implementations of greedy and of random placement
+  * `util`: auxiliary scripts, e.g., for measurement
+  * `placement_emulator.py` triggers the a placement algorithm and starts the placed VNFs on the emulator
 * `inputs`: example VNF images, networks, services, sources for placement and emulation
 * `results`: placement results and emulation logs
 * `docs`: docs...
+* `bin`: scripts for automating the placement emulation and measurement process; run from project root!
 
 
 ## Preliminary timeplan
@@ -26,10 +29,11 @@ Folder structure:
       - `cd vim-emu; sudo python setup.py develop`
       - *Note: I use a workaround inside the emulator to compute shortest paths correctly using link delays (instead of hop count). This workaround is currently only at my private repository: https://github.com/StefanUPB/vim-emu*
    2. Pre-build VNF containers: `cd inputs/vnfs; ./build.sh`
-   3. Install some other dependencies: `geopy`, `numpy`, `requests`
 2. Install [`bjointsp 2.3+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) (use `setup.py` in the `placement-emulation` branch)
    - `sudo pyhton3 setup.py develop` Somehow `install` doesn't work at the moment.
    - Requires Python 3.5
+3. Install other dependencies of place_emu: `sudo python3 setup.py develop`
+
 
 ## Usage
 
@@ -50,8 +54,8 @@ If you just want to test placement-emulation with predefined parameters, simply 
 If you prefer to run the steps yourself, you can follow these manual steps:
 
 1. Select inputs from `inputs`
-2. Start the topology on `vim-emu` as described [below](#start-a-topology), e.g., `sudo python emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
-3. Start the placement and emulation with `python3 placement/placement_emulator.py -a bjointsp --network inputs/networks/Abilene.graphml --service inputs/services/fw1chain.yaml --sources inputs/sources/source0.yaml`.
+2. Start the topology on `vim-emu` as described [below](#start-a-topology), e.g., `sudo python place_emu/emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
+3. Start the placement and emulation with `python3 place_emu/placement_emulator.py -a bjointsp --network inputs/networks/Abilene.graphml --service inputs/services/fw1chain.yaml --sources inputs/sources/source0.yaml`.
 4. You can test the deployment and connectivity as described [below](#testing-the-deployment), e.g., with `vim-emu compute list`. Delay measurements can be performed with `ping` or `httping` from inside `vim-emu`.
 5. Important: Stop the emulator using `exit` inside the ContainerNet terminal. This is necessary to clean up, so that the emulator can be started again.
 
@@ -69,7 +73,7 @@ Use scripts like `runAllAbilene.sh` to run a large number of placement emulation
 
 ### Start a topology
 
-1. `sudo python emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
+1. `sudo python place_emu/emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
 2. Check if everything is working (other terminal): `vim-emu datacenter list`
 
 ### Start and place a service (example)
@@ -190,9 +194,7 @@ The black numbers illustrate the pop number used by the `vim-emu` and the placem
 ### Network service chains
 The repository ~~also~~ only contains examples without the proxy, which may introduce unexpected effects. These examples contain 1-2 L4FW or 1-2 bridges instead. While L4FW each require a separate TCP connection, leading to higher delays with `httping`, the bridges don't such that there's only one TCP connection from the user to the web server.
 
-We use chains of varying length, in which a user (1st "VNF") requests content from a web server (last VNF). In between, there are 1 to 3 forwarding VNFs (either layer 2 or layer 4).
-
-#### Chains with layer-4 forwarders (socat)
+We use chains of varying length, in which a user (1st "VNF") requests content from a web server (last VNF). In between, there are 1 to 3 forwarding VNFs.
 L4FW are connected with separate TCP connections. Each TCP connection is setup using TCP's 3-way handshake, leading to considerable delay. These are the different chains (interfaces in brackets):
 
 ```
@@ -205,21 +207,6 @@ vnf_user (77.0.0.1/24) --> (77.0.0.2/24) vnf_fw2 (88.0.0.1/24) --> (88.0.0.2/24)
 
 ```
 vnf_user (66.0.0.1/24) --> (66.0.0.2/24) vnf_fw3 (77.0.0.1/24) --> (77.0.0.2/24) vnf_fw2 (88.0.0.1/24) --> (88.0.0.2/24) vnf_fw1 (99.0.0.1/24) --> (99.0.0.2/24) vnf_web
-```
-
-#### Chains with layer-2 forwarders (bridges)
-Here, user and web server are directly connected with a single TCP connection, thus requiring shorter setup delay.
-
-```
-vnf_user (88.0.0.1/24) --> (88.0.0.2/24) vnf_bridge1 (88.0.0.3/24) --> (88.0.0.4/24) vnf_web
-```
-
-```
-vnf_user (88.0.0.1/24) --> (88.0.0.2/24) vnf_bridge2 (88.0.0.3/24) --> (88.0.0.4/24) vnf_bridge1 (88.0.0.5/24) --> (88.0.0.6/24) vnf_web
-```
-
-```
-vnf_user (88.0.0.1/24) --> (88.0.0.2/24) vnf_bridge3 (88.0.0.3/24) --> (88.0.0.4/24) vnf_bridge2 (88.0.0.5/24) --> (88.0.0.6/24) vnf_bridge1 (88.0.0.7/24) --> (88.0.0.8/24) vnf_web
 ```
 
 # Current limitations

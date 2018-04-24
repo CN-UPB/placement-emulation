@@ -17,9 +17,9 @@ setup(
         "requests"
     ],
     zip_safe=False,
-    entry_points={
-        'console_scripts': [
-            'place_emu=place_emu.placement_emulator:main',
-        ],
-    },
+#    entry_points={
+#        'console_scripts': [
+#            'place_emu=place_emu.placement_emulator:main',
+#        ],
+#    },
 )

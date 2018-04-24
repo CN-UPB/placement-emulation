@@ -10,7 +10,7 @@ do
 		do
 			for SRC in source0 source1 source2 source3 source4 source5 source6 source7 source8 source9
 			do
-				./place-emu.sh -a $ALG -n inputs/networks/$NET.graphml -t inputs/services/$SERVICE.yaml -s inputs/sources/$SRC.yaml -c 100
+				./place-emu.sh -a $ALG -n inputs/networks/$NET.graphml -t inputs/services/$SERVICE.yaml -s inputs/sources/$SRC.yaml -c 50
 			done
 		done
 	done
