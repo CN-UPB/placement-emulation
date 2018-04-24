@@ -5,7 +5,6 @@ import pandas as pd
 import os
 
 
-# FIXME: path to eval probably broken -> set as arg
 # load simulation results and calculate RTT
 # network and algorithm name are used to filter the results
 def sim_delays(network, algorithm):
