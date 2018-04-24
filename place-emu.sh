@@ -46,7 +46,7 @@ sleep $NETWORKSIZE
 
 # start the placement emulation
 printf "\n\nStarting the placement emulation\n"
-python3 place_emu/placement/placement_emulator.py -a $ALG --network $NETWORK --service $SERVICE --sources $SOURCES
+python3 place_emu/placement_emulator.py -a $ALG --network $NETWORK --service $SERVICE --sources $SOURCES
 
 # start measurement: 1. generate individual measurement script, 2. run & log it
 printf "\n\nStarting the measurement (logging to $LOG)\n"
