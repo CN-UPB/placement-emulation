@@ -3,7 +3,7 @@ import yaml
 import requests
 import ast
 import bjointsp.main as bjointsp
-from placement import random_placement, greedy_placement
+from place_emu.placement import random_placement, greedy_placement
 
 
 compute_url = 'http://127.0.0.1:5001/restapi/compute/'
@@ -51,7 +51,7 @@ def parse_args():
     return parser.parse_args()
 
 
-if __name__ == '__main__':
+def main():
     args = parse_args()
     if args.alg == 'bjointsp':
         print('\nStarting placement with B-JointSP (heuristic)\n')
@@ -70,3 +70,7 @@ if __name__ == '__main__':
     else:
         print('\n\nEmulating calculated placement:\n')
         emulate_placement(placement)
+
+
+if __name__ == '__main__':
+    main()

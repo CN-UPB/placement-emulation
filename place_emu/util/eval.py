@@ -5,6 +5,7 @@ import pandas as pd
 import os
 
 
+# FIXME: path to eval probably broken -> set as arg
 # load simulation results and calculate RTT
 # network and algorithm name are used to filter the results
 def sim_delays(network, algorithm):
@@ -40,7 +41,6 @@ def emu_delays(network, algorithm):
                 delay['rtt'] = delay['delay']
 
             emu_delays.append(result)
-            # TODO: also store std (how is std affected, when mean/2?)
 
     return emu_delays
 

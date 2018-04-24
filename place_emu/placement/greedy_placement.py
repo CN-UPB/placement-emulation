@@ -1,5 +1,5 @@
 # simple greedy placement
-from util import reader, writer
+from place_emu.util import reader, writer
 import yaml
 import networkx as nx
 from datetime import datetime
