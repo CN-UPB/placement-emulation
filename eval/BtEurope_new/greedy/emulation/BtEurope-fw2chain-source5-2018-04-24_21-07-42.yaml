@@ -1,0 +1,33 @@
+chain_delay:
+  delay: 7.1
+  max: 9.2
+  min: 6.9
+delays:
+- delay: 0.129
+  dest: vnf_fw2
+  max: 1.181
+  min: 0.101
+  src: vnf_user
+  stddev: 0.151
+- delay: 0.114
+  dest: vnf_fw1
+  max: 1.272
+  min: 0.088
+  src: vnf_fw2
+  stddev: 0.165
+- delay: 2.276
+  dest: vnf_web
+  max: 5.664
+  min: 2.134
+  src: vnf_fw1
+  stddev: 0.485
+input:
+  algorithm: greedy
+  network: inputs/networks/BtEurope.graphml
+  num_edges: 37
+  num_nodes: 24
+  num_sources: 1
+  num_vnfs: 4
+  service: inputs/services/fw2chain.yaml
+  sources: inputs/sources/source5.yaml
+time: 2018-04-24_21-07-42

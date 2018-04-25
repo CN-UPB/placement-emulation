@@ -1,0 +1,81 @@
+input:
+  algorithm: greedy
+  network: inputs/networks/BtEurope.graphml
+  num_edges: 37
+  num_nodes: 24
+  num_sources: 1
+  num_vnfs: 5
+  service: inputs/services/fw3chain.yaml
+  sources: inputs/sources/source3.yaml
+metrics:
+  delays:
+  - delay: 2
+    dest: vnf_fw3
+    dest_node: pop4
+    src: vnf_user
+    src_node: pop3
+  - delay: 0
+    dest: vnf_fw2
+    dest_node: pop5
+    src: vnf_fw3
+    src_node: pop4
+  - delay: 0
+    dest: vnf_fw1
+    dest_node: pop21
+    src: vnf_fw2
+    src_node: pop5
+  - delay: 1
+    dest: vnf_web
+    dest_node: pop7
+    src: vnf_fw1
+    src_node: pop21
+  total_delay: 3
+placement:
+  vlinks:
+  - dest_node: pop4
+    dest_vnf: vnf_fw3
+    path:
+    - pop3
+    - pop5
+    - pop4
+    src_node: pop3
+    src_vnf: vnf_user
+  - dest_node: pop5
+    dest_vnf: vnf_fw2
+    path:
+    - pop4
+    - pop5
+    src_node: pop4
+    src_vnf: vnf_fw3
+  - dest_node: pop21
+    dest_vnf: vnf_fw1
+    path:
+    - pop5
+    - pop4
+    - pop21
+    src_node: pop5
+    src_vnf: vnf_fw2
+  - dest_node: pop7
+    dest_vnf: vnf_web
+    path:
+    - pop21
+    - pop7
+    src_node: pop21
+    src_vnf: vnf_fw1
+  vnfs:
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=66.0.0.1/24)"}'
+    name: vnf_user
+    node: pop3
+  - image: '{"image":"placement-fw3-img", "network":"(id=input,ip=66.0.0.2/24),(id=output,ip=77.0.0.1/24)"}'
+    name: vnf_fw3
+    node: pop4
+  - image: '{"image":"placement-fw2-img", "network":"(id=input,ip=77.0.0.2/24),(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_fw2
+    node: pop5
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop21
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop7
+time: 2018-04-24_21-50-26

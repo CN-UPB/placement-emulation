@@ -1,0 +1,51 @@
+input:
+  algorithm: random
+  network: inputs/networks/BtEurope.graphml
+  num_edges: 37
+  num_nodes: 24
+  num_sources: 1
+  num_vnfs: 3
+  seed: 1234
+  service: inputs/services/fw1chain.yaml
+  sources: inputs/sources/source9.yaml
+metrics:
+  delays:
+  - delay: 3
+    dest: vnf_fw1
+    dest_node: pop21
+    src: vnf_user
+    src_node: pop9
+  - delay: 16
+    dest: vnf_web
+    dest_node: pop11
+    src: vnf_fw1
+    src_node: pop21
+  total_delay: 19
+placement:
+  vlinks:
+  - dest_node: pop21
+    dest_vnf: vnf_fw1
+    path:
+    - pop9
+    - pop21
+    src_node: pop9
+    src_vnf: vnf_user
+  - dest_node: pop11
+    dest_vnf: vnf_web
+    path:
+    - pop21
+    - pop17
+    - pop11
+    src_node: pop21
+    src_vnf: vnf_fw1
+  vnfs:
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_user
+    node: pop9
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop21
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop11
+time: 2018-04-24_18-10-19

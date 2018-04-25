@@ -1,0 +1,73 @@
+input:
+  algorithm: random
+  network: inputs/networks/BtEurope.graphml
+  num_edges: 37
+  num_nodes: 24
+  num_sources: 1
+  num_vnfs: 4
+  seed: 1234
+  service: inputs/services/fw2chain.yaml
+  sources: inputs/sources/source1.yaml
+metrics:
+  delays:
+  - delay: 3
+    dest: vnf_fw2
+    dest_node: pop22
+    src: vnf_user
+    src_node: pop1
+  - delay: 18
+    dest: vnf_fw1
+    dest_node: pop12
+    src: vnf_fw2
+    src_node: pop22
+  - delay: 18
+    dest: vnf_web
+    dest_node: pop0
+    src: vnf_fw1
+    src_node: pop12
+  total_delay: 39
+placement:
+  vlinks:
+  - dest_node: pop22
+    dest_vnf: vnf_fw2
+    path:
+    - pop1
+    - pop4
+    - pop21
+    - pop22
+    src_node: pop1
+    src_vnf: vnf_user
+  - dest_node: pop12
+    dest_vnf: vnf_fw1
+    path:
+    - pop22
+    - pop21
+    - pop16
+    - pop12
+    src_node: pop22
+    src_vnf: vnf_fw2
+  - dest_node: pop0
+    dest_vnf: vnf_web
+    path:
+    - pop12
+    - pop16
+    - pop21
+    - pop4
+    - pop5
+    - pop0
+    src_node: pop12
+    src_vnf: vnf_fw1
+  vnfs:
+  - image: '{"image":"placement-user-img", "network":"(id=output,ip=77.0.0.1/24)"}'
+    name: vnf_user
+    node: pop1
+  - image: '{"image":"placement-fw2-img", "network":"(id=input,ip=77.0.0.2/24),(id=output,ip=88.0.0.1/24)"}'
+    name: vnf_fw2
+    node: pop22
+  - image: '{"image":"placement-fw1-img", "network":"(id=input,ip=88.0.0.2/24),(id=output,ip=99.0.0.1/24)"}'
+    name: vnf_fw1
+    node: pop12
+  - image: '{"image":"placement-apache-img", "network":"(id=input,ip=99.0.0.2/24)"}'
+    name: vnf_web
+    node: pop0
+time: 2018-04-24_18-19-28
