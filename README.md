@@ -17,9 +17,9 @@ Folder structure:
 ## Preliminary timeplan
 
 * until 13.4.: first complete paper draft
-* until 27.4.: complete paper
-* until 4.5.: finalization
-* **deadline (probably!): 12.5.**
+* until 2.5.: restructured paper (1st iteration)
+* until 11.5.: finalization
+* **deadline: 12.5.**
 
 
 ## Installation
