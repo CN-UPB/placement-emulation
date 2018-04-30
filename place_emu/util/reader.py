@@ -27,6 +27,7 @@ def read_network(file, node_attr=None, edge_attr=None):
         delay = (distance / SPEED_OF_LIGHT * 1000) * PROPAGATION_FACTOR  	    # in milliseconds
         # round to integer delays! use np.around for consistent behavior in python2 vs 3
         network[e[0]][e[1]]['delay'] = int(np.around(delay))
+        network[e[0]][e[1]]['distance'] = int(distance)
 
     # set node and edge attributes if specified
     # all attributes are set equally for all nodes/edges
