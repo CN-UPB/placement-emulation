@@ -37,9 +37,9 @@ If you just want to test placement-emulation with predefined parameters, simply 
 If you prefer to run the steps yourself, you can follow these manual steps:
 
 1. Select inputs from `inputs`
-2. Start the topology on `vim-emu` as described [below](#start-a-topology), e.g., `sudo python place_emu/emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
+2. Start a network topology on `vim-emu`, e.g., `sudo python place_emu/emulator/topology_zoo.py -g inputs/networks/Abilene.graphml`
 3. Start the placement and emulation with `python3 place_emu/placement_emulator.py -a bjointsp --network inputs/networks/Abilene.graphml --service inputs/services/fw1chain.yaml --sources inputs/sources/source0.yaml`.
-4. You can test the deployment and connectivity as described [below](#testing-the-deployment), e.g., with `vim-emu compute list`. Delay measurements can be performed with `ping` or `httping` from inside `vim-emu`.
+4. You can test the deployment and connectivity as described [in the wiki](https://github.com/CN-UPB/placement-emulation/wiki/emulation), e.g., with `vim-emu compute list`. Delay measurements can be performed with `ping` or `httping` from inside `vim-emu`.
 5. Important: Stop the emulator using `exit` inside the ContainerNet terminal. This is necessary to clean up, so that the emulator can be started again.
 
 *Note*:
@@ -55,4 +55,4 @@ Use scripts like `runAll.sh` to run a large number of placement emulations seque
 
 Lead developers: Stefan Schneider and Manuel Peuster
 
-For questions or support, please use GitHub's issue system. 
+For questions or support, please use [GitHub's issue system](https://github.com/CN-UPB/placement-emulation/issues). Please also consider the additional information on the [wiki pages](https://github.com/CN-UPB/placement-emulation/wiki).
