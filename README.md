@@ -11,7 +11,7 @@ This prototype belongs to the paper **"A Generic Emulation Framework for Reusing
 2. Pre-build VNF containers: `cd inputs/vnfs; ./build.sh`
 3. Install the B-JointSP placement algorithm [`bjointsp 2.3+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) 
    - Use `setup.py` in the `placement-emulation` branch
-   - `sudo pyhton3 setup.py develop` 
+   - `sudo python3 setup.py develop` 
    - Requires Python 3.5
 4. Install other dependencies: `sudo python3 setup.py develop`
 
