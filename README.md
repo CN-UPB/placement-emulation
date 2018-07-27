@@ -9,11 +9,8 @@ This prototype belongs to the paper **"A Generic Emulation Framework for Reusing
 1. Install the emulator [`vim-emu`](https://osm.etsi.org/gitweb/?p=osm/vim-emu.git) (see [README.md "Bare-metal installation"](https://osm.etsi.org/gitweb/?p=osm/vim-emu.git;a=blob;f=README.md;h=ba22ec342ed5d60bf65770aa154adce8b0fcc141;hb=HEAD))
   * `cd vim-emu; sudo python setup.py develop`
 2. Pre-build VNF containers: `cd inputs/vnfs; ./build.sh`
-3. Install the B-JointSP placement algorithm [`bjointsp 2.3+`](https://github.com/CN-UPB/B-JointSP/tree/placement-emulation) 
-   - Use `setup.py` in the `placement-emulation` branch
-   - `sudo pyhton3 setup.py develop` 
-   - Requires Python 3.5
-4. Install other dependencies: `sudo python3 setup.py develop`
+3. Install the B-JointSP placement algorithm [`bjointsp 2.3+`](https://github.com/CN-UPB/B-JointSP)
+4. Install other dependencies of the placement emulation framework: `python setup.py install` (requires Python 3.5+)
 
 We tested the installation on Ubuntu 16.04.
 
