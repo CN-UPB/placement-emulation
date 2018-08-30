@@ -1,7 +1,13 @@
 # Generic Placement Emulation Framework
 This placement emulation framework (PEF) supports the automatic emulation of network service placements calculated by arbitrary placement algorithms. This allows to get hands-on practical experience with deployed services and enables realistic performance measurements.
 
-This prototype belongs to the paper **"A Generic Emulation Framework for Reusing and Evaluating VNF Placement Algorithms"** submitted to IEEE NFV-SDN 2018 by Stefan Schneider, Manuel Peuster, and Holger Karl.
+This prototype belongs to the paper **"A Generic Emulation Framework for Reusing and Evaluating VNF Placement Algorithms"** accepted at IEEE NFV-SDN 2018 by Stefan Schneider, Manuel Peuster, and Holger Karl.
+
+## Cite this work
+
+If you use this placement emulation framework, please cite the following publication:
+
+> Stefan Schneider, Manuel Peuster, and Holger Karl: "A Generic Emulation Framework for Reusing and Evaluating VNF Placement Algorithms", 2018 IEEE Conference on Network Function Virtualization and Software Defined Networks (NFV-SDN), Verona, Italy. (2018)
 
 
 ## Installation
