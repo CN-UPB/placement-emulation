@@ -15,6 +15,14 @@ This prototype belongs to the paper **"A Generic Emulation Framework for Reusing
 We tested the installation on Ubuntu 16.04.
 
 
+
+To install the dependencies required for running the Jupyter notebooks, additionally run:
+
+```bash
+pip install -r notebook_requirements.txt
+```
+
+
 ## Usage
 
 **Quickstart:**
