@@ -2,6 +2,7 @@
 .idea/
 results/
 logs/
+jupyter*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
