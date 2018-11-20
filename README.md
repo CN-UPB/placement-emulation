@@ -62,6 +62,40 @@ If you only want to trigger placement without emulation, use the `--placeOnly` o
 
 Use scripts like `runAll.sh` to run a large number of placement emulations sequentially. *Important:* use `|& tee some_log.log` to log the display output for debugging.
 
+## Integrating a placement algorithm to the standard interface
+
+To integrate your VNF placement algorithm to the standard interface of the placement abstraction layer, you only have to adjust the inputs, outputs, and triggering of your algorithm. For examples, see the [B-JointSP scaling and placement algorithm](https://github.com/CN-UPB/B-JointSP) or [the two dummy algorithms in this repo: Greedy and random placement](https://github.com/CN-UPB/placement-emulation/tree/master/place_emu/placement).
+
+Currently, the framework is implemented as a Python library. In the future, we plan on implementing a REST API, which will allow interacting with the interface independent of the programming language.
+
+### Triggering
+
+Your algorithm needs to implement a function `place()` that triggers the placement:
+
+```python
+def place(network_file, service_file, sources_file, optional_args=None):
+    # start placement
+    return placement
+```
+
+You can use arbitrary `optional_args` depending on the needs of your algorithm.
+
+### Inputs
+
+Currently, the mandatory inputs are formatted YAML files (the structure may evolve as we continue improving the framework). See the examples [here](https://github.com/CN-UPB/placement-emulation/tree/master/inputs).
+
+### Outputs
+
+The output of your algorithm is the returned placement (the return value from `place()`). This placement is a Python dictionary (similar to a YAML file) that needs to have at least the following fields:  A `placement` dictionary with `vnfs` and `vlinks`.  `vnfs` is a list of the placed VNFs with name and location (and image if you want to use the emulator). `vlinks` is a list of vLinks connecting the placed VNFs.
+
+Of course, you can add any additional information in the dictionary that may be useful for the evaluation.
+
+## Contributions
+
+We plan on continuously improving this framework and contributions are very welcome!
+
+Please ask for new features in the issues or submit new features in the form of pull requests.
+
 ## Contact
 
 Lead developers: Stefan Schneider and Manuel Peuster
